@@ -1,5 +1,20 @@
 <resources>
     <string name="app_name">movie-catalog-kotlin</string>
-    <string name="moviecatalog">MovieCatalog</string>
+    <string name="catalog">MovieCatalog</string>
     <string name="label">label</string>
+    <string name="text">Text</string>
+    <string name="enter_account">Войти в аккаунт</string>
+    <string name="welcome_to_movieCatalog">Добро пожаловать в MovieCatalog</string>
+    <string name="registration">Зарегистрироваться</string>
+    <string name="enter_to_account">Вход в аккаунт</string>
+    <string name="sing_in">Войти</string>
+    <string name="backgraound_movies">backgraound_movies</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="email">Электронная почта</string>
+    <string name="name">Имя</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="date_of_birth">Дата рождения</string>
+    <string name="male_button">Мужчина</string>
+    <string name="female_button">Женщина</string>
 </resources>
