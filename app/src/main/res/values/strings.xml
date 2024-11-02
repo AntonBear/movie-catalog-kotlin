@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">movie-catalog-kotlin</string>
+    <string name="moviecatalog">MovieCatalog</string>
+    <string name="label">label</string>
+</resources>
