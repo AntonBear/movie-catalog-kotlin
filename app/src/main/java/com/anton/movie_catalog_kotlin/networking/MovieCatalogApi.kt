@@ -2,19 +2,27 @@ package com.anton.movie_catalog_kotlin.networking
 
 import com.anton.movie_catalog_kotlin.models.ErrorResponse
 import com.anton.movie_catalog_kotlin.models.LoginResponse
-import com.anton.movie_catalog_kotlin.models.SingUpRequest
-import com.anton.movie_catalog_kotlin.models.SingUpResponse
+import com.anton.movie_catalog_kotlin.models.MovieDetails
+import com.anton.movie_catalog_kotlin.models.MoviesPagedListModel
+import com.anton.movie_catalog_kotlin.models.SignUpRequest
 import models.LoginRequest
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface MovieCatalogApi {
     @POST("api/account/register")
-    suspend fun singUp(@Body singUpRequest: SingUpRequest): Response<SingUpResponse>
+    suspend fun signUp(@Body signUpRequest: SignUpRequest): Response<Unit>
 
     @POST("api/account/login")
     suspend fun login(@Body loginRequest: LoginRequest): NetworkResult<LoginResponse, ErrorResponse>
 
+    @GET("/api/movies/{page}")
+    suspend fun getMovies(@Path("page") page: Int): Response<MoviesPagedListModel>
+
+    @GET("/api/movies/details/{id}")
+    suspend fun getDetails(@Path("id") id: Int): Response<MovieDetails>
 }
 

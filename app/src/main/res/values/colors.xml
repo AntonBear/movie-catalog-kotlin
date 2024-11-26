@@ -10,4 +10,6 @@
     <color name="dark_faded">#333333</color>
     <color name="dark">#1E1E1E</color>
     <color name="gray_faded">#999999</color>
+    <color name="gray">#CCCCCC</color>
+    <color name="backgroundColor">#1e1e1e</color>
 </resources>

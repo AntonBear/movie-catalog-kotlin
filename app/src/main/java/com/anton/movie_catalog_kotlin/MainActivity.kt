@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityWelcomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.buttonEnterAccount.setOnClickListener {
@@ -23,8 +24,5 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
-        val intent = Intent("ACTION_MAIN_ACTIVITY_LOADED")
-        sendBroadcast(intent)
-
     }
 }

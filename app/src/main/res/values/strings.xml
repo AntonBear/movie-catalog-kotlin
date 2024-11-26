@@ -7,7 +7,7 @@
     <string name="welcome_to_movieCatalog">Добро пожаловать в MovieCatalog</string>
     <string name="registration">Зарегистрироваться</string>
     <string name="enter_to_account">Вход в аккаунт</string>
-    <string name="sing_in">Войти</string>
+    <string name="sign_in">Войти</string>
     <string name="backgraound_movies">backgraound_movies</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
@@ -17,4 +17,15 @@
     <string name="date_of_birth">Дата рождения</string>
     <string name="male_button">Мужчина</string>
     <string name="female_button">Женщина</string>
+    <string name="email_error">email_error</string>
+    <string name="error_fill_all_fields">Все поля должны быть заполнены</string>
+    <string name="auth_success_notion">Авторизация прошла успешно!</string>
+    <string name="error_title">Ошибка</string>
+    <string name="login_failed">Ошибка авторизации</string>
+    <string name="signup_failed">Ошибка регистрации</string>
+    <string name="signup_success_notion">Регистрация прошла успешно!</string>
+    <string name="OK_notion">OK</string>
+    <string name="success_title">Успешная авторизация</string>
+    <string name="sing_in">Войти</string>
+    <string name="SignUp">Зарегистрироваться</string>
 </resources>

@@ -5,79 +5,93 @@ import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.widget.EditText
+import android.view.View
+import android.widget.ProgressBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.ActivitySingUpBinding
 import com.anton.movie_catalog_kotlin.models.Gender
 import com.anton.movie_catalog_kotlin.signin.SignInActivity
+import com.anton.movie_catalog_kotlin.utils.DialogUtils.showErrorDialog
+import com.anton.movie_catalog_kotlin.utils.DialogUtils.showSuccessDialog
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 
-class SignUpActivity: AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySingUpBinding
-    private lateinit var dateOfBirthEditText: EditText
-    private val viewModel: SingUpViewModel by viewModels()
+    private val viewModel: SignUpViewModel by viewModels { SignUpViewModel.Factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySingUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        dateOfBirthEditText = binding.dateOfBirthEditText
-
-        binding.loginEditText.setText("Anton2")
-        binding.dateOfBirthEditText.setText("2024-11-06T10:26:03.128Z")
-        binding.emailEditText.setText("holzed15@gmail.com")
-        binding.nameEditText.setText("Anton")
-        binding.passwordEditText.setText("greedisgood")
-        binding.passwordConfirmEditText.setText("greedisgood")
-
         binding.squareButton.setOnClickListener {
-            val intent = Intent(this, SignInActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, SignInActivity::class.java))
         }
-        dateOfBirthEditText.setOnClickListener {
-            showDatePickerDialog()
-        }
-        binding.maleButton.setOnClickListener {
-            viewModel.selectedGender = Gender.MALE
-        }
-        binding.femaleButton.setOnClickListener {
-            viewModel.selectedGender = Gender.FEMALE
-        }
-
-
-        binding.singUpButton.setOnClickListener {
-            val context = this
-            with(binding) {
-                if (validateInputFields(listOf(loginEditText, emailEditText, nameEditText, passwordEditText, dateOfBirthEditText))) {
-                    val userName = binding.loginEditText.text.toString()
-                    val passWord = binding.passwordEditText.text.toString()
-                    val name = binding.nameEditText.text.toString()
-                    val email = binding.emailEditText.text.toString()
-                    val birthDate = binding.dateOfBirthEditText.text.toString()
-                    val passwordConfirmEditText = binding.passwordConfirmEditText.text.toString()
-                    val selectedGender = viewModel.selectedGender
-                    if (selectedGender != null) {
-                        viewModel.singUp(userName,name,passWord,passwordConfirmEditText, email,birthDate, selectedGender, context)
-                    }
-                } else {
-                    println("Введите все поля регистрации")
+        binding.dateOfBirthEditText.setOnClickListener { showDatePickerDialog() }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.selectedGender.collect { gender ->
+                    binding.maleButton.isSelected = gender == Gender.MALE
+                    binding.femaleButton.isSelected = gender == Gender.FEMALE
                 }
             }
         }
-}
-    private fun validateInputFields(editTextList: List<EditText>): Boolean {
-        return editTextList.all { it.text.isNotEmpty() }
-    }
+        binding.maleButton.setOnClickListener { viewModel.selectGender(Gender.MALE) }
+        binding.femaleButton.setOnClickListener { viewModel.selectGender(Gender.FEMALE) }
+        binding.singUpButton.setOnClickListener {
+            viewModel.signUp(
+                binding.loginEditText.text.toString(),
+                binding.nameEditText.text.toString(),
+                binding.passwordEditText.text.toString(),
+                binding.passwordConfirmEditText.text.toString(),
+                binding.emailEditText.text.toString(),
+                binding.dateOfBirthEditText.text.toString(),
+            )
+        }
 
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.signUpState.collect { state ->
+                    when (state) {
+                        is SignUpViewModel.SignUpState.Loading -> binding.progressBar.show()
+                        is SignUpViewModel.SignUpState.Success -> {
+                            binding.progressBar.hide()
+                            showSuccessDialog(R.string.success_title, R.string.signup_success_notion) {
+                                startActivity(Intent(this@SignUpActivity, SignInActivity::class.java))
+                                finish()
+                            }
+                        }
+                        is SignUpViewModel.SignUpState.Error -> {
+                            binding.progressBar.hide()
+                            showErrorDialog(R.string.error_title, state.message.toIntOrNull()?:R.string.error_title)
+                        }
+                        is SignUpViewModel.SignUpState.InputFieldsInvalid -> {
+                            showErrorDialog(R.string.error_title, R.string.error_fill_all_fields)
+                        }
+                        else -> binding.progressBar.hide()
+                    }
+                }
+            }
+        }
+    }
+    private fun ProgressBar.show() {
+        this.visibility = View.VISIBLE
+    }
+    private fun ProgressBar.hide() {
+        this.visibility = View.GONE
+    }
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-
         val datePickerDialog = DatePickerDialog(
             this,
             { _, year, monthOfYear, dayOfMonth ->
@@ -89,7 +103,7 @@ class SignUpActivity: AppCompatActivity() {
                             set(Calendar.MONTH, monthOfYear)
                             set(Calendar.DAY_OF_MONTH, dayOfMonth)
                         }.time)
-                dateOfBirthEditText.setText(formattedDate)
+                binding.dateOfBirthEditText.setText(formattedDate)
             },
             year,
             month,
@@ -97,6 +111,4 @@ class SignUpActivity: AppCompatActivity() {
         )
         datePickerDialog.show()
     }
-
-
 }

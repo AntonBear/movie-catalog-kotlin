@@ -16,31 +16,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moviecatalogkotlin"
         tools:targetApi="31">
-
+        <activity
+            android:name=".navigationBar.NavigationBarView"
+            android:exported="false"
+            android:label="Compose Activity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar" />
+        <activity
+            android:name=".movieDetailsScreen.MovieDetailsScreenView"
+            android:exported="false"
+            android:label="Compose Activity"
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".signin.SignInActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat"
             android:exported="false" />
         <activity
             android:name=".signup.SignUpActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.Moviecatalogkotlin"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
-            android:exported="true">
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Moviecatalogkotlin">
-        </activity>
-
-
-
     </application>
-
 </manifest>
