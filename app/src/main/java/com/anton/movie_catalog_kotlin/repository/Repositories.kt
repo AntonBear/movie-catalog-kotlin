@@ -22,8 +22,4 @@ object Repositories {
     val signUpRepository: SignUpRepository by lazy {
         SignUpRepositoryImpl(ApiServices.movieCatalogApi)
     }
-
-    val movieRepository: MovieRepository by lazy {
-        MovieRepositoryImpl(ApiServices.movieCatalogApi)
-    }
 }

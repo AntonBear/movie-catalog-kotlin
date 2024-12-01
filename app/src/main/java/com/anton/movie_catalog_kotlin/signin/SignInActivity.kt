@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.anton.movie_catalog_kotlin.MainActivity
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.ActivitySingInBinding
-import com.anton.movie_catalog_kotlin.navigationBar.NavigationBarView
 import com.anton.movie_catalog_kotlin.utils.Result
 import com.anton.movie_catalog_kotlin.utils.showErrorDialog
 import com.anton.movie_catalog_kotlin.utils.showSuccessDialog
@@ -42,9 +41,8 @@ class SignInActivity : AppCompatActivity() {
                             R.string.success_title,
                             R.string.auth_success_notion,
                             onSuccess = {
-                                val intent = Intent(this, NavigationBarView::class.java)
-                                startActivity(intent)
-                            })
+                            }
+                        )
                     }
                     is Result.Error -> {
                         showErrorDialog(R.string.error_title, R.string.login_failed)
