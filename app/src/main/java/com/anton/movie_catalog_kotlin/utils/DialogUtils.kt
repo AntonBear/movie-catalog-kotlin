@@ -17,17 +17,15 @@ fun Activity.showSuccessDialog(
         .setPositiveButton(getString(R.string.OK_notion)) { dialog, _ ->
             dialog.dismiss()
             onSuccess()
-            finish()
         }
         .show()
 }
 
-fun Activity.showErrorDialog(@StringRes titleRes: Int, @StringRes messageRes: Int) {
+fun Activity.showErrorDialog(@StringRes titleRes: Int, messageText: String) {
     AlertDialog.Builder(this)
         .setTitle(getString(titleRes))
-        .setMessage(getString(messageRes))
+        .setMessage(messageText)
         .setCancelable(false)
         .setPositiveButton(getString(R.string.OK_notion), null)
         .show()
 }
-

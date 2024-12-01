@@ -5,59 +5,71 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.anton.movie_catalog_kotlin.MainActivity
 import com.anton.movie_catalog_kotlin.R
-import com.anton.movie_catalog_kotlin.databinding.ActivitySingInBinding
-import com.anton.movie_catalog_kotlin.utils.Result
+import com.anton.movie_catalog_kotlin.databinding.ActivitySignInBinding
+import com.anton.movie_catalog_kotlin.signup.SignUpError
 import com.anton.movie_catalog_kotlin.utils.showErrorDialog
 import com.anton.movie_catalog_kotlin.utils.showSuccessDialog
+import kotlinx.coroutines.launch
 
 class SignInActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySingInBinding
+    private lateinit var binding: ActivitySignInBinding
     private val viewModel: SignInViewModel by viewModels { SignInViewModel.Factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySingInBinding.inflate(layoutInflater)
+        binding = ActivitySignInBinding.inflate(layoutInflater)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         setContentView(binding.root)
+
         binding.squareButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
-        binding.singInButton.setOnClickListener {
-            val username = binding.loginEditText.text.toString()
-            val password = binding.passwordEditText.text.toString()
-            viewModel.login(username, password)
-        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
 
-        viewModel.loginResult.observe(this) { result ->
-            if (!isFinishing) {
-                when (result) {
-                    is Result.Loading -> showLoading()
-                    is Result.Success -> {
-                        hideLoading()
-                        showSuccessDialog(
-                            R.string.success_title,
-                            R.string.auth_success_notion,
-                            onSuccess = {
-                            }
+                    binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+
+                    binding.signInButton.text = if (state.isLoading) getString(R.string.sign_in_progress) else getString(R.string.sign_in)
+
+                    binding.signInButton.isEnabled = state.isAuthButtonEnabled
+
+                    when (state.error) {
+                        is SignInError.InvalidFields -> showErrorDialog(
+                            R.string.error_title,
+                            getString(R.string.error_valid)
                         )
+                        is SignInError.RequestError -> showErrorDialog(
+                            R.string.error_title,
+                            state.error.message ?: getString(R.string.error_default)
+                        )
+                        else -> Unit
                     }
-                    is Result.Error -> {
-                        showErrorDialog(R.string.error_title, R.string.login_failed)
-                        hideLoading()
+
+                    if (state.isUserLoggedIn) {
+                        val intent = Intent(this@SignInActivity, MainActivity::class.java)
+                        showSuccessDialog(R.string.success_title, R.string.auth_success_notion) {
+                            startActivity(
+                                intent
+                            )
+                        }
                     }
+                    viewModel.onHandleError()
                 }
+
             }
         }
     }
-
-    private fun showLoading() {
-        binding.progressBar.visibility = View.VISIBLE
-    }
-
-    private fun hideLoading() {
-        binding.progressBar.visibility = View.GONE
-    }
 }
+
+
+
+

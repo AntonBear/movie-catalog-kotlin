@@ -15,11 +15,9 @@ object Repositories {
         SecureTokenStorage(applicationContext)
     }
 
-    val authRepository: AuthRepository by lazy {
-        AuthRepositoryImpl(ApiServices.movieCatalogApi, tokenStorage)
+    val userAuthRepository: UserAuthRepository by lazy {
+        UserAuthRepositoryImpl(ApiServices.movieCatalogApi, tokenStorage)
     }
 
-    val signUpRepository: SignUpRepository by lazy {
-        SignUpRepositoryImpl(ApiServices.movieCatalogApi)
-    }
+
 }

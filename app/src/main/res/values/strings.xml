@@ -7,7 +7,6 @@
     <string name="welcome_to_movieCatalog">Добро пожаловать в MovieCatalog</string>
     <string name="registration">Зарегистрироваться</string>
     <string name="enter_to_account">Вход в аккаунт</string>
-    <string name="sign_in">Войти</string>
     <string name="backgraound_movies">backgraound_movies</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
@@ -26,6 +25,11 @@
     <string name="signup_success_notion">Регистрация прошла успешно!</string>
     <string name="OK_notion">OK</string>
     <string name="success_title">Успешная авторизация</string>
-    <string name="sing_in">Войти</string>
-    <string name="SignUp">Зарегистрироваться</string>
+    <string name="sign_in_progress">Вход...</string>
+    <string name="sign_in">Войти</string>
+    <string name="sign_up_progress">Регистрация...</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="button_description">Вернуться к главному меню</string>
+    <string name="error_valid">Неправильно введены данные</string>
+    <string name="error_default">Неизвестная ошибка</string>
 </resources>

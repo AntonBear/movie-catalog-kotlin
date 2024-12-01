@@ -45,6 +45,7 @@ android {
         dataBinding = true
         compose = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
@@ -70,8 +71,6 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material)
     implementation(project.dependencies.platform(libs.koin.bom))
-    implementation(libs.koin.core)
-    implementation(libs.koin.android)
     implementation(libs.androidx.paging.common.android)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.constraintlayout)

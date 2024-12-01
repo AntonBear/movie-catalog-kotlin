@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.anton.movie_catalog_kotlin.signin.SignInViewModel" />
+
+        <variable
+            name="viewModel"
+            type="SignInViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/backgraound_movies"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background" />
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/manrope_bold"
+            android:text="@string/enter_to_account"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/square_button"
+            app:layout_constraintStart_toEndOf="@+id/square_button"
+            app:layout_constraintTop_toTopOf="@+id/square_button"
+            app:layout_constraintVertical_bias="0.545" />
+
+        <Button
+            android:id="@+id/square_button"
+            style="@style/ButtonWithSvgStyle"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="40dp"
+            android:contentDescription="@string/button_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/signInButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/button_selector"
+            android:onClick="@{() -> viewModel.signIn()}"
+            android:fontFamily="@font/manrope_bold"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/gray_faded"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/loginEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button_black"
+            android:ems="10"
+            android:hint="@string/login"
+            android:afterTextChanged="@{viewModel::onLoginTextChanged}"
+            android:inputType="text"
+            android:paddingStart="20dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textColorHint="@color/gray_faded"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/button_black"
+            android:ems="10"
+            android:hint="@string/password"
+            android:inputType="text"
+            android:afterTextChanged="@{viewModel::onPasswordTextChanged}"
+            android:paddingStart="20dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textColorHint="@color/gray_faded"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/signInButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
