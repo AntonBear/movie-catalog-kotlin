@@ -5,15 +5,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.anton.movie_catalog_kotlin.MainActivity
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.ActivitySingInBinding
 import com.anton.movie_catalog_kotlin.navigationBar.NavigationBarView
-import com.anton.movie_catalog_kotlin.utils.DialogUtils.showErrorDialog
-import com.anton.movie_catalog_kotlin.utils.DialogUtils.showSuccessDialog
 import com.anton.movie_catalog_kotlin.utils.Result
-import kotlinx.coroutines.launch
+import com.anton.movie_catalog_kotlin.utils.showErrorDialog
+import com.anton.movie_catalog_kotlin.utils.showSuccessDialog
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySingInBinding
@@ -31,9 +29,7 @@ class SignInActivity : AppCompatActivity() {
         binding.singInButton.setOnClickListener {
             val username = binding.loginEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
-            lifecycleScope.launch {
-                viewModel.login(username, password)
-            }
+            viewModel.login(username, password)
         }
 
         viewModel.loginResult.observe(this) { result ->

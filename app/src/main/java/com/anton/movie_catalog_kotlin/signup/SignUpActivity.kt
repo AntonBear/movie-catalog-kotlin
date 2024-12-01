@@ -16,8 +16,8 @@ import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.ActivitySingUpBinding
 import com.anton.movie_catalog_kotlin.models.Gender
 import com.anton.movie_catalog_kotlin.signin.SignInActivity
-import com.anton.movie_catalog_kotlin.utils.DialogUtils.showErrorDialog
-import com.anton.movie_catalog_kotlin.utils.DialogUtils.showSuccessDialog
+import com.anton.movie_catalog_kotlin.utils.showErrorDialog
+import com.anton.movie_catalog_kotlin.utils.showSuccessDialog
 import kotlinx.coroutines.launch
 import java.util.Locale
 

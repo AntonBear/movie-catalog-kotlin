@@ -29,7 +29,7 @@ class SignInViewModel(
         }
     }
 
-    suspend fun login(username: String, password: String) {
+    fun login(username: String, password: String) {
         viewModelScope.launch {
             try {
                 val loginRequest = LoginRequest(username, password)
