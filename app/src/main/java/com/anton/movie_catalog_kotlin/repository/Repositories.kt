@@ -19,5 +19,7 @@ object Repositories {
         UserAuthRepositoryImpl(ApiServices.movieCatalogApi, tokenStorage)
     }
 
-
+    val movieRepository: MovieRepository by lazy {
+        MovieRepositoryImpl(ApiServices.movieCatalogApi)
+    }
 }
