@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+<data>
+
+    <import type="com.anton.movie_catalog_kotlin.signup.SignUpViewModel" />
+
+    <variable
+        name="viewModel"
+        type="SignUpViewModel" />
+</data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark">
+
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/backgraound_movies"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"
+        app:layout_constraintTop_toTopOf="@+id/loginEditText"
+        tools:layout_editor_absoluteX="92dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="Регистрация"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/square_button"
+        app:layout_constraintStart_toEndOf="@+id/square_button"
+        app:layout_constraintTop_toTopOf="@+id/square_button"
+        app:layout_constraintVertical_bias="0.545" />
+
+    <Button
+        android:id="@+id/square_button"
+        style="@style/ButtonWithSvgStyle"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_black"
+        android:ems="10"
+        android:hint="@string/name"
+        android:afterTextChanged = "@{viewModel::onNameTextChanged}"
+        android:inputType="text"
+        android:paddingStart="20dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray_faded"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/emailEditText"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_black"
+        android:ems="10"
+        android:hint="@string/email"
+        android:afterTextChanged="@{viewModel::onEmailTextChanged}"
+        android:inputType="text"
+        android:paddingStart="20dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray_faded"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/nameEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/loginEditText"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_black"
+        android:ems="10"
+        android:hint="@string/login"
+        android:afterTextChanged="@{viewModel::onLoginTextChanged}"
+        android:inputType="text"
+        android:paddingStart="20dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray_faded"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/emailEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_black"
+        android:ems="10"
+        android:hint="@string/password"
+        android:afterTextChanged="@{viewModel::onPasswordTextChanged}"
+        android:inputType="text"
+        android:paddingStart="20dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray_faded"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/passwordConfirmEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/passwordConfirmEditText"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_black"
+        android:ems="10"
+        android:hint="@string/confirm_password"
+        android:afterTextChanged="@{viewModel::onConfirmPasswordTextChanged}"
+        android:inputType="text"
+        android:paddingStart="20dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray_faded"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/date_of_birthEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <EditText
+        android:id="@+id/date_of_birthEditText"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_black"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="@string/date_of_birth"
+        android:afterTextChanged="@{viewModel::onBirthDateTextChanged}"
+        android:inputType="text"
+        android:paddingStart="20dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray_faded"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/maleButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/maleButton"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="36dp"
+        android:layout_weight="1"
+        android:background="@drawable/male_gender_button_selector"
+        android:onClick="@{() -> viewModel.onGenderSelectedMale()}"
+        android:text="@string/male_button"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/signUpButton"
+        app:layout_constraintEnd_toStartOf="@+id/femaleButton"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/date_of_birthEditText" />
+
+    <Button
+        android:id="@+id/femaleButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/female_gender_button_selector"
+        android:text="@string/female_button"
+        android:onClick="@{() -> viewModel.onGenderSelectedFemale()}"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/maleButton"
+        app:layout_constraintEnd_toEndOf="@+id/date_of_birthEditText"
+        app:layout_constraintStart_toEndOf="@+id/maleButton"
+        app:layout_constraintTop_toTopOf="@+id/maleButton" />
+
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/button_selector"
+        android:fontFamily="@font/manrope_bold"
+        android:onClick="@{() -> viewModel.signUp()}"
+        android:text="@string/sign_up"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/gray_faded"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

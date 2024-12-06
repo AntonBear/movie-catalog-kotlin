@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MyButtonTextStyle">
+        <item name="android:fontFamily">@font/manrope_bold</item>
+    </style>
+
+<style name="ButtonWithSvgStyle" parent="Widget.AppCompat.Button">
+    <item name="android:layout_width">48dp</item>
+    <item name="android:layout_height">48dp</item>
+    <item name="android:background">@drawable/button_layer_list</item>
+    <item name="android:gravity">center</item>
+</style>
+
+</resources>
