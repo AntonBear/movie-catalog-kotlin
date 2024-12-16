@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityWelcomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.buttonEnterAccount.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)

@@ -1,7 +1,7 @@
 package com.anton.movie_catalog_kotlin.repository
 
 import android.util.Log
-import com.anton.movie_catalog_kotlin.models.ImageSource
+//import com.anton.movie_catalog_kotlin.models.ImageSource
 import com.anton.movie_catalog_kotlin.models.MovieDetails
 import com.anton.movie_catalog_kotlin.models.MovieElementModel
 import com.anton.movie_catalog_kotlin.models.MoviesPagedListModel
@@ -58,7 +58,7 @@ class MovieRepositoryImpl(private val movieCatalogApi: MovieCatalogApi) : MovieR
                 val movieDetails = MovieDetails(
                     id = randomMovie.id ?: "",
                     name = randomMovie.name ?: "",
-                    poster = ImageSource.Remote(randomMovie.poster ?: ""),
+                    poster = randomMovie.poster ?: "",
                     year = randomMovie.year ?: 0,
                     country = randomMovie.country ?: "",
                     genres = genres
@@ -67,7 +67,7 @@ class MovieRepositoryImpl(private val movieCatalogApi: MovieCatalogApi) : MovieR
             },
             onFailure = {
                 Log.e("MovieRepository", "Error fetching movies: $it")
-                return@fold MovieDetails(id = " ", name = " ", poster = ImageSource.Remote(""), year = 0, country = "", genres = emptyList())
+                return@fold MovieDetails(id = " ", name = " ", poster = "" , year = 0, country = "", genres = emptyList())
             }
         )
     }

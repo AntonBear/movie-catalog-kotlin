@@ -10,11 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.anton.movie_catalog_kotlin.MainActivity
 import com.anton.movie_catalog_kotlin.R
+import com.anton.movie_catalog_kotlin.bottomNavigation.BottomNavigationView
 import com.anton.movie_catalog_kotlin.databinding.ActivitySignInBinding
-import com.anton.movie_catalog_kotlin.navigationBar.NavigationBarView
-import com.anton.movie_catalog_kotlin.signup.SignUpError
 import com.anton.movie_catalog_kotlin.utils.showErrorDialog
-import com.anton.movie_catalog_kotlin.utils.showSuccessDialog
 import kotlinx.coroutines.launch
 
 class SignInActivity : AppCompatActivity() {
@@ -56,7 +54,7 @@ class SignInActivity : AppCompatActivity() {
                     }
 
                     if (state.isUserLoggedIn) {
-                        val intent = Intent(this@SignInActivity, NavigationBarView::class.java)
+                        val intent = Intent(this@SignInActivity, BottomNavigationView::class.java)
                         startActivity(intent)
                     }
                     viewModel.onHandleError()

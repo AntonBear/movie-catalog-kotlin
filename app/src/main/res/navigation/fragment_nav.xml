@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_nav"
+    app:startDestination="@id/fragment_feed_screen">
+    <fragment
+        android:id="@+id/fragment_feed_screen"
+        android:name="com.anton.movie_catalog_kotlin.feedScreenFragment.FeedScreenFragment"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_feed_screen" />
+    <fragment
+        android:id="@+id/fragment_movies_screen"
+        android:name="com.anton.movie_catalog_kotlin.MoviesScreenFragment"
+        android:label="fragment_movies_screen"
+        tools:layout="@layout/fragment_movies_screen" />
+    <fragment
+        android:id="@+id/blank_favorites_screen"
+        android:name="com.anton.movie_catalog_kotlin.BlankFragment3"
+        android:label="blank_favorites_screen"
+        tools:layout="@layout/fragment_favorites_screen" />
+    <fragment
+        android:id="@+id/fragment_profile_screen"
+        android:name="com.anton.movie_catalog_kotlin.ProfileScreenFragment"
+        android:label="fragment_profile_screen"
+        tools:layout="@layout/fragment_profile_screen" />
+</navigation>

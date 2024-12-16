@@ -15,3 +15,5 @@
 local.properties
 .idea
 .kotlin
+/app/src/main/java/com/anton/movie_catalog_kotlin/feedScreen/
+/app/src/main/java/com/anton/movie_catalog_kotlin/navigationBar/
