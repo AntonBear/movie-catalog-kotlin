@@ -11,4 +11,16 @@
         android:layout_height="match_parent"
         android:text="@string/movie_title" />
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerMovies"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"/>
+
 </FrameLayout>

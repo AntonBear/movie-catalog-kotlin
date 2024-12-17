@@ -8,12 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.findNavController
 
 
 class FavoritesScreenViewModelProvider : PreviewParameterProvider<FavoritesScreenViewModel> {
@@ -23,14 +25,13 @@ class FavoritesScreenViewModelProvider : PreviewParameterProvider<FavoritesScree
 @Composable
 @Preview(showBackground = true)
 fun FavoritesScreenPreview(@PreviewParameter(FavoritesScreenViewModelProvider::class) favoritesScreenViewModel: FavoritesScreenViewModel) {
-    FavoritesScreen(favoritesScreenViewModel)
+    FavoritesScreen(/*favoritesScreenViewModel*/)
 }
-//rememberNavController(),
-//navController: NavController,
+
 @Composable
-fun FavoritesScreen(favoritesScreenViewModel: FavoritesScreenViewModel = viewModel()) {
-    LaunchedEffect(Unit) {
-    }
+fun FavoritesScreen(/*favoritesScreenViewModel: FavoritesScreenViewModel = viewModel()*/) {
+
+    val navController = LocalView.current.findNavController()
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -38,7 +39,7 @@ fun FavoritesScreen(favoritesScreenViewModel: FavoritesScreenViewModel = viewMod
     ) {
 
         Button(onClick = {
-//            navController.navigate("movie")
+//            navController.navigate(R.id.actio)
         }) {
             Text("FavoritesScreen")
         }

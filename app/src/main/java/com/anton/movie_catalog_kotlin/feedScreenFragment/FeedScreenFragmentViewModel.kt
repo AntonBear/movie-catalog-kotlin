@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 class FeedScreenFragmentViewModel: ViewModel() {
 
     val imageUrl = MutableLiveData<String>()
-    val genres= MutableLiveData<List<String?>>()
+    val genres = MutableLiveData<List<String>>()
     val name = MutableLiveData<String>()
     val year = MutableLiveData<String>()
     val country = MutableLiveData<String>()

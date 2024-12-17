@@ -60,8 +60,9 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.splashscreen)
+    implementation (libs.androidx.navigation.fragment.compose)
     implementation (libs.glide)
-    implementation (libs.flexbox)
+    implementation (libs.androidx.viewpager2)
     kapt (libs.compiler)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -74,7 +75,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.material)
     implementation(libs.androidx.paging.common.android)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.constraintlayout)

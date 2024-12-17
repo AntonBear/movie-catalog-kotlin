@@ -55,12 +55,13 @@ class MovieRepositoryImpl(private val movieCatalogApi: MovieCatalogApi) : MovieR
                 val randomMovieIndex = movies.movies.indices.random()
                 val randomMovie = movies.movies[randomMovieIndex]
                 val genres = randomMovie.genres.map { it.name }.toList()
+                // TODO: Remove redundant models
                 val movieDetails = MovieDetails(
-                    id = randomMovie.id ?: "",
-                    name = randomMovie.name ?: "",
-                    poster = randomMovie.poster ?: "",
-                    year = randomMovie.year ?: 0,
-                    country = randomMovie.country ?: "",
+                    id = randomMovie.id,
+                    name = randomMovie.name,
+                    poster = randomMovie.poster,
+                    year = randomMovie.year,
+                    country = randomMovie.country,
                     genres = genres
                 )
                 return@fold movieDetails

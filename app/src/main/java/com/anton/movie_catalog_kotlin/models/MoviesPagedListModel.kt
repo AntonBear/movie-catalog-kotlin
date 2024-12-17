@@ -9,25 +9,25 @@ data class MoviesPagedListModel(
 
 @Serializable
 data class MovieElementModel(
-    val id: String? = null,
-    val name: String? = null,
-    val poster: String? = null,
-    val year: Int? = null,
-    val country: String? = null,
+    val id: String,
+    val name: String,
+    val poster: String,
+    val year: Int,
+    val country: String,
     val genres: List<GenreModel> = emptyList(),
     val reviews: List<ReviewShortModel> = emptyList()
 )
 
 @Serializable
 data class GenreModel(
-    val id: String? = null,
-    val name: String? = null
+    val id: String,
+    val name: String
 )
 
 @Serializable
 data class ReviewShortModel(
-    val id: String? = null,
-    val rating: Int? = null
+    val id: String,
+    val rating: Int
 )
 
 @Serializable
