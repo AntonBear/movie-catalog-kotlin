@@ -8,6 +8,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.ActivityBottomNavigationBinding
 
+
 class BottomNavigationView : AppCompatActivity() {
     private lateinit var binding: ActivityBottomNavigationBinding
     private lateinit var navController: NavController
@@ -16,9 +17,11 @@ class BottomNavigationView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityBottomNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
+
     }
 }

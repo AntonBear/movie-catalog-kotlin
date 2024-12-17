@@ -12,13 +12,13 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="BottomNavigationView.NoShiftMode" parent="Widget.Design.BottomNavigationView">
+    <style name="BottomNavigationView.NoShiftMode" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="labelVisibilityMode">labeled</item>
         <item name="itemTextColor">@color/bottom_nav_text_colors</item>
         <item name="itemIconTint">@color/bottom_nav_icon_colors</item>
     </style>
 
-    <style name="BottomNavigationTextStyle" parent="TextAppearance.AppCompat.Body1">
+    <style name="BottomNavigationTextStyle" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">normal</item>
     </style>

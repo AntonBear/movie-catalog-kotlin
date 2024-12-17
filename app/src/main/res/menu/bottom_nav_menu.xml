@@ -11,7 +11,7 @@
         android:title="@string/movie_title" />
 
     <item
-        android:id="@+id/blank_favorites_screen"
+        android:id="@+id/compose_favorites_fragment"
         android:icon="@drawable/title_library"
         android:title="@string/favorite_title" />
     <item

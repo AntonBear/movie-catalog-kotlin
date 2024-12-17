@@ -23,12 +23,12 @@ class FavoritesScreenViewModelProvider : PreviewParameterProvider<FavoritesScree
 @Composable
 @Preview(showBackground = true)
 fun FavoritesScreenPreview(@PreviewParameter(FavoritesScreenViewModelProvider::class) favoritesScreenViewModel: FavoritesScreenViewModel) {
-    FavoritesScreen(rememberNavController(), favoritesScreenViewModel)
+    FavoritesScreen(favoritesScreenViewModel)
 }
-
-
+//rememberNavController(),
+//navController: NavController,
 @Composable
-fun FavoritesScreen(navController: NavController, favoritesScreenViewModel: FavoritesScreenViewModel = viewModel()) {
+fun FavoritesScreen(favoritesScreenViewModel: FavoritesScreenViewModel = viewModel()) {
     LaunchedEffect(Unit) {
     }
 
@@ -38,7 +38,7 @@ fun FavoritesScreen(navController: NavController, favoritesScreenViewModel: Favo
     ) {
 
         Button(onClick = {
-            navController.navigate("movie")
+//            navController.navigate("movie")
         }) {
             Text("FavoritesScreen")
         }

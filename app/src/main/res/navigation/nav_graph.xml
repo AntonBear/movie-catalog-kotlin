@@ -14,11 +14,13 @@
         android:name="com.anton.movie_catalog_kotlin.MoviesScreenFragment"
         android:label="fragment_movies_screen"
         tools:layout="@layout/fragment_movies_screen" />
+
     <fragment
-        android:id="@+id/blank_favorites_screen"
-        android:name="com.anton.movie_catalog_kotlin.BlankFragment3"
+        android:id="@+id/compose_favorites_fragment"
+        android:name="com.anton.movie_catalog_kotlin.favoritesScreen.FavoritesScreenFragment"
         android:label="blank_favorites_screen"
-        tools:layout="@layout/fragment_favorites_screen" />
+        tools:layout="@layout/fragment_compose_favorites" />
+
     <fragment
         android:id="@+id/fragment_profile_screen"
         android:name="com.anton.movie_catalog_kotlin.ProfileScreenFragment"
