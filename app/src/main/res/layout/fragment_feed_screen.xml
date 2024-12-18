@@ -20,7 +20,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -41,26 +41,26 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="8dp"
             app:cardCornerRadius="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintBottom_toTopOf="@+id/movieName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
+            app:layout_constraintTop_toBottomOf="@+id/label">
 
             <ImageView
                 android:id="@+id/moviePoster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/filmdescription"
-                android:scaleType="centerCrop"
                 android:clickable="true"
+                android:contentDescription="@string/filmdescription"
                 android:focusable="true"
+                android:scaleType="centerCrop"
                 app:imageUrl="@{viewModel.imageUrl}" />
 
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/movieName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -71,12 +71,12 @@
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintBottom_toTopOf="@+id/movieYear"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/movieCountry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -87,14 +87,14 @@
             android:textColor="@color/gray"
             android:textSize="16sp"
             android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="@+id/textView4"
-            app:layout_constraintEnd_toStartOf="@+id/textView5"
+            app:layout_constraintBottom_toBottomOf="@+id/movieYear"
+            app:layout_constraintEnd_toStartOf="@+id/devide"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView4" />
+            app:layout_constraintTop_toTopOf="@+id/movieYear" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/devide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/point"
@@ -103,15 +103,15 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView4"
+            app:layout_constraintBottom_toBottomOf="@+id/movieYear"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="@+id/movieYear"
             app:layout_constraintVertical_bias="1.0" />
 
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/movieYear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -126,7 +126,7 @@
             app:layout_constraintBottom_toTopOf="@+id/chip_group"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textView5" />
+            app:layout_constraintStart_toEndOf="@+id/devide" />
 
         <LinearLayout
             android:id="@+id/chip_group"

@@ -38,9 +38,7 @@ fun FavoritesScreen(/*favoritesScreenViewModel: FavoritesScreenViewModel = viewM
         contentAlignment = Alignment.Center
     ) {
 
-        Button(onClick = {
-//            navController.navigate(R.id.actio)
-        }) {
+        Button(onClick = {}) {
             Text("FavoritesScreen")
         }
     }

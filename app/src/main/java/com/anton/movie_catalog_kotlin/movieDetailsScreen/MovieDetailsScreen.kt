@@ -21,10 +21,8 @@ fun MovieDetailsScreen(/*favoritesScreenViewModel: FavoritesScreenViewModel = vi
         contentAlignment = Alignment.Center
     ) {
 
-        Button(onClick = {
-//            navController.navigate(R.id.actio)
-        }) {
-            Text("FavoritesScreen")
+        Button(onClick = {}) {
+            Text("MovieDetailsScreen")
         }
     }
 }
