@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Moviecatalogkotlin" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Moviecatalogkotlin" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/dark</item>
         <item name="colorPrimaryVariant">@color/dark</item>
         <item name="colorOnPrimary">@color/dark</item>
@@ -17,7 +17,3 @@
     </style>
 
 </resources>
-
-
-
-    <!--        <item name="android:windowLightStatusBar">false</item>-->

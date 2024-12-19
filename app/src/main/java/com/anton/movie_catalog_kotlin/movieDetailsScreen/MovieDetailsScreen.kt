@@ -12,7 +12,7 @@ import androidx.navigation.findNavController
 
 
 @Composable
-fun MovieDetailsScreen(/*favoritesScreenViewModel: FavoritesScreenViewModel = viewModel()*/) {
+fun MovieDetailsScreen() {
 
     val navController = LocalView.current.findNavController()
 
