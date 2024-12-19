@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/fragment_feed_screen"
+        android:icon="@drawable/title_feed"
+        android:title="@string/feed_title" />
+
+    <item
+        android:id="@+id/fragment_movies_screen"
+        android:icon="@drawable/title_movies"
+        android:title="@string/movie_title" />
+
+    <item
+        android:id="@+id/compose_favorites_fragment"
+        android:icon="@drawable/title_library"
+        android:title="@string/favorite_title" />
+    <item
+        android:id="@+id/fragment_profile_screen"
+        android:icon="@drawable/title_person"
+        android:title="@string/profile_title" />
+</menu>

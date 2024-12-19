@@ -1,14 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="MyButtonTextStyle">
         <item name="android:fontFamily">@font/manrope_bold</item>
     </style>
 
-<style name="ButtonWithSvgStyle" parent="Widget.AppCompat.Button">
-    <item name="android:layout_width">48dp</item>
-    <item name="android:layout_height">48dp</item>
-    <item name="android:background">@drawable/button_layer_list</item>
-    <item name="android:gravity">center</item>
-</style>
+    <style name="ButtonWithSvgStyle" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/button_layer_list</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="BottomNavigationView.NoShiftMode" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemTextColor">@color/bottom_nav_text_colors</item>
+        <item name="itemIconTint">@color/bottom_nav_icon_colors</item>
+    </style>
+
+    <style name="BottomNavigationTextStyle" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="BottomNavigationTextStyleActive" parent="BottomNavigationTextStyle">
+        <item name="android:textColor">@color/selected_color</item>
+    </style>
+
+    <style name="BottomNavigationTextStyleInactive" parent="BottomNavigationTextStyle">
+        <item name="android:textColor">@color/gray_faded</item>
+    </style>
+
+    <style name="ChipTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="android:textColor">@color/white</item>
+        <item name="chipBackgroundColor">@color/dark_faded</item>
+
+    </style>
 
 </resources>

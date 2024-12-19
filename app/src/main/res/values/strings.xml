@@ -7,7 +7,7 @@
     <string name="welcome_to_movieCatalog">Добро пожаловать в MovieCatalog</string>
     <string name="registration">Зарегистрироваться</string>
     <string name="enter_to_account">Вход в аккаунт</string>
-    <string name="backgraound_movies">backgraound_movies</string>
+    <string name="background_movies">backgraound_movies</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="email">Электронная почта</string>
@@ -32,4 +32,11 @@
     <string name="button_description">Вернуться к главному меню</string>
     <string name="error_valid">Неправильно введены данные</string>
     <string name="error_default">Неизвестная ошибка</string>
+    <string name="feed_title">Лента</string>
+    <string name="movie_title">Фильмы</string>
+    <string name="favorite_title">Избранное</string>
+    <string name="profile_title">Профиль</string>
+    <string name="point">•</string>
+    <string name="filmdescription">Опции</string>
+    <string name="signup">Регистрация</string>
 </resources>
