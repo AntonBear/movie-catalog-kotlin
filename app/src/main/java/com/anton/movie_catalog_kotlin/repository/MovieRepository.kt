@@ -3,6 +3,7 @@ package com.anton.movie_catalog_kotlin.repository
 import android.util.Log
 //import com.anton.movie_catalog_kotlin.models.ImageSource
 import com.anton.movie_catalog_kotlin.models.MovieDetails
+import com.anton.movie_catalog_kotlin.models.MovieDetailsModel
 import com.anton.movie_catalog_kotlin.models.MovieElementModel
 import com.anton.movie_catalog_kotlin.models.MoviesPagedListModel
 import com.anton.movie_catalog_kotlin.networking.MovieCatalogApi
@@ -13,6 +14,7 @@ interface MovieRepository {
     suspend fun fetchMovies(page: Int): Result<MoviesPagedListModel>
     suspend fun getMovies(page: Int): List<MovieElementModel>
     suspend fun getRandomMoviePosterWithDetails(): MovieDetails
+    suspend fun getMoviesDetails(id: String): Result<MovieDetailsModel>
 }
 
 class MovieRepositoryImpl(private val movieCatalogApi: MovieCatalogApi) : MovieRepository {
@@ -68,9 +70,36 @@ class MovieRepositoryImpl(private val movieCatalogApi: MovieCatalogApi) : MovieR
             },
             onFailure = {
                 Log.e("MovieRepository", "Error fetching movies: $it")
-                return@fold MovieDetails(id = " ", name = " ", poster = "" , year = 0, country = "", genres = emptyList())
+                return@fold MovieDetails(
+                    id = " ",
+                    name = " ",
+                    poster = "",
+                    year = 0,
+                    country = "",
+                    genres = emptyList()
+                )
             }
         )
+    }
+
+    override suspend fun getMoviesDetails(id: String): Result<MovieDetailsModel> {
+        return try {
+            val response: Response<MovieDetailsModel> = movieCatalogApi.getDetails(id)
+            when {
+                response.isSuccessful -> {
+                    val movieDetails = response.body()
+                    if (movieDetails != null) {
+                        Result.success(movieDetails)
+                    } else {
+                        Result.failure(Exception("Null response body"))
+                    }
+                }
+
+                else -> Result.failure(Exception("HTTP error ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }
 

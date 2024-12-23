@@ -22,7 +22,7 @@ class UserAuthRepositoryImpl(
     }
 
     override suspend fun signIn(loginRequest: LoginRequest) {
-        val response = movieCatalogApi.login(loginRequest)
+        val response = movieCatalogApi.signIn(loginRequest)
         handleResponse(response, "Login") { it.token }
     }
 

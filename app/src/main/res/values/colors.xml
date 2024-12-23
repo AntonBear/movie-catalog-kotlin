@@ -13,5 +13,8 @@
     <color name="backgroundColor">#1e1e1e</color>
     <color name="selected_color">#DF2800</color>
     <color name="gray_faded">#999999</color>
+    <color name="start_orange_gradient">#DF2800</color>
+    <color name="end_orange_gradient">#FF6633</color>
+
 </resources>
 

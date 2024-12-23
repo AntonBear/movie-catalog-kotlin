@@ -2,6 +2,7 @@ package com.anton.movie_catalog_kotlin.networking
 
 import com.anton.movie_catalog_kotlin.models.LoginResponse
 import com.anton.movie_catalog_kotlin.models.MovieDetails
+import com.anton.movie_catalog_kotlin.models.MovieDetailsModel
 import com.anton.movie_catalog_kotlin.models.MoviesPagedListModel
 import com.anton.movie_catalog_kotlin.models.SignUpRequest
 import models.LoginRequest
@@ -16,12 +17,12 @@ interface MovieCatalogApi {
     suspend fun signUp(@Body signUpRequest: SignUpRequest): Response<LoginResponse>
 
     @POST("api/account/login")
-    suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
+    suspend fun signIn(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
     @GET("/api/movies/{page}")
     suspend fun getMovies(@Path("page") page: Int): Response<MoviesPagedListModel>
 
     @GET("/api/movies/details/{id}")
-    suspend fun getDetails(@Path("id") id: Int): Response<MovieDetails>
+    suspend fun getDetails(@Path("id") id: String): Response<MovieDetailsModel>
 }
 

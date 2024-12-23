@@ -5,7 +5,7 @@ import com.anton.movie_catalog_kotlin.MovieCatalogApplication
 import com.anton.movie_catalog_kotlin.storage.SecureTokenStorage
 import com.anton.movie_catalog_kotlin.storage.TokenStorage
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
+
 
 object ApiClients {
     private val applicationContext: Context
@@ -18,25 +18,18 @@ object ApiClients {
     val kinopoiskOkHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .addInterceptor { chain ->
-                val apiKey = tokenStorage.getApiKey()
-                val headerValue = apiKey ?: "default_api_key"
                 val original = chain.request()
                 val request = original.newBuilder()
-                    .header("X-API-KEY", headerValue)
+                    .header("X-API-KEY", "5673684a-da0e-43e0-bfc9-4829489bbe4f")
                     .build()
                 chain.proceed(request)
             }
             .build()
-
     }
 
     val movieCatalogOkHttpClient: OkHttpClient by lazy {
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
         OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
+            .addInterceptor(AuthInterceptor(tokenStorage))
             .build()
-
     }
 }

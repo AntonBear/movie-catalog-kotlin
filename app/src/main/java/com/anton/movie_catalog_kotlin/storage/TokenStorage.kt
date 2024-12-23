@@ -7,6 +7,7 @@ import androidx.security.crypto.MasterKey
 interface TokenStorage {
     fun getApiKey(): String?
     fun saveApiKey(apiKey: String?)
+    fun deleteApiKey()
 }
 
 class SecureTokenStorage(context: Context): TokenStorage {
@@ -33,5 +34,9 @@ class SecureTokenStorage(context: Context): TokenStorage {
 
     override fun saveApiKey(apiKey: String?) {
         prefs.edit().putString(KEY_API_AUTH_TOKEN, apiKey).apply()
+    }
+
+    override fun deleteApiKey() {
+        prefs.edit().remove(KEY_API_AUTH_TOKEN).apply()
     }
 }

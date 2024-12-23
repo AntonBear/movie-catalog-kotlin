@@ -7,20 +7,19 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        style="@style/BottomNavigationView.NoShiftMode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_black"
-        app:itemTextAppearanceActive="@style/BottomNavigationTextStyleActive"
-        app:itemTextAppearanceInactive="@style/BottomNavigationTextStyleInactive"
-        app:labelVisibilityMode="labeled"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconSize="80dp"
+       />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"

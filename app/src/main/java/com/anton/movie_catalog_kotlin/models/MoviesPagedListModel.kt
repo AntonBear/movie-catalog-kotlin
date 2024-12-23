@@ -18,21 +18,4 @@ data class MovieElementModel(
     val reviews: List<ReviewShortModel> = emptyList()
 )
 
-@Serializable
-data class GenreModel(
-    val id: String,
-    val name: String
-)
 
-@Serializable
-data class ReviewShortModel(
-    val id: String,
-    val rating: Int
-)
-
-@Serializable
-data class PageInfoModel(
-    val pageSize: Int,
-    val pageCount: Int,
-    val currentPage: Int
-)

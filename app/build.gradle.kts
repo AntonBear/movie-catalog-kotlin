@@ -54,15 +54,24 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            merges += "META-INF/LICENSE.md"
+            merges += "META-INF/LICENSE-notice.md"
         }
     }
+
 }
 
 dependencies {
+    debugImplementation(libs.mockk)
+    implementation (libs.flexbox)
     implementation(libs.androidx.core.splashscreen)
     implementation (libs.androidx.navigation.fragment.compose)
     implementation (libs.glide)
+    implementation(libs.androidx.navigation.ui.ktx)
     implementation (libs.androidx.viewpager2)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.fragment.ktx)
     kapt (libs.compiler)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -86,7 +95,6 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.material)
     implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

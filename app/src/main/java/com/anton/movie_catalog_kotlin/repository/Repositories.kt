@@ -22,4 +22,8 @@ object Repositories {
     val movieRepository: MovieRepository by lazy {
         MovieRepositoryImpl(ApiServices.movieCatalogApi)
     }
+
+    val kinopoiskRepository: KinopoiskRepository by lazy {
+        KinopoiskRepositoryImpl(ApiServices.kinopoiskApi)
+    }
 }

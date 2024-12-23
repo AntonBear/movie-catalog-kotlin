@@ -9,10 +9,6 @@
         android:name="com.anton.movie_catalog_kotlin.feedScreenFragment.FeedScreenFragment"
         android:label="fragment_blank"
         tools:layout="@layout/fragment_feed_screen">
-        <action
-            android:id="@+id/action_feed_screen_to_movie_details_screen"
-            app:destination="@id/movie_details_screen" />
-
     </fragment>
 
     <fragment
@@ -22,12 +18,9 @@
         tools:layout="@layout/fragment_movies_screen" />
 
     <composable
-        android:id="@+id/movie_details_screen"
-        android:name="com.anton.movie_catalog_kotlin.movieDetailsScreen.MovieDetailsScreenKt\$MovieDetailsScreen" />
-
-    <composable
         android:id="@+id/compose_favorites_fragment"
-        android:name="com.anton.movie_catalog_kotlin.favoritesScreen.FavoritesScreenKt\$FavoritesScreen" />
+        android:name="com.anton.movie_catalog_kotlin.favoritesScreen.FavoritesScreenKt\$FavoritesScreen">
+    </composable>
 
     <fragment
         android:id="@+id/fragment_profile_screen"
