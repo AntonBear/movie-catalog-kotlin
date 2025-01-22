@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import coil.load
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.FragmentFeedScreenBinding
 import com.anton.movie_catalog_kotlin.movieDetailsScreen.MovieDetailsActivity
@@ -31,52 +32,47 @@ class FeedScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
         viewModel.loadData()
 
-        viewModel.country.observe(viewLifecycleOwner) { country ->
-            viewModel.year.observe(viewLifecycleOwner) { year ->
-                val countryYearText = SpannableString("$country • $year")
+        viewModel.movieData.observe(viewLifecycleOwner) { movieDetails ->
+            movieDetails?.let {
+                binding.movieTitle.text = it.name
+                val countryYearText = SpannableString("${it.country.split(",").firstOrNull()?.trim()} • ${it.year}")
                 binding.movieCountryYear.text = countryYearText
-            }
-        }
+                binding.moviePoster.load(it.poster)
 
-        viewModel.movieId.observe(viewLifecycleOwner) { movieId ->
-            binding.moviePoster.setOnClickListener {
-                movieId?.let {
+                updateChips(it.genres)
+
+                binding.moviePoster.setOnClickListener { _ ->
                     val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
-                    intent.putExtra("id", it)
+                    intent.putExtra("id", it.id)
                     startActivity(intent)
                 }
             }
         }
+    }
 
-        val flexbox = binding.flexbox
-        viewModel.genres.observe(viewLifecycleOwner) { genresList ->
-            binding.flexbox.removeAllViews()
-            genresList?.forEachIndexed { index, genre ->
-                if (index < 3) {
-                    val chip = Chip(requireContext(), null).apply {
-                        text = genre
-                        shapeAppearanceModel = shapeAppearanceModel.toBuilder()
-                            .setAllCornerSizes(resources.getDimension(R.dimen.chip_corner_radius))
-                            .build()
-                        setChipBackgroundColorResource(R.color.dark_faded)
-                        setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                        val layoutParams = ViewGroup.MarginLayoutParams(
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
-                        ).apply {
-                            marginStart = resources.getDimensionPixelSize(R.dimen.chip_margin)
-                            marginEnd = resources.getDimensionPixelSize(R.dimen.chip_margin)
-                        }
-                        this.layoutParams = layoutParams
-                    }
-                    flexbox.addView(chip)
+    private fun updateChips(genres: List<String>?) {
+        binding.flexbox.removeAllViews()
+        genres?.take(3)?.forEach { genre ->
+            val chip = Chip(requireContext()).apply {
+                text = genre
+                shapeAppearanceModel = shapeAppearanceModel.toBuilder()
+                    .setAllCornerSizes(resources.getDimension(R.dimen.chip_corner_radius))
+                    .build()
+                setChipBackgroundColorResource(R.color.dark_faded)
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+
+                val layoutParams = ViewGroup.MarginLayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    marginStart = resources.getDimensionPixelSize(R.dimen.chip_margin)
+                    marginEnd = resources.getDimensionPixelSize(R.dimen.chip_margin)
                 }
+                this.layoutParams = layoutParams
             }
+            binding.flexbox.addView(chip)
         }
     }
 

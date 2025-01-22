@@ -42,7 +42,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="8dp"
             app:cardCornerRadius="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/movieName"
+            app:layout_constraintBottom_toTopOf="@+id/movieTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,24 +51,22 @@
             <ImageView
                 android:id="@+id/moviePoster"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:clickable="true"
                 android:contentDescription="@string/filmdescription"
                 android:focusable="true"
-                android:scaleType="centerCrop"
-                app:imageUrl="@{viewModel.imageUrl}" />
+                android:scaleType="centerCrop" />
 
         </com.google.android.material.card.MaterialCardView>
 
 
         <TextView
-            android:id="@+id/movieName"
+            android:id="@+id/movieTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/manrope_bold"
-            android:text="@{viewModel.name}"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="24sp"
@@ -104,7 +102,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movieName">
+            app:layout_constraintTop_toBottomOf="@+id/movieTitle">
 
         </com.google.android.flexbox.FlexboxLayout>
 
