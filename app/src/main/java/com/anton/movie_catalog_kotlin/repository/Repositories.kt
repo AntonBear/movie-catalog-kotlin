@@ -26,4 +26,9 @@ object Repositories {
     val kinopoiskRepository: KinopoiskRepository by lazy {
         KinopoiskRepositoryImpl(ApiServices.kinopoiskApi)
     }
+
+    val reviewRepository: ReviewRepository by lazy {
+        ReviewRepositoryImpl(ApiServices.movieCatalogApi)
+    }
+
 }

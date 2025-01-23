@@ -1,7 +1,5 @@
 package com.anton.movie_catalog_kotlin.movieDetailsScreen
 
-import com.anton.movie_catalog_kotlin.models.FilmDetails
-import com.anton.movie_catalog_kotlin.models.MovieDetailsModel
 
 
 sealed class MovieDetailsUiState {

@@ -22,13 +22,12 @@ fun GradientText(text: String, desc: String) {
         listOf(colorResource(id = R.color.start_orange_gradient), colorResource(id = R.color.end_orange_gradient))
     )
 
-    Box(
-        modifier = Modifier
-            .padding(16.dp)
-            .background(gradient, RoundedCornerShape(8.dp))
-            .padding(8.dp)
-    ) {
-        Column {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .background(gradient, RoundedCornerShape(8.dp))
+                .padding(8.dp)
+        ) {
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyLarge,
@@ -43,4 +42,3 @@ fun GradientText(text: String, desc: String) {
             )
         }
     }
-}

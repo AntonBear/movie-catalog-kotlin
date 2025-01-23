@@ -39,4 +39,8 @@
     <string name="point">•</string>
     <string name="filmdescription">Опции</string>
     <string name="signup">Регистрация</string>
+    <string name="anonymous_review">Анонимный отзыв</string>
+    <string name="mark">Оценка</string>
+    <string name="change_review">Изменить отзыв</string>
+    <string name="send_review">Добавить отзыв</string>
 </resources>

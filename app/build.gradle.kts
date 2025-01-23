@@ -62,6 +62,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.ui.test.android)
+    implementation(libs.androidx.runtime.livedata)
     debugImplementation(libs.mockk)
     implementation (libs.flexbox)
     implementation(libs.androidx.core.splashscreen)
