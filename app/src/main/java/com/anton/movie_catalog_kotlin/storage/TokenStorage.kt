@@ -5,9 +5,9 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 
 interface TokenStorage {
-    fun getApiKey(): String?
-    fun saveApiKey(apiKey: String?)
-    fun deleteApiKey()
+    fun getToken(): String?
+    fun saveToken(apiKey: String?)
+    fun deleteToken()
 }
 
 class SecureTokenStorage(context: Context): TokenStorage {
@@ -30,13 +30,13 @@ class SecureTokenStorage(context: Context): TokenStorage {
         ) as EncryptedSharedPreferences
     }
 
-    override fun getApiKey(): String? = prefs.getString(KEY_API_AUTH_TOKEN, null)
+    override fun getToken(): String? = prefs.getString(KEY_API_AUTH_TOKEN, null)
 
-    override fun saveApiKey(apiKey: String?) {
+    override fun saveToken(apiKey: String?) {
         prefs.edit().putString(KEY_API_AUTH_TOKEN, apiKey).apply()
     }
 
-    override fun deleteApiKey() {
+    override fun deleteToken() {
         prefs.edit().remove(KEY_API_AUTH_TOKEN).apply()
     }
 }

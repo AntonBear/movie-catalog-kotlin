@@ -37,6 +37,8 @@ class MovieDetailsViewModel(
     private val reviewRepository: ReviewRepository
 ) : ViewModel() {
 
+
+
     private val _uiState = MutableStateFlow<MovieDetailsUiState>(MovieDetailsUiState.Loading)
     val uiState: StateFlow<MovieDetailsUiState> = _uiState
 
@@ -44,16 +46,25 @@ class MovieDetailsViewModel(
     private val _isAnonChecked = MutableStateFlow(false)
     val isAnonChecked = _isAnonChecked.asStateFlow()
 
+    private val _text = MutableStateFlow("")
+    val text: StateFlow<String> = _text
+    fun updateText(newText: String) {
+        _text.value = newText
+        println(_text.value)
+    }
+
+
     fun onAnonCheckedChange(isChecked: Boolean) {
         _isAnonChecked.value = isChecked
         println(_isAnonChecked.value)
     }
-    private val _rating = MutableLiveData(1)
-    val rating: LiveData<Int> = _rating
+    private val _rating = MutableStateFlow(1)
+    val rating: StateFlow<Int> = _rating
 
     fun updateRating(newRating: Int) {
         _rating.value = newRating
         println(_rating.value)
+        println(movieId)
     }
 
 
@@ -62,9 +73,12 @@ class MovieDetailsViewModel(
             loadMovieDetails(movieId)
         }
     }
-    fun onSendReview(movieId: String, reviewText: String, rating: Int, isAnonymous: Boolean) {
+    fun onSendReview() {
         viewModelScope.launch {
             try {
+                val reviewText = _text.value
+                val rating = _rating.value
+                val isAnonymous = _isAnonChecked.value
                 val postReviewBody = ReviewModifyModel(reviewText, rating, isAnonymous)
                 reviewRepository.postReview(movieId, postReviewBody)
             }

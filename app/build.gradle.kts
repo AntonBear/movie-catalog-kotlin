@@ -62,6 +62,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.toolbar.compose)
     implementation(libs.androidx.ui.test.android)
     implementation(libs.androidx.runtime.livedata)
     debugImplementation(libs.mockk)

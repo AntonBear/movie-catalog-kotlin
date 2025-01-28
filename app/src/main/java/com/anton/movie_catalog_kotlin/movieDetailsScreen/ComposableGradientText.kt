@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.anton.movie_catalog_kotlin.R
 
 @Composable
-fun GradientText(text: String, desc: String) {
+fun GradientText(text: String, desc: String, modifier:Modifier = Modifier) {
     val gradient = Brush.horizontalGradient(
         listOf(colorResource(id = R.color.start_orange_gradient), colorResource(id = R.color.end_orange_gradient))
     )

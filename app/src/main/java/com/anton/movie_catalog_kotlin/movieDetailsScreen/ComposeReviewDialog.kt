@@ -53,10 +53,11 @@ fun ReviewDialog(
     onDismiss: () -> Unit,
     onAnonymousChange: (Boolean) -> Unit
 ) {
-    var reviewText by remember { mutableStateOf("") }
-    val rating by viewModel.rating.observeAsState(5)
 
-    val isAnonymous by viewModel.isAnonChecked.collectAsState(false)
+
+    val rating by viewModel.rating.collectAsState()
+    val isAnonymous by viewModel.isAnonChecked.collectAsState()
+    val text by viewModel.text.collectAsState()
 
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -102,8 +103,8 @@ fun ReviewDialog(
                 }
 
                 TextField(
-                    value = reviewText,
-                    onValueChange = { reviewText = it },
+                    value = text,
+                    onValueChange = { viewModel.updateText(it) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .size(150.dp),
@@ -147,7 +148,7 @@ fun ReviewDialog(
                 Button(
                     onClick = {
                         coroutineScope.launch {
-                            viewModel.onSendReview(movieId, reviewText, rating, isAnonymous)
+                            viewModel.onSendReview()
                             Log.d("ButtonClick", "кнопка нажата")
                             onDismiss()
                         }

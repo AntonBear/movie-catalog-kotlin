@@ -46,6 +46,7 @@ class FeedScreenFragment : Fragment() {
                 binding.moviePoster.setOnClickListener { _ ->
                     val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
                     intent.putExtra("id", it.id)
+//                    intent.putExtra("id", "b6c5228b-91fb-43a1-a2ac-08d9b9f3d2a2")
                     startActivity(intent)
                 }
             }

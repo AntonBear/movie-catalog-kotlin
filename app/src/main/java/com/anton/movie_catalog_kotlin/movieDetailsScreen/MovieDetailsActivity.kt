@@ -15,7 +15,6 @@ class MovieDetailsActivity : ComponentActivity() {
     private val movieId: String by lazy {
         intent?.getStringExtra("id") ?: ""
     }
-//    private val viewModel: MovieDetailsViewModel by viewModels { MovieDetailsViewModel.Factory }
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {

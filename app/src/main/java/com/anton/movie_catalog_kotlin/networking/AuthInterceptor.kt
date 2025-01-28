@@ -17,7 +17,7 @@ class AuthInterceptor(private val tokenStorage: TokenStorage) : Interceptor {
         val response = chain.proceed(original)
 
         if (response.code == 401) {
-            tokenStorage.deleteApiKey()
+            tokenStorage.deleteToken()
             _unauthorizedError.tryEmit(Unit)
         }
 

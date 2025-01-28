@@ -33,7 +33,7 @@ class UserAuthRepositoryImpl(
     ) {
         if (response.isSuccessful) {
             response.body()?.let {
-                tokenStorage.saveApiKey(tokenExtractor(it))
+                tokenStorage.saveToken(tokenExtractor(it))
             } ?: throw Exception("$operation successful, but response body is null")
         } else {
             throw Exception("$operation failed: ${response.code()}")
