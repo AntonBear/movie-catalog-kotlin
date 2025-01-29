@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -46,9 +47,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.repository.Repositories
-import me.onebone.toolbar.CollapsingToolbarScaffold
-import me.onebone.toolbar.ScrollStrategy
-import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -84,7 +82,6 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
         is MovieDetailsUiState.Success -> {
             val movieDetails = state.data.movieDetails
             val kinopoiskDetails = state.data.filmDetails
-            val state = rememberCollapsingToolbarScaffoldState()
             var gradientTextVisible by remember { mutableStateOf(true) }
             var toolbarText by remember {
                 mutableStateOf(
@@ -105,81 +102,90 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
 
             }
 
-            CollapsingToolbarScaffold(
-                modifier = Modifier,
-                state = state,
-                scrollStrategy = ScrollStrategy.ExitUntilCollapsed,
-                toolbar = {
+            Scaffold(
+                topBar = {
+                    Box(modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp )
+                    ) {
+                        kinopoiskDetails?.posterUrl?.let { posterUrl ->
+                            AsyncImage(
+                                model = posterUrl,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(500.dp)
+                                    .clip(RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)),
+                                contentScale = ContentScale.Crop,
+                                alignment = Alignment.TopCenter
+                            )
+                        }
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                            .pin(),
-                        horizontalArrangement = Arrangement.Start,
-                        verticalAlignment = Alignment.CenterVertically
-                    )
-                    {
-
-
-                        SvgButtonBack(
-                            R.drawable.ic_chevron_left,
-                            onClick = {
-                                onBackClick()
-                                Log.d(
-                                    "MovieDetailsScreen",
-                                    "Кнопка \"Назад\" нажата! Movie ID: $movieId"
-                                )
-                            },
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
-
-                        Text(
-                            text = "toolbarText",
-                            style = MaterialTheme.typography.bodySmall,
+                        Row(
                             modifier = Modifier
-//                             .offset(x = 30.dp, y = 100.dp)
-                                .road(
-                                    whenCollapsed = Alignment.TopStart,
-                                    whenExpanded = Alignment.BottomStart
-                                ),
-                            color = Color.Blue,
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1
+                                .fillMaxWidth()
+                                .height(60.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         )
+                        {
 
-                        ComposeButtonLike(
-                            R.drawable.ic_like,
-                            onClick = {
-                                Log.d(
-                                    "MovieDetailsScreen",
-                                    "Кнопка \"Лайк\" нажата! Movie ID: $movieId"
-                                )
-                            },
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
+                            SvgButtonBack(
+                                R.drawable.ic_chevron_left,
+                                onClick = {
+                                    onBackClick()
+                                    Log.d(
+                                        "MovieDetailsScreen",
+                                        "Кнопка \"Назад\" нажата! Movie ID: $movieId"
+                                    )
+                                },
+                                modifier = Modifier.padding(horizontal = 8.dp)
+                            )
+
+                            Text(
+                                text = "toolbarText",
+                                style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier,
+                                color = Color.Blue,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1
+                            )
+
+                            ComposeButtonLike(
+                                R.drawable.ic_like,
+                                onClick = {
+                                    Log.d(
+                                        "MovieDetailsScreen",
+                                        "Кнопка \"Лайк\" нажата! Movie ID: $movieId"
+                                    )
+                                },
+                                modifier = Modifier.padding(horizontal = 8.dp)
+                            )
+                        }
                     }
                 }
 
 
-            ) {
 
-                Box(modifier = Modifier
-                    .fillMaxSize()
+            ) { innerPadding ->
+
+
+            Box(modifier = Modifier
                     .background(color = colorResource(R.color.dark))
                     .onGloballyPositioned { coordinates ->
                         windowHeightPx = coordinates.size.height
                         println(windowHeightPx)
                     }
-                    .fillMaxHeight()) {
+                    ) {
                     kinopoiskDetails?.posterUrl?.let { posterUrl ->
                         AsyncImage(
                             model = posterUrl,
                             contentDescription = null,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(350.dp)
-                                .offset(y = -56.dp)
+                                .height(500.dp)
+                                .padding(innerPadding)
+                                .offset(y = -60.dp)
                                 .align(Alignment.TopCenter)
                                 .clip(RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)),
                             contentScale = ContentScale.FillWidth,
@@ -193,13 +199,9 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                     Column(
                         modifier = Modifier
                             .verticalScroll(rememberScrollState())
-                            .offset(y = -56.dp)
-                            .fillMaxSize()
-                            .fillMaxHeight()
-                            .statusBarsPadding()
-                            .background(color = Color.Transparent)
+                            .padding(innerPadding)
                     ) {
-                        Spacer(modifier = Modifier.height(300.dp))
+                        Spacer(modifier = Modifier.height(350.dp))
 
                         GradientText(
                             movieDetails?.name ?: "Название отсутствует",
@@ -218,9 +220,7 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                             }
                         )
                         LaunchedEffect(myElementCoordinates) {
-                            // Здесь обрабатываем изменения координат
                             println("Координаты изменились: $myElementCoordinates")
-                            // Ваши действия с myElementCoordinates
                         }
 
                         if (showReviewDialog) {
@@ -243,21 +243,7 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                             "Рейтинг",
                             kinopoiskDetails = kinopoiskDetails
                         )
-                        RatingField(
-                            R.drawable.ic_star,
-                            "Рейтинг",
-                            kinopoiskDetails = kinopoiskDetails
-                        )
-                        RatingField(
-                            R.drawable.ic_star,
-                            "Рейтинг",
-                            kinopoiskDetails = kinopoiskDetails
-                        )
-                        RatingField(
-                            R.drawable.ic_star,
-                            "Рейтинг",
-                            kinopoiskDetails = kinopoiskDetails
-                        )
+
 
                         ReviewField(
                             movieDetails,
