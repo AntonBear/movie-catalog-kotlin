@@ -4,19 +4,15 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -58,11 +54,13 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
             movieId,
             Repositories.movieRepository,
             Repositories.kinopoiskRepository,
-            Repositories.reviewRepository
+            Repositories.reviewRepository,
+            Repositories.favoriteMovieRepository
         )
     )
     var showReviewDialog by remember { mutableStateOf(false) }
     val uiState by viewModel.uiState.collectAsState()
+    val isMovieFavorite by viewModel.isMovieFavorite.collectAsState()
 
     when (val state = uiState) {
         is MovieDetailsUiState.Loading -> {
@@ -70,7 +68,6 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                 modifier = Modifier.wrapContentSize(Alignment.Center)
             )
         }
-
 
         is MovieDetailsUiState.Error -> {
             Text(
@@ -131,7 +128,7 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                         {
 
                             SvgButtonBack(
-                                R.drawable.ic_chevron_left,
+                                resourceId = R.drawable.ic_chevron_left,
                                 onClick = {
                                     onBackClick()
                                     Log.d(
@@ -152,14 +149,16 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                             )
 
                             ComposeButtonLike(
-                                R.drawable.ic_like,
+                                resourceId = if(isMovieFavorite) R.drawable.ic_like_able  else R.drawable.ic_like,
                                 onClick = {
+                                    viewModel.changeFavoriteMovieHandler()
                                     Log.d(
                                         "MovieDetailsScreen",
                                         "Кнопка \"Лайк\" нажата! Movie ID: $movieId"
                                     )
                                 },
-                                modifier = Modifier.padding(horizontal = 8.dp)
+                                modifier = Modifier.padding(horizontal = 8.dp),
+                                isMovieFavorite = isMovieFavorite
                             )
                         }
                     }

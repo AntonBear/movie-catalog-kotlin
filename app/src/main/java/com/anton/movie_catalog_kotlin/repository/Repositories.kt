@@ -31,4 +31,8 @@ object Repositories {
         ReviewRepositoryImpl(ApiServices.movieCatalogApi)
     }
 
+    val favoriteMovieRepository: FavoriteMovieRepository by lazy {
+        FavoriteMovieRepositoryImpl(ApiServices.movieCatalogApi)
+    }
+
 }

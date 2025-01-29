@@ -1,13 +1,12 @@
 package com.anton.movie_catalog_kotlin.movieDetailsScreen
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.anton.movie_catalog_kotlin.models.FilmDetails
 import com.anton.movie_catalog_kotlin.models.ReviewModifyModel
+import com.anton.movie_catalog_kotlin.repository.FavoriteMovieRepository
 import com.anton.movie_catalog_kotlin.repository.KinopoiskRepository
 import com.anton.movie_catalog_kotlin.repository.MovieRepository
 import com.anton.movie_catalog_kotlin.repository.ReviewRepository
@@ -18,7 +17,6 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 
 
 sealed class ErrorType {
@@ -34,10 +32,9 @@ class MovieDetailsViewModel(
     private val movieId: String,
     private val movieRepository: MovieRepository,
     private val kinopoiskRepository: KinopoiskRepository,
-    private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository,
+    private val favoriteMovieRepository: FavoriteMovieRepository
 ) : ViewModel() {
-
-
 
     private val _uiState = MutableStateFlow<MovieDetailsUiState>(MovieDetailsUiState.Loading)
     val uiState: StateFlow<MovieDetailsUiState> = _uiState
@@ -67,12 +64,68 @@ class MovieDetailsViewModel(
         println(movieId)
     }
 
-
     init {
         viewModelScope.launch {
             loadMovieDetails(movieId)
+            isMovieFavorite()
         }
     }
+
+    private val _isMovieFavorite = MutableStateFlow(false)
+    val isMovieFavorite: StateFlow<Boolean> = _isMovieFavorite.asStateFlow()
+
+    fun changeFavoriteMovieHandler() {
+        viewModelScope.launch {
+            try {
+                when (_isMovieFavorite.value) {
+                    true -> {
+                        favoriteMovieRepository.deleteFavoriteMovies(movieId)
+                        _isMovieFavorite.value = false
+                    }
+                    false -> {
+                        favoriteMovieRepository.postFavoriteMovies(movieId)
+                        _isMovieFavorite.value = true
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("MovieDetailsViewModel", "Error changing favorite status for movieId: $movieId", e)
+            }
+        }
+    }
+
+
+    private suspend fun isMovieFavorite() {
+        viewModelScope.launch {
+            try {
+                val result = favoriteMovieRepository.getFavoriteMovieIds()
+                result.onSuccess { favoriteMovieIds ->
+                    _isMovieFavorite.value = favoriteMovieIds.contains(movieId)
+                }
+                    .onFailure {
+                    Log.e("MovieDetailsViewModel", "Error loading favorite movies: ")
+                        _isMovieFavorite.value = false
+
+                }
+            }
+            catch (e:Exception) {
+                _uiState.value = when (e) {
+                    is SocketTimeoutException -> MovieDetailsUiState.Error(ErrorType.NetworkError("Kreosoft", "Connection timeout"))
+                    is IOException -> MovieDetailsUiState.Error(ErrorType.NetworkError("Kreosoft", e.message ?: "Network error"))
+                    is HttpException -> {
+                        when (e.code()) {
+                            401 -> MovieDetailsUiState.Error(ErrorType.NotAuthorizeError)
+                            404 -> MovieDetailsUiState.Error(ErrorType.NotFoundError)
+                            else -> MovieDetailsUiState.Error(ErrorType.ApiError(e.code(), e.message()))
+                        }
+                    }
+                    else -> MovieDetailsUiState.Error(ErrorType.UnknownError)
+                }
+
+            }
+        }
+    }
+
+
     fun onSendReview() {
         viewModelScope.launch {
             try {
@@ -141,12 +194,13 @@ class MovieDetailsViewModelFactory(
     private val movieId: String,
     private val movieRepository: MovieRepository,
     private val kinopoiskRepository: KinopoiskRepository,
-    private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository,
+    private val favoriteMovieRepository: FavoriteMovieRepository
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
         @Suppress("UNCHECKED_CAST")
-        return MovieDetailsViewModel(movieId, movieRepository, kinopoiskRepository, reviewRepository) as T
+        return MovieDetailsViewModel(movieId, movieRepository, kinopoiskRepository, reviewRepository, favoriteMovieRepository) as T
     }
 }

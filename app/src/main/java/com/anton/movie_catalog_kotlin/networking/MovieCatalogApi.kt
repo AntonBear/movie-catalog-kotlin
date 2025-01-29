@@ -3,6 +3,7 @@ package com.anton.movie_catalog_kotlin.networking
 import com.anton.movie_catalog_kotlin.models.LoginResponse
 import com.anton.movie_catalog_kotlin.models.MovieDetails
 import com.anton.movie_catalog_kotlin.models.MovieDetailsModel
+import com.anton.movie_catalog_kotlin.models.MovieListModel
 import com.anton.movie_catalog_kotlin.models.MoviesPagedListModel
 import com.anton.movie_catalog_kotlin.models.ProfileModel
 import com.anton.movie_catalog_kotlin.models.ReviewModel
@@ -53,6 +54,15 @@ interface MovieCatalogApi {
 
     @PUT("api/account/profile")
     suspend fun putProfile(@Body body: ProfileModel)
+
+    @GET("api/favorites")
+    suspend fun getFavoriteMovies(): Response<MovieListModel>
+
+    @POST("api/favorites/{id}/add")
+    suspend fun postFavoriteMovies(@Path("id") movieId: String)
+
+    @DELETE("api/favorites/{id}/delete")
+    suspend fun deleteFavoriteMovies(@Path("id") movieId: String)
 
 
 }
