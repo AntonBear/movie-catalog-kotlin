@@ -242,6 +242,10 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                             "Рейтинг",
                             kinopoiskDetails = kinopoiskDetails
                         )
+                        ComposeInfoField(   R.drawable.ic_info,
+                            "Информация",
+                            kinopoiskDetails = kinopoiskDetails,
+                            movieDetails = movieDetails)
 
 
                         ReviewField(
