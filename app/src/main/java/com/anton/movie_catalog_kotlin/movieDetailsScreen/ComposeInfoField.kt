@@ -1,0 +1,4 @@
+package com.anton.movie_catalog_kotlin.movieDetailsScreen
+
+class ComposeInfoField {
+}
