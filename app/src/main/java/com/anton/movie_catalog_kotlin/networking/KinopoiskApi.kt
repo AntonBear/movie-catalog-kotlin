@@ -2,6 +2,7 @@ package com.anton.movie_catalog_kotlin.networking
 
 import com.anton.movie_catalog_kotlin.models.FilmDetails
 import com.anton.movie_catalog_kotlin.models.MovieSearchModel
+import com.anton.movie_catalog_kotlin.models.PersonListModel
 import com.anton.movie_catalog_kotlin.models.Staff
 import retrofit2.Response
 import retrofit2.http.GET
@@ -15,6 +16,10 @@ interface KinopoiskApi {
 
     @GET("/api/v2.2/films/{id}")
     suspend fun getFilmDetails(@Path("id") id: Int): Response<FilmDetails>
+
+
+    @GET("/api/v1/persons")
+    suspend fun getPersonList(@Query("name") name: String): Response<PersonListModel>
 
 }
 

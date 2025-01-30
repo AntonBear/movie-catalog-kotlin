@@ -11,19 +11,20 @@ interface ProfileRepository {
 
 }
 
-class ProfileRepositoryImpl(private val movieCatalogApi: MovieCatalogApi):
+class ProfileRepositoryImpl(private val movieCatalogApi: MovieCatalogApi) :
     ProfileRepository {
     override suspend fun getProfile() {
-            try {
-                movieCatalogApi.getProfile()
-            } catch (e:Exception) {
-                Log.e("getProfile", "$e")
-            }
+        try {
+            movieCatalogApi.getProfile()
+        } catch (e: Exception) {
+            Log.e("getProfile", "$e")
+        }
     }
-    override  suspend fun putProfile(body: ProfileModel) {
+
+    override suspend fun putProfile(body: ProfileModel) {
         try {
             movieCatalogApi.putProfile(body)
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             Log.e("putProfile", "$e")
         }
     }

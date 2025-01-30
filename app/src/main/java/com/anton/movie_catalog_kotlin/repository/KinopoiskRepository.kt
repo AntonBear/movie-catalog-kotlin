@@ -2,6 +2,8 @@ package com.anton.movie_catalog_kotlin.repository
 
 import com.anton.movie_catalog_kotlin.models.FilmDetails
 import com.anton.movie_catalog_kotlin.models.MovieSearchModel
+import com.anton.movie_catalog_kotlin.models.PersonItem
+import com.anton.movie_catalog_kotlin.models.PersonListModel
 import com.anton.movie_catalog_kotlin.networking.KinopoiskApi
 import retrofit2.Response
 
@@ -9,10 +11,34 @@ import retrofit2.Response
 interface KinopoiskRepository {
     suspend fun fetchKinopoiskMoviesByKeyword(keyword: String) : Result<MovieSearchModel>
     suspend fun getFilmDetails(id: Int): Result<FilmDetails>
+    suspend fun getPersonItem(name: String): Result<PersonItem>
+
 
 }
 
 class KinopoiskRepositoryImpl(private val kinopoiskApi: KinopoiskApi): KinopoiskRepository {
+
+
+    override suspend fun getPersonItem(name: String): Result<PersonItem> {
+
+        return try {
+            val response: Response<PersonListModel> = kinopoiskApi.getPersonList(name)
+
+                if (response.isSuccessful)  {
+                    response.body()?.let { personList ->
+                        val personItem = personList.items.getOrNull(0) ?:
+                        return Result.failure(Exception("No person found for name: $name"))
+                        Result.success(personItem)
+                    } ?: Result.failure(Exception("Null response body for name: $name"))
+                } else { Result.failure(Exception("HTTP error ${response.code()}"))}
+
+        } catch(e:Exception) {
+            Result.failure(Exception("Network error: ${e.message} for name: $name"))
+
+        }
+    }
+
+
     override suspend fun fetchKinopoiskMoviesByKeyword(keyword: String): Result<MovieSearchModel> {
         return try {
             val response: Response<MovieSearchModel> = kinopoiskApi.searchMovies(keyword)

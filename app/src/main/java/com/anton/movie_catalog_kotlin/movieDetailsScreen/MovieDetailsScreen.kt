@@ -4,6 +4,9 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +38,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -55,7 +59,8 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
             Repositories.movieRepository,
             Repositories.kinopoiskRepository,
             Repositories.reviewRepository,
-            Repositories.favoriteMovieRepository
+            Repositories.favoriteMovieRepository,
+            Repositories.profileRepository
         )
     )
     var showReviewDialog by remember { mutableStateOf(false) }
@@ -80,24 +85,14 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
             val movieDetails = state.data.movieDetails
             val kinopoiskDetails = state.data.filmDetails
             var gradientTextVisible by remember { mutableStateOf(true) }
-            var toolbarText by remember {
-                mutableStateOf(
-                    movieDetails?.name ?: "Название отсутствует"
-                )
-            }
             var windowHeightPx by remember { mutableStateOf(0) }
-            var myElementCoordinates by remember { mutableStateOf<Offset?>(null) }
+            val listState = rememberScrollState()
+            var currentTopBarTitle by remember { mutableStateOf(movieDetails?.name ?: "") }
+            var myElementCoordinates by remember { mutableStateOf(Offset.Zero) }
+            var offset by remember { mutableStateOf(0f) }
 
+            val imageURL = viewModel.directorPoster.collectAsState()
 
-            LaunchedEffect(gradientTextVisible) {
-                toolbarText = if (gradientTextVisible) {
-                    ""
-                } else {
-                    movieDetails?.name ?: "Название отсутствует"
-                }
-                println("gradientTextVisible changed: $gradientTextVisible")
-
-            }
 
             Scaffold(
                 topBar = {
@@ -140,7 +135,7 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                             )
 
                             Text(
-                                text = "toolbarText",
+                                text =  currentTopBarTitle,
                                 style = MaterialTheme.typography.bodySmall,
                                 modifier = Modifier,
                                 color = Color.Blue,
@@ -195,32 +190,47 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                     }
 
 
-                    Column(
+                Column(
                         modifier = Modifier
-                            .verticalScroll(rememberScrollState())
+
                             .padding(innerPadding)
+//                            .scrollable(
+//                                orientation = Orientation.Vertical,
+//                                state = rememberScrollableState { delta ->
+//                                    offset += delta
+//                                    delta
+//                                }
+//                            )
+                            .verticalScroll(listState)
                     ) {
-                        Spacer(modifier = Modifier.height(350.dp))
+
+
+                    Spacer(modifier = Modifier.height(350.dp))
+                        val configuration = LocalConfiguration.current
+                        val screenHeightPx = configuration.screenHeightDp
+
 
                         GradientText(
                             movieDetails?.name ?: "Название отсутствует",
                             kinopoiskDetails?.slogan ?: "Слоган отсутствует",
                             modifier = Modifier.onGloballyPositioned { coordinates ->
                                 myElementCoordinates = coordinates.localToWindow(Offset.Zero)
-
-                                if (windowHeightPx > 0) {
-                                    println(coordinates.localToWindow(Offset.Zero))
-                                    val visible =
-                                        coordinates.localToWindow(Offset.Zero).y + coordinates.size.height < windowHeightPx && coordinates.localToWindow(
-                                            Offset.Zero
-                                        ).y > 0
-                                    gradientTextVisible = visible
-                                }
-                            }
+                                val visible = myElementCoordinates.y + coordinates.size.height < screenHeightPx + listState.value
+                                gradientTextVisible = visible
+                                println("Visible: $visible, Coordinates: $myElementCoordinates, Height: ${coordinates.size.height}, WindowHeight: $windowHeightPx, ScrollOffset: ${listState.value}")
+                            },
+                            offset = offset,
                         )
-                        LaunchedEffect(myElementCoordinates) {
-                            println("Координаты изменились: $myElementCoordinates")
+
+                        LaunchedEffect(offset){
+                            println("Offset: $offset")
                         }
+
+
+                        LaunchedEffect(gradientTextVisible) {
+                            currentTopBarTitle = if (!gradientTextVisible) movieDetails?.name ?: "" else ""
+                        }
+
 
                         if (showReviewDialog) {
                             ReviewDialog(
@@ -247,6 +257,7 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                             kinopoiskDetails = kinopoiskDetails,
                             movieDetails = movieDetails)
 
+                        DirectorField(iconResId = R.drawable.ic_director, text = "Режиссеёр", directorName = movieDetails?.director, imageURL = imageURL.value )
 
                         ReviewField(
                             movieDetails,
