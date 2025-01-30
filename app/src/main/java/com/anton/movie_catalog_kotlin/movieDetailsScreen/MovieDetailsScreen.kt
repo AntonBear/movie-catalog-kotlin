@@ -65,7 +65,6 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
     )
     var showReviewDialog by remember { mutableStateOf(false) }
     val uiState by viewModel.uiState.collectAsState()
-    val isMovieFavorite by viewModel.isMovieFavorite.collectAsState()
 
     when (val state = uiState) {
         is MovieDetailsUiState.Loading -> {
@@ -144,16 +143,12 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                             )
 
                             ComposeButtonLike(
-                                resourceId = if(isMovieFavorite) R.drawable.ic_like_able  else R.drawable.ic_like,
+                                resourceId = if(state.isFavorite) R.drawable.ic_like_able  else R.drawable.ic_like,
                                 onClick = {
                                     viewModel.changeFavoriteMovieHandler()
-                                    Log.d(
-                                        "MovieDetailsScreen",
-                                        "Кнопка \"Лайк\" нажата! Movie ID: $movieId"
-                                    )
                                 },
                                 modifier = Modifier.padding(horizontal = 8.dp),
-                                isMovieFavorite = isMovieFavorite
+                                isMovieFavorite = state.isFavorite
                             )
                         }
                     }
@@ -234,11 +229,8 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
 
                         if (showReviewDialog) {
                             ReviewDialog(
-                                movieId = movieId,
                                 viewModel = viewModel,
                                 onDismiss = { showReviewDialog = false },
-                                onAnonymousChange = { viewModel.onAnonCheckedChange(it) },
-
                                 )
 
                         }

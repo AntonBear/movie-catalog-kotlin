@@ -48,10 +48,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ReviewDialog(
-    movieId: String,
     viewModel: MovieDetailsViewModel,
     onDismiss: () -> Unit,
-    onAnonymousChange: (Boolean) -> Unit
 ) {
 
 
@@ -95,7 +93,7 @@ fun ReviewDialog(
 
                 Box(modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)) {
                     DividedSlider(
-                        initialValue = rating.toFloat(),
+                        initialValue = rating,
                         onRatingChanged = { newRating ->
                             viewModel.updateRating(newRating)
                         }
@@ -137,7 +135,7 @@ fun ReviewDialog(
                         color = MaterialTheme.colorScheme.primary
                     )
 
-                    GradientSwitch(checked = isAnonymous,  onCheckedChange = {isAnon -> viewModel.onAnonCheckedChange(isAnon)})
+                    GradientSwitch(checked = isAnonymous,  onCheckedChange = {isAnon -> viewModel.updateAnonChecked(isAnon)})
 
 
                 }

@@ -59,10 +59,10 @@ interface MovieCatalogApi {
     suspend fun getFavoriteMovies(): Response<MovieListModel>
 
     @POST("api/favorites/{id}/add")
-    suspend fun postFavoriteMovies(@Path("id") movieId: String)
+    suspend fun postFavoriteMovies(@Path("id") movieId: String): Response<Unit>
 
     @DELETE("api/favorites/{id}/delete")
-    suspend fun deleteFavoriteMovies(@Path("id") movieId: String)
+    suspend fun deleteFavoriteMovies(@Path("id") movieId: String): Response<Unit>
 
 
 }

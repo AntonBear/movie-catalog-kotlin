@@ -26,7 +26,7 @@ sealed class ErrorType {
     data object NotFoundError : ErrorType()
     data class ApiError(val code: Int?, val message: String) : ErrorType()
     data object NotAuthorizeError: ErrorType()
-    data object UnknownError : ErrorType()
+    data class UnknownError(val message: String) : ErrorType()
 }
 
 
@@ -40,172 +40,134 @@ class MovieDetailsViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<MovieDetailsUiState>(MovieDetailsUiState.Loading)
-    val uiState: StateFlow<MovieDetailsUiState> = _uiState
-
-
-    private val _isAnonChecked = MutableStateFlow(false)
-    val isAnonChecked = _isAnonChecked.asStateFlow()
-
-
-    private val _directorPoster = MutableStateFlow("")
-    val directorPoster: StateFlow<String> = _directorPoster
-
-    private val _text = MutableStateFlow("")
-    val text: StateFlow<String> = _text
-    fun updateText(newText: String) {
-        _text.value = newText
-        println(_text.value)
-    }
-
-
-    fun onAnonCheckedChange(isChecked: Boolean) {
-        _isAnonChecked.value = isChecked
-        println(_isAnonChecked.value)
-    }
-    private val _rating = MutableStateFlow(1)
-    val rating: StateFlow<Int> = _rating
-
-    fun updateRating(newRating: Int) {
-        _rating.value = newRating
-        println(_rating.value)
-        println(movieId)
-    }
-
-    init {
-        viewModelScope.launch {
-            loadMovieDetails(movieId)
-            isMovieFavorite()
-
-        }
-    }
-
-    private val _isMovieFavorite = MutableStateFlow(false)
-    val isMovieFavorite: StateFlow<Boolean> = _isMovieFavorite.asStateFlow()
-
+    val uiState: StateFlow<MovieDetailsUiState> = _uiState.asStateFlow()
 
     fun changeFavoriteMovieHandler() {
         viewModelScope.launch {
             try {
-                when (_isMovieFavorite.value) {
-                    true -> {
-                        favoriteMovieRepository.deleteFavoriteMovies(movieId)
-                        _isMovieFavorite.value = false
-                    }
-                    false -> {
-                        favoriteMovieRepository.postFavoriteMovies(movieId)
-                        _isMovieFavorite.value = true
-                    }
+                val currentUiState = _uiState.value
+                val newIsFavorite = when (currentUiState) {
+                    is MovieDetailsUiState.Success -> !currentUiState.isFavorite
+                    else -> return@launch
+                }
+
+                val result = if (newIsFavorite) {
+                    favoriteMovieRepository.postFavoriteMovies(movieId)
+                } else {
+                    favoriteMovieRepository.deleteFavoriteMovies(movieId)
+                }
+
+                result.onSuccess {
+                    _uiState.value = (currentUiState as? MovieDetailsUiState.Success)?.copy(isFavorite = newIsFavorite)
+                        ?: currentUiState
+                }.onFailure {
+                    _uiState.value = MovieDetailsUiState.Error(ErrorType.UnknownError(""))
                 }
             } catch (e: Exception) {
                 Log.e("MovieDetailsViewModel", "Error changing favorite status for movieId: $movieId", e)
+                _uiState.value = MovieDetailsUiState.Error(ErrorType.UnknownError(e.message ?: ""))
             }
         }
     }
 
+//    fun changeFavoriteMovieHandler() {
+//        viewModelScope.launch {
+//            try {
+//                when (_isMovieFavorite.value) {
+//                    true -> {
+//                        favoriteMovieRepository.deleteFavoriteMovies(movieId)
+//                        _isMovieFavorite.value = false
+//                    }
+//
+//                    false -> {
+//                        favoriteMovieRepository.postFavoriteMovies(movieId)
+//                        _isMovieFavorite.value = true
+//                    }
+//                }
+//            } catch (e: Exception) {
+//                Log.e(
+//                    "MovieDetailsViewModel",
+//                    "Error changing favorite status for movieId: $movieId",
+//                    e
+//                )
+//            }
+//        }
+//    }
 
-    private suspend fun getPersonItem(name: String) {
+    init {
         viewModelScope.launch {
-            try {
-                val result = kinopoiskRepository.getPersonItem(name)
-                result.onSuccess { personItem ->
-                    personItem.posterUrl?.let { posterUrl ->
-                        _directorPoster.value = posterUrl
-                    } ?: run {
-                        Log.w("GetPersonItem", "posterUrl is null for $name")
-                        _directorPoster.value = ""
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("GetPersonItem", "Error getting person item: ${e.message}", e)
-                _directorPoster.value = ""
-            }
+            loadMovieDetails(movieId)
         }
     }
 
+    private val _directorPoster = MutableStateFlow("")
+    val directorPoster: StateFlow<String> = _directorPoster.asStateFlow()
 
-    private suspend fun isMovieFavorite() {
-        viewModelScope.launch {
-            try {
-                val result = favoriteMovieRepository.getFavoriteMovieIds()
-                result.onSuccess { favoriteMovieIds ->
-                    _isMovieFavorite.value = favoriteMovieIds.contains(movieId)
-                }
-                    .onFailure {
-                    Log.e("MovieDetailsViewModel", "Error loading favorite movies: ")
-                        _isMovieFavorite.value = false
+    private val _text = MutableStateFlow("")
+    val text: StateFlow<String> = _text.asStateFlow()
 
-                }
-            }
-            catch (e:Exception) {
-                _uiState.value = when (e) {
-                    is SocketTimeoutException -> MovieDetailsUiState.Error(ErrorType.NetworkError("Kreosoft", "Connection timeout"))
-                    is IOException -> MovieDetailsUiState.Error(ErrorType.NetworkError("Kreosoft", e.message ?: "Network error"))
-                    is HttpException -> {
-                        when (e.code()) {
-                            401 -> MovieDetailsUiState.Error(ErrorType.NotAuthorizeError)
-                            404 -> MovieDetailsUiState.Error(ErrorType.NotFoundError)
-                            else -> MovieDetailsUiState.Error(ErrorType.ApiError(e.code(), e.message()))
-                        }
-                    }
-                    else -> MovieDetailsUiState.Error(ErrorType.UnknownError)
-                }
+    private val _rating = MutableStateFlow(5f)
+    val rating: StateFlow<Float> = _rating.asStateFlow()
 
-            }
-        }
+    private val _isAnonChecked = MutableStateFlow(false)
+    val isAnonChecked: StateFlow<Boolean> = _isAnonChecked.asStateFlow()
+
+    fun updateText(newText: String) {
+        _text.value = newText
     }
 
-
-    fun onSendReview() {
-        viewModelScope.launch {
-            try {
-                val reviewText = _text.value
-                val rating = _rating.value
-                val isAnonymous = _isAnonChecked.value
-                val postReviewBody = ReviewModifyModel(reviewText, rating, isAnonymous)
-                reviewRepository.postReview(movieId, postReviewBody)
-            }
-            catch (e: Exception) {
-                _uiState.value = when (e) {
-                    is SocketTimeoutException -> MovieDetailsUiState.Error(ErrorType.NetworkError("Kreosoft", "Connection timeout"))
-                    is IOException -> MovieDetailsUiState.Error(ErrorType.NetworkError("Kreosoft", e.message ?: "Network error"))
-                    is HttpException -> {
-                        when (e.code()) {
-                            401 -> MovieDetailsUiState.Error(ErrorType.NotAuthorizeError)
-                            404 -> MovieDetailsUiState.Error(ErrorType.NotFoundError)
-                            else -> MovieDetailsUiState.Error(ErrorType.ApiError(e.code(), e.message()))
-                        }
-                    }
-                    else -> MovieDetailsUiState.Error(ErrorType.UnknownError)
-                }
-            }
-        }
+    fun updateRating(newRating: Float) {
+        _rating.value = newRating
     }
 
+    fun updateAnonChecked(isChecked: Boolean) {
+        _isAnonChecked.value = isChecked
+    }
 
-    private suspend fun loadMovieDetails(movieId: String) {
+    fun loadMovieDetails(movieId: String) = viewModelScope.launch {
+        _uiState.value = MovieDetailsUiState.Loading
         try {
             val movieDetails = movieRepository.getMoviesDetails(movieId).getOrThrow()
             val kinopoiskDetails = movieDetails.name?.let { loadKinopoiskDetails(it) }
             getPersonItem(movieDetails.director ?: "")
-            _uiState.value = MovieDetailsUiState.Success(MovieDetailsCombined(movieDetails, kinopoiskDetails))
+            _uiState.value = MovieDetailsUiState.Success(
+                MovieDetailsCombined(movieDetails, kinopoiskDetails),
+                isFavorite = isMovieFavorite(movieId)
+            )
         } catch (e: Exception) {
-            _uiState.value = when (e) {
-                is SocketTimeoutException -> MovieDetailsUiState.Error(ErrorType.NetworkError("Kreosoft", "Connection timeout"))
-                is IOException -> MovieDetailsUiState.Error(ErrorType.NetworkError("Kreosoft", e.message ?: "Network error"))
-                is HttpException -> {
-                    when (e.code()) {
-                        401 -> MovieDetailsUiState.Error(ErrorType.NotAuthorizeError)
-                        404 -> MovieDetailsUiState.Error(ErrorType.NotFoundError)
-                        else -> MovieDetailsUiState.Error(ErrorType.ApiError(e.code(), e.message()))
-                    }
-                }
-                else -> MovieDetailsUiState.Error(ErrorType.UnknownError)
-            }
+            _uiState.value = handleError(e)
         }
     }
 
+    private suspend fun isMovieFavorite(movieId:String) : Boolean {
+        return try {
+            favoriteMovieRepository.getFavoriteMovieIds().getOrThrow().contains(movieId)
+        } catch (e: Exception) {
+            false
+        }
+    }
 
+    private suspend fun getPersonItem(name: String) {
+        try {
+            val result = kinopoiskRepository.getPersonItem(name).getOrThrow()
+            _directorPoster.value = result.posterUrl ?: ""
+        } catch (e: Exception) {
+            Log.e("GetPersonItem", "Error getting person item: ${e.message}", e)
+            _directorPoster.value = ""
+        }
+    }
 
+    fun onSendReview() = viewModelScope.launch {
+        try {
+            val reviewText = _text.value
+            val rating = _rating.value.toInt()
+            val isAnonymous = _isAnonChecked.value
+            val postReviewBody = ReviewModifyModel(reviewText, rating, isAnonymous)
+            reviewRepository.postReview(movieId, postReviewBody)
+        } catch (e: Exception) {
+            _uiState.value = handleError(e)
+        }
+    }
 
     private suspend fun loadKinopoiskDetails(keyword: String): FilmDetails? {
         return try {
@@ -217,6 +179,16 @@ class MovieDetailsViewModel(
             Log.e("ViewModel", "Error loading Kinopoisk details: ${e.message}", e)
             null
         }
+    }
+
+    private fun handleError(e: Exception): MovieDetailsUiState.Error = when (e) {
+        is SocketTimeoutException, is IOException -> MovieDetailsUiState.Error(ErrorType.NetworkError("Kreosoft", "Connection timeout or Network error"))
+        is HttpException -> when (e.code()) {
+            401 -> MovieDetailsUiState.Error(ErrorType.NotAuthorizeError)
+            404 -> MovieDetailsUiState.Error(ErrorType.NotFoundError)
+            else -> MovieDetailsUiState.Error(ErrorType.ApiError(e.code(), e.message()))
+        }
+        else -> MovieDetailsUiState.Error(ErrorType.UnknownError(e.message ?: "Unknown error"))
     }
 }
 

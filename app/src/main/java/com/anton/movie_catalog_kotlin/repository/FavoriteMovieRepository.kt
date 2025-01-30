@@ -4,12 +4,13 @@ import android.util.Log
 import com.anton.movie_catalog_kotlin.models.MovieDetails
 import com.anton.movie_catalog_kotlin.models.MovieListModel
 import com.anton.movie_catalog_kotlin.networking.MovieCatalogApi
+import retrofit2.HttpException
 import retrofit2.Response
 
 interface FavoriteMovieRepository {
     suspend fun getFavoriteMovies() : Result<MovieListModel>
-    suspend fun postFavoriteMovies(id: String)
-    suspend fun deleteFavoriteMovies(id: String)
+    suspend fun postFavoriteMovies(movieId: String) : Result<Unit>
+    suspend fun deleteFavoriteMovies(movieId: String) : Result<Unit>
     suspend fun getFavoriteMovieIds(): Result<Set<String>>
 }
 
@@ -48,21 +49,32 @@ class FavoriteMovieRepositoryImpl(private val movieCatalogApi: MovieCatalogApi):
         }
     }
 
-    override suspend fun postFavoriteMovies(movieId: String) {
-        try {
-            movieCatalogApi.postFavoriteMovies(movieId)
+    override suspend fun postFavoriteMovies(movieId: String) : Result<Unit> {
+        return try {
+         val response = movieCatalogApi.postFavoriteMovies(movieId)
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(HttpException(response)) }
         }
         catch(e: Exception) {
             Log.e("postFavoriteMovies", e.message.toString())
+            Result.failure(e)
         }
     }
 
-    override suspend fun deleteFavoriteMovies(id: String) {
-        try {
-            movieCatalogApi.deleteFavoriteMovies(id)
+    override suspend fun deleteFavoriteMovies(movieId: String) : Result<Unit> {
+        return try {
+            val response = movieCatalogApi.deleteFavoriteMovies(movieId)
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(HttpException(response))
+            }
         }
         catch (e:Exception) {
             Log.e("deleteFavoriteMovies", e.message.toString())
+            Result.failure(e)
         }
     }
 }

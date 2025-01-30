@@ -31,7 +31,7 @@ import kotlin.math.roundToInt
 @Composable
 fun DividedSlider(
     initialValue: Float = 5f,
-    onRatingChanged: (Int) -> Unit
+    onRatingChanged: (Float) -> Unit
 ) {
     var sliderValue by remember { mutableFloatStateOf(initialValue) }
     var sliderWidth by remember { mutableFloatStateOf(0f) }
@@ -49,7 +49,7 @@ fun DividedSlider(
             value = sliderValue,
             onValueChange = { newValue ->
                 sliderValue = newValue
-                onRatingChanged(newValue.toInt())
+                onRatingChanged(newValue)
             },
             valueRange = 0f..10f,
             steps = 10,
