@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.anton.movie_catalog_kotlin.R
 
 @Composable
-fun GradientText(text: String, desc: String, modifier:Modifier = Modifier, offset: Float) {
+fun GradientText(text: String, desc: String, modifier:Modifier = Modifier) {
     val gradient = Brush.horizontalGradient(
         listOf(colorResource(id = R.color.start_orange_gradient), colorResource(id = R.color.end_orange_gradient))
     )
@@ -50,12 +50,12 @@ fun GradientText(text: String, desc: String, modifier:Modifier = Modifier, offse
                 modifier = Modifier.fillMaxWidth(),
                 color = Color.White
             )
-            Text(
-                text = offset.toString(),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.fillMaxWidth(),
-                color = Color.White
-            )
+//            Text(
+//                text = offset.toString(),
+//                style = MaterialTheme.typography.bodyMedium,
+//                modifier = Modifier.fillMaxWidth(),
+//                color = Color.White
+//            )
 
         }
     }

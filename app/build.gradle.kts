@@ -62,9 +62,13 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.room.runtime)
+    implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
     implementation(libs.toolbar.compose)
     implementation(libs.androidx.ui.test.android)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.material)
     debugImplementation(libs.mockk)
     implementation (libs.flexbox)
     implementation(libs.androidx.core.splashscreen)

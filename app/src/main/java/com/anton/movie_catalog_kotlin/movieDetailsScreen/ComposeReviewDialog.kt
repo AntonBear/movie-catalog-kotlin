@@ -56,7 +56,6 @@ fun ReviewDialog(
     val rating by viewModel.rating.collectAsState()
     val isAnonymous by viewModel.isAnonChecked.collectAsState()
     val text by viewModel.text.collectAsState()
-
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val sendReviewResult = remember { mutableStateOf<Result<Unit>?>(null) }
@@ -115,9 +114,6 @@ fun ReviewDialog(
                         focusedIndicatorColor = Color.Transparent
                     )
                 )
-
-
-
 
                 Spacer(modifier = Modifier.height(16.dp))
 

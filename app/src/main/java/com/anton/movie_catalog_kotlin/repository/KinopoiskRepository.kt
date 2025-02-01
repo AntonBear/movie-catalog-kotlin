@@ -19,22 +19,19 @@ interface KinopoiskRepository {
 class KinopoiskRepositoryImpl(private val kinopoiskApi: KinopoiskApi): KinopoiskRepository {
 
 
+
     override suspend fun getPersonItem(name: String): Result<PersonItem> {
-
         return try {
-            val response: Response<PersonListModel> = kinopoiskApi.getPersonList(name)
-
-                if (response.isSuccessful)  {
-                    response.body()?.let { personList ->
-                        val personItem = personList.items.getOrNull(0) ?:
-                        return Result.failure(Exception("No person found for name: $name"))
-                        Result.success(personItem)
-                    } ?: Result.failure(Exception("Null response body for name: $name"))
-                } else { Result.failure(Exception("HTTP error ${response.code()}"))}
-
-        } catch(e:Exception) {
+            val response = kinopoiskApi.getPersonList(name)
+            if (response.isSuccessful) {
+                response.body()?.items?.getOrNull(0)?.let { personItem ->
+                    Result.success(personItem)
+                } ?: Result.failure(Exception("No person found for name: $name"))
+            } else {
+                Result.failure(Exception("HTTP error ${response.code()}"))
+            }
+        } catch (e: Exception) {
             Result.failure(Exception("Network error: ${e.message} for name: $name"))
-
         }
     }
 

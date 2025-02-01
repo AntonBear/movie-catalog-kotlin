@@ -3,6 +3,8 @@ package com.anton.movie_catalog_kotlin.repository
 import android.content.Context
 import com.anton.movie_catalog_kotlin.MovieCatalogApplication
 import com.anton.movie_catalog_kotlin.networking.ApiServices
+import com.anton.movie_catalog_kotlin.room.GenreRepository
+import com.anton.movie_catalog_kotlin.room.GenreRepositoryImpl
 import com.anton.movie_catalog_kotlin.storage.SecureTokenStorage
 import com.anton.movie_catalog_kotlin.storage.TokenStorage
 
@@ -36,6 +38,11 @@ object Repositories {
     }
     val profileRepository: ProfileRepository by lazy {
         ProfileRepositoryImpl(ApiServices.movieCatalogApi)
+    }
+
+    val genreRepository: GenreRepository by lazy {
+        val app = MovieCatalogApplication.applicationContext as MovieCatalogApplication
+        GenreRepositoryImpl(app.genreDao)
     }
 
 }

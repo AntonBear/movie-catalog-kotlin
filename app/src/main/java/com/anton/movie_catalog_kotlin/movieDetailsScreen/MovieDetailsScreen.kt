@@ -3,31 +3,30 @@ package com.anton.movie_catalog_kotlin.movieDetailsScreen
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,18 +36,25 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.repository.Repositories
+import kotlin.math.roundToInt
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
@@ -60,7 +66,8 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
             Repositories.kinopoiskRepository,
             Repositories.reviewRepository,
             Repositories.favoriteMovieRepository,
-            Repositories.profileRepository
+            Repositories.profileRepository,
+            Repositories.genreRepository
         )
     )
     var showReviewDialog by remember { mutableStateOf(false) }
@@ -83,44 +90,40 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
         is MovieDetailsUiState.Success -> {
             val movieDetails = state.data.movieDetails
             val kinopoiskDetails = state.data.filmDetails
-            var gradientTextVisible by remember { mutableStateOf(true) }
-            var windowHeightPx by remember { mutableStateOf(0) }
-            val listState = rememberScrollState()
+            val listState = rememberLazyListState()
             var currentTopBarTitle by remember { mutableStateOf(movieDetails?.name ?: "") }
-            var myElementCoordinates by remember { mutableStateOf(Offset.Zero) }
-            var offset by remember { mutableStateOf(0f) }
-
             val imageURL = viewModel.directorPoster.collectAsState()
+            val movieDetailsUiState by viewModel.uiState.collectAsState()
+            val movieGenres by viewModel.movieGenres.observeAsState(emptyList())
+            val favoriteGenres by viewModel.favoriteGenres.collectAsState()
+            val topBarTitle by remember(currentTopBarTitle) {
+                derivedStateOf { currentTopBarTitle }
+            }
+            var showText by remember { mutableStateOf(false) }
+
+            LaunchedEffect(listState.firstVisibleItemIndex) {
+                showText = listState.firstVisibleItemIndex > 0
+            }
 
 
             Scaffold(
                 topBar = {
-                    Box(modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp )
-                    ) {
-                        kinopoiskDetails?.posterUrl?.let { posterUrl ->
-                            AsyncImage(
-                                model = posterUrl,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(500.dp)
-                                    .clip(RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)),
-                                contentScale = ContentScale.Crop,
-                                alignment = Alignment.TopCenter
+                    TopAppBar(
+                        colors = TopAppBarDefaults.topAppBarColors(Color.Transparent),
+                        title = {
+                            Text(
+                                text = if (showText) topBarTitle else " ",
+                                style = MaterialTheme.typography.bodyMedium.copy(),
+                                modifier = Modifier,
+                                color = Color.White,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
+                                fontFamily = FontFamily(Font(R.font.manrope_bold)),
+                                fontSize = 24.sp
                             )
-                        }
+                        },
 
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(60.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        )
-                        {
-
+                        navigationIcon = {
                             SvgButtonBack(
                                 resourceId = R.drawable.ic_chevron_left,
                                 onClick = {
@@ -132,124 +135,89 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                                 },
                                 modifier = Modifier.padding(horizontal = 8.dp)
                             )
+                        },
 
-                            Text(
-                                text =  currentTopBarTitle,
-                                style = MaterialTheme.typography.bodySmall,
-                                modifier = Modifier,
-                                color = Color.Blue,
-                                overflow = TextOverflow.Ellipsis,
-                                maxLines = 1
-                            )
-
+                        actions = {
                             ComposeButtonLike(
-                                resourceId = if(state.isFavorite) R.drawable.ic_like_able  else R.drawable.ic_like,
+                                resourceId = if (state.isFavorite) R.drawable.ic_like_able else R.drawable.ic_like,
                                 onClick = {
                                     viewModel.changeFavoriteMovieHandler()
                                 },
                                 modifier = Modifier.padding(horizontal = 8.dp),
                                 isMovieFavorite = state.isFavorite
                             )
-                        }
-                    }
+                        },
+                    )
+                }
+            )
+
+            { innerPadding ->
+                kinopoiskDetails?.posterUrl?.let { posterUrl ->
+                    AsyncImage(
+                        model = posterUrl,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(500.dp)
+                            .padding(innerPadding)
+                            .offset(y = -60.dp)
+                            .clip(RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)),
+                        contentScale = ContentScale.FillWidth,
+                        alignment = Alignment.TopCenter,
+                        placeholder = painterResource(id = R.drawable.background),
+                        error = painterResource(id = R.drawable.background)
+                    )
                 }
 
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize(),
+                    state = listState
+                ) {
+                    item {
 
+                        Spacer(modifier = Modifier.height(325.dp))
 
-            ) { innerPadding ->
-
-
-            Box(modifier = Modifier
-                    .background(color = colorResource(R.color.dark))
-                    .onGloballyPositioned { coordinates ->
-                        windowHeightPx = coordinates.size.height
-                        println(windowHeightPx)
                     }
-                    ) {
-                    kinopoiskDetails?.posterUrl?.let { posterUrl ->
-                        AsyncImage(
-                            model = posterUrl,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(500.dp)
-                                .padding(innerPadding)
-                                .offset(y = -60.dp)
-                                .align(Alignment.TopCenter)
-                                .clip(RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)),
-                            contentScale = ContentScale.FillWidth,
-                            alignment = Alignment.TopCenter,
-                            placeholder = painterResource(id = R.drawable.background),
-                            error = painterResource(id = R.drawable.background)
-                        )
+                    item {
+
                     }
 
-
-                Column(
-                        modifier = Modifier
-
-                            .padding(innerPadding)
-//                            .scrollable(
-//                                orientation = Orientation.Vertical,
-//                                state = rememberScrollableState { delta ->
-//                                    offset += delta
-//                                    delta
-//                                }
-//                            )
-                            .verticalScroll(listState)
-                    ) {
-
-
-                    Spacer(modifier = Modifier.height(350.dp))
-                        val configuration = LocalConfiguration.current
-                        val screenHeightPx = configuration.screenHeightDp
-
-
+                    item {
                         GradientText(
                             movieDetails?.name ?: "Название отсутствует",
                             kinopoiskDetails?.slogan ?: "Слоган отсутствует",
-                            modifier = Modifier.onGloballyPositioned { coordinates ->
-                                myElementCoordinates = coordinates.localToWindow(Offset.Zero)
-                                val visible = myElementCoordinates.y + coordinates.size.height < screenHeightPx + listState.value
-                                gradientTextVisible = visible
-                                println("Visible: $visible, Coordinates: $myElementCoordinates, Height: ${coordinates.size.height}, WindowHeight: $windowHeightPx, ScrollOffset: ${listState.value}")
-                            },
-                            offset = offset,
                         )
 
-                        LaunchedEffect(offset){
-                            println("Offset: $offset")
-                        }
 
+                    }
 
-                        LaunchedEffect(gradientTextVisible) {
-                            currentTopBarTitle = if (!gradientTextVisible) movieDetails?.name ?: "" else ""
-                        }
-
-
-                        if (showReviewDialog) {
-                            ReviewDialog(
-                                viewModel = viewModel,
-                                onDismiss = { showReviewDialog = false },
-                                )
-
-                        }
-
+                    item {
                         RoundedTextElement(
                             text = kinopoiskDetails?.description ?: "Описание отсутствует"
                         )
+                    }
 
+                    item {
                         RatingField(
                             R.drawable.ic_star,
                             "Рейтинг",
                             kinopoiskDetails = kinopoiskDetails
                         )
-                        ComposeInfoField(   R.drawable.ic_info,
+                        ComposeInfoField(
+                            R.drawable.ic_info,
                             "Информация",
                             kinopoiskDetails = kinopoiskDetails,
-                            movieDetails = movieDetails)
+                            movieDetails = movieDetails
+                        )
 
-                        DirectorField(iconResId = R.drawable.ic_director, text = "Режиссеёр", directorName = movieDetails?.director, imageURL = imageURL.value )
+                        DirectorField(
+                            iconResId = R.drawable.ic_director,
+                            text = "Режиссеёр",
+                            directorName = movieDetails?.director,
+                            imageURL = imageURL.value
+                        )
 
                         ReviewField(
                             movieDetails,
@@ -257,9 +225,20 @@ fun MovieDetailsScreen(onBackClick: () -> Unit, movieId: String) {
                             { showReviewDialog = true },
                             viewModel
                         )
+
+                        if (showReviewDialog) {
+                            ReviewDialog(
+                                viewModel = viewModel,
+                                onDismiss = { showReviewDialog = false },
+                            )
+
+                        }
+
+
                     }
 
                 }
+
             }
         }
     }
