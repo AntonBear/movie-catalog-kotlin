@@ -9,11 +9,7 @@ import com.anton.movie_catalog_kotlin.databinding.FragmentSignInBinding
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
 
     private var _binding: FragmentSignInBinding? = null
-    val binding: FragmentSignInBinding = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    val binding: FragmentSignInBinding get()  = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

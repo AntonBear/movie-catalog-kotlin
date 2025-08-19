@@ -64,6 +64,7 @@ android {
 dependencies {
     implementation(libs.androidx.room.runtime)
     implementation("androidx.room:room-ktx:2.6.1")
+    implementation(libs.androidx.fragment)
     kapt("androidx.room:room-compiler:2.6.1")
     implementation(libs.toolbar.compose)
     implementation(libs.androidx.ui.test.android)

@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.anton.movie_catalog_kotlin.MainActivity
+import com.anton.movie_catalog_kotlin.mainActivity.MainActivity
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.bottomNavigation.BottomNavigationBarActivity
 import com.anton.movie_catalog_kotlin.databinding.ActivitySignInBinding
