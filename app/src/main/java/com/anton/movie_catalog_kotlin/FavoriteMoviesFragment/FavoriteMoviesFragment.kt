@@ -4,5 +4,5 @@ import androidx.fragment.app.Fragment
 import com.anton.movie_catalog_kotlin.R
 
 
-class FavoriteMoviesFragment() : Fragment() {
+class FavoriteMoviesFragment() : Fragment(R.layout.movies_screen_fragment) {
 }

@@ -20,13 +20,19 @@
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.anton.movie_catalog_kotlin.signInFragment.SignInFragment"
-        tools:layout="@layout/fragment_sign_in">
+        tools:layout="@layout/sign_in_fragment">
+        <action
+            android:id="@+id/action_signInFragment_to_mainHostFragment"
+            app:destination="@id/mainHostFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.anton.movie_catalog_kotlin.signUpFragment.SignUpFragment"
         tools:layout="@layout/sign_up_fragment">
+        <action
+            android:id="@+id/action_signUpFragment_to_mainHostFragment"
+            app:destination="@id/mainHostFragment" />
     </fragment>
 
     <fragment
