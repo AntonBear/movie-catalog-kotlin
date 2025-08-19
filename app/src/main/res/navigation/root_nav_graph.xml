@@ -5,17 +5,16 @@
     app:startDestination="@+id/welcome_screen_fragment"
     android:id="@+id/root_nav_graph">
 
-<!--    <fragment-->
-<!--        android:id="@+id/splashFragment"-->
-<!--        android:name="com.anton.movie_catalog_kotlin.splashScreenFragment.SplashScreenFragment"-->
-<!--        android:label="Splash"-->
-<!--        tools:layout="@layout/splash_screen_fragment">-->
-<!--    </fragment>-->
-
     <fragment
         android:id="@+id/welcome_screen_fragment"
         android:name="com.anton.movie_catalog_kotlin.welcomeScreenFragment.WelcomeScreenFragment"
         tools:layout="@layout/welcome_screen_fragment">
+        <action
+            android:id="@+id/action_welcome_screen_fragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_welcome_screen_fragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
 
     <fragment
