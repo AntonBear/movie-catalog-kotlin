@@ -7,24 +7,39 @@ import com.anton.movie_catalog_kotlin.models.PersonListModel
 import com.anton.movie_catalog_kotlin.networking.KinopoiskApi
 import retrofit2.Response
 
+interface FriendsRepository {
+    fun deleteFriend(id: String)
+    fun createFriend()
+}
+
+
+class FriendsRepositoryImpl() : FriendsRepository {
+    override fun deleteFriend(id: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun createFriend() {
+        TODO("Not yet implemented")
+    }
+
+}
+
+
+
 
 interface KinopoiskRepository {
     suspend fun fetchKinopoiskMoviesByKeyword(keyword: String) : Result<MovieSearchModel>
     suspend fun getFilmDetails(id: Int): Result<FilmDetails>
     suspend fun getPersonItem(name: String): Result<PersonItem>
-
-
 }
 
 class KinopoiskRepositoryImpl(private val kinopoiskApi: KinopoiskApi): KinopoiskRepository {
-
-
 
     override suspend fun getPersonItem(name: String): Result<PersonItem> {
         return try {
             val response = kinopoiskApi.getPersonList(name)
             if (response.isSuccessful) {
-                response.body()?.items?.getOrNull(0)?.let { personItem ->
+                response.body()?.items?.firstOrNull()?.let { personItem ->
                     Result.success(personItem)
                 } ?: Result.failure(Exception("No person found for name: $name"))
             } else {
