@@ -13,6 +13,24 @@
     </fragment>
 
     <fragment
+        android:id="@+id/welcome_screen_fragment"
+        android:name="com.anton.movie_catalog_kotlin.welcomeScreenFragment.WelcomeScreenFragment"
+        tools:layout="@layout/welcome_screen_fragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.anton.movie_catalog_kotlin.signInFragment.SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.anton.movie_catalog_kotlin.signUpFragment.SignUpFragment"
+        tools:layout="@layout/sign_up_fragment">
+    </fragment>
+
+    <fragment
         android:id="@+id/mainHostFragment"
         android:name="com.anton.movie_catalog_kotlin.mainHostFragment.MainHostFragment"
         tools:layout="@layout/main_host_fragment">

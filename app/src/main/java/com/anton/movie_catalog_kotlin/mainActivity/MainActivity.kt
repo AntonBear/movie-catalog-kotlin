@@ -13,4 +13,6 @@ class MainActivity : AppCompatActivity() {
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
+
+    //TODO Навигируемся на main host fragment
 }

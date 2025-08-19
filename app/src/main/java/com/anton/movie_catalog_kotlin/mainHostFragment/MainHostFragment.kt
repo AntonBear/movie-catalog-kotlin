@@ -14,4 +14,6 @@ class MainHostFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _binding = MainHostFragmentBinding.bind(view)
     }
+
+    // TODO Токен действителен?
 }
