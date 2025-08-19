@@ -3,13 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_host_nav_graph"
-    app:startDestination="@+id/welcome_screen_fragment">
+    app:startDestination="@+id/feedScreenFragment">
 
-
-    <composable
+    <fragment
+        android:id="@+id/feedScreenFragment"
+        android:name="com.anton.movie_catalog_kotlin.feedScreenFragment.FeedScreenFragment"
+        android:label="FeedScreenFragment" />
+    <fragment
         android:id="@+id/moviesScreenFragment"
-        android:name="com.anton.movie_catalog_kotlin.MoviesScreenFragment"
+        android:name="com.anton.movie_catalog_kotlin.moviesScreenFragment.MoviesScreenFragment"
         android:label="fragment_movies_screen"
-        tools:layout="@layout/fragment_movies_screen" />
+        tools:layout="@layout/movies_screen_fragment" />
+    <fragment
+        android:id="@+id/favoriteMoviesFragment"
+        android:name="com.anton.movie_catalog_kotlin.FavoriteMoviesFragment.FavoriteMoviesFragment"
+        android:label="FavoriteMoviesFragment" />
+    <fragment
+        android:id="@+id/profileScreenFragment"
+        android:name="com.anton.movie_catalog_kotlin.profileScreenFragment.ProfileScreenFragment"
+        android:label="ProfileScreenFragment" />
+
 
 </navigation>

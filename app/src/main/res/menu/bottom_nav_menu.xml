@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/feed_screen_fragment"
+        android:id="@+id/feedScreenFragment"
         android:icon="@drawable/title_feed_selector"
         android:title="@null" />
 
     <item
-        android:id="@+id/movie_screen_fragment"
+        android:id="@+id/moviesScreenFragment"
         android:icon="@drawable/title_movies_selector"
         android:title="@null" />
 
     <item
-        android:id="@+id/favorite_movies_fragment"
+        android:id="@+id/favoriteMoviesFragment"
         android:icon="@drawable/title_favorites_selector"
         android:title="@null" />
 
     <item
-        android:id="@+id/profile_screen_fragment"
+        android:id="@+id/profileScreenFragment"
         android:icon="@drawable/title_profile_selector"
         android:title="@null" />
 </menu>

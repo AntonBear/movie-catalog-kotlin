@@ -20,38 +20,13 @@
 
         <activity
             android:name=".mainActivity.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-<!--        <activity-->
-<!--            android:name=".movieDetailsScreen.MovieDetailsActivity"-->
-<!--            android:exported="false"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/Theme.Moviecatalogkotlin">-->
-<!--        </activity>-->
-
-<!--        <activity-->
-<!--            android:name=".signin.SignInActivity"-->
-<!--            android:exported="false"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/Theme.Moviecatalogkotlin" />-->
-
-<!--        <activity-->
-<!--            android:name=".bottomNavigation.BottomNavigationBarActivity"-->
-<!--            android:exported="false"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/Theme.App.MaterialComponents" >-->
-<!--        </activity>-->
-
-<!--        <activity-->
-<!--            android:name=".signup.SignUpActivity"-->
-<!--            android:exported="false"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/Theme.Moviecatalogkotlin" />-->
 
     </application>
 
