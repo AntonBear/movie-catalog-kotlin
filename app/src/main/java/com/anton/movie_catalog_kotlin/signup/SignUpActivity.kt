@@ -11,12 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.anton.movie_catalog_kotlin.MainActivity
 import com.anton.movie_catalog_kotlin.R
+import com.anton.movie_catalog_kotlin.bottomNavigation.BottomNavigationBarActivity
 import com.anton.movie_catalog_kotlin.databinding.ActivitySignUpBinding
+//import com.anton.movie_catalog_kotlin.navigationBar.NavigationBarView
 import com.anton.movie_catalog_kotlin.signin.SignInActivity
 import com.anton.movie_catalog_kotlin.utils.showErrorDialog
-import com.anton.movie_catalog_kotlin.utils.showSuccessDialog
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -61,14 +61,9 @@ class SignUpActivity : AppCompatActivity() {
                     }
 
                     if (state.isUserLoggedIn) {
-                        val intent = Intent(this@SignUpActivity, MainActivity::class.java)
-                        showSuccessDialog(R.string.success_title, R.string.signup_success_notion) {
-                            startActivity(
-                                intent
-                            )
-                        }
+                        val intent = Intent(this@SignUpActivity, BottomNavigationBarActivity::class.java)
+                        startActivity(intent)
                     }
-
                     viewModel.onHandleError()
                 }
             }

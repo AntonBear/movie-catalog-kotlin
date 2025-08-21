@@ -3,6 +3,7 @@ package com.anton.movie_catalog_kotlin
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.anton.movie_catalog_kotlin.databinding.ActivityWelcomeScreenBinding
 import com.anton.movie_catalog_kotlin.signin.SignInActivity
 import com.anton.movie_catalog_kotlin.signup.SignUpActivity
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        installSplashScreen()
         binding = ActivityWelcomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.buttonEnterAccount.setOnClickListener {

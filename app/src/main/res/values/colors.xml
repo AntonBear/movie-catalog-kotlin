@@ -9,7 +9,15 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dark_faded">#333333</color>
     <color name="dark">#1E1E1E</color>
-    <color name="gray_faded">#999999</color>
     <color name="gray">#CCCCCC</color>
     <color name="backgroundColor">#1e1e1e</color>
+    <color name="selected_color">#DF2800</color>
+    <color name="gray_faded">#999999</color>
+    <color name="start_orange_gradient">#DF2800</color>
+    <color name="end_orange_gradient">#FF6633</color>
+    <color name="green">#00991A</color>
+    <color name="gradient_start">#DF2800</color>
+    <color name="gradient_end">#FF6633</color>
+
 </resources>
+

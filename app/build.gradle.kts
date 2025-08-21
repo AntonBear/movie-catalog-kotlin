@@ -1,15 +1,17 @@
+import com.android.build.api.dsl.Packaging
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.kapt)
-
 }
 
 android {
     namespace = "com.anton.movie_catalog_kotlin"
     compileSdk = 35
+
 
     defaultConfig {
         applicationId = "com.anton.movie_catalog_kotlin"
@@ -52,12 +54,32 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            merges += "META-INF/LICENSE.md"
+            merges += "META-INF/LICENSE-notice.md"
         }
     }
+
 }
 
 dependencies {
+    implementation(libs.androidx.room.runtime)
+    implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation(libs.toolbar.compose)
+    implementation(libs.androidx.ui.test.android)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.material)
+    debugImplementation(libs.mockk)
+    implementation (libs.flexbox)
     implementation(libs.androidx.core.splashscreen)
+    implementation (libs.androidx.navigation.fragment.compose)
+    implementation (libs.glide)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation (libs.androidx.viewpager2)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    kapt (libs.compiler)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -69,8 +91,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.material)
-    implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.androidx.paging.common.android)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.constraintlayout)
@@ -81,6 +101,7 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.material)
+    implementation(libs.androidx.navigation.fragment)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
