@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/dark</item>
         <item name="colorPrimaryVariant">@color/dark</item>
         <item name="colorOnPrimary">@color/dark</item>
-        <item name="android:statusBarColor">@color/dark_faded</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">

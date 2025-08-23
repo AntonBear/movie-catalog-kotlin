@@ -32,9 +32,6 @@ class SignUpActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         setContentView(binding.root)
 
-        binding.squareButton.setOnClickListener {
-            startActivity(Intent(this, SignInActivity::class.java))
-        }
         binding.dateOfBirthEditText.setOnClickListener { showDatePickerDialog() }
 
         lifecycleScope.launch {

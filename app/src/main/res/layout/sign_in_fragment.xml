@@ -31,14 +31,14 @@
             android:text="@string/enter_to_account"
             android:textColor="@color/white"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/square_button"
-            app:layout_constraintStart_toEndOf="@+id/square_button"
-            app:layout_constraintTop_toTopOf="@+id/square_button"
+            app:layout_constraintBottom_toBottomOf="@+id/backStackButton"
+            app:layout_constraintStart_toEndOf="@+id/backStackButton"
+            app:layout_constraintTop_toTopOf="@+id/backStackButton"
             app:layout_constraintVertical_bias="0.545" />
 
         <!-- Кнопка с MaterialButton -->
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/square_button"
+            android:id="@+id/backStackButton"
             style="@style/ButtonWithSvgMaterial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
