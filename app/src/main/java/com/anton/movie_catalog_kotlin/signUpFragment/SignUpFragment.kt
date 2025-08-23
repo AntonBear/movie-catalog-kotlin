@@ -20,6 +20,9 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
             signUpButton.setOnClickListener {
                 findNavController().navigate(R.id.action_signUpFragment_to_mainHostFragment)
             }
+            backStackButton.setOnClickListener {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
         }
     }
 }

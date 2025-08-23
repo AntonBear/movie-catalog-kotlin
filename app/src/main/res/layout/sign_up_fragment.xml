@@ -25,19 +25,21 @@
             android:id="@+id/label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:fontFamily="@font/manrope_bold"
             android:text="@string/signup"
             android:textColor="@color/white"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/square_button"
-            app:layout_constraintStart_toEndOf="@+id/square_button"
-            app:layout_constraintTop_toTopOf="@+id/square_button"
+            app:layout_constraintBottom_toBottomOf="@+id/backStackButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/backStackButton"
+            app:layout_constraintTop_toTopOf="@+id/backStackButton"
             app:layout_constraintVertical_bias="0.545" />
 
-        <Button
-            android:id="@+id/square_button"
-            style="@style/ButtonWithSvgStyle"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/backStackButton"
+            style="@style/ButtonWithSvgMaterial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="40dp"
             app:layout_constraintStart_toStartOf="parent"
