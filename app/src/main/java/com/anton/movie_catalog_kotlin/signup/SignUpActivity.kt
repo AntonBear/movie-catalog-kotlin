@@ -15,7 +15,6 @@ import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.bottomNavigation.BottomNavigationBarActivity
 import com.anton.movie_catalog_kotlin.databinding.ActivitySignUpBinding
 //import com.anton.movie_catalog_kotlin.navigationBar.NavigationBarView
-import com.anton.movie_catalog_kotlin.signin.SignInActivity
 import com.anton.movie_catalog_kotlin.utils.showErrorDialog
 import kotlinx.coroutines.launch
 import java.util.Locale

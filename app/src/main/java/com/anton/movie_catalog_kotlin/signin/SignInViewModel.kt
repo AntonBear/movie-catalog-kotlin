@@ -1,6 +1,5 @@
 package com.anton.movie_catalog_kotlin.signin
 
-import android.text.Editable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -25,13 +24,13 @@ class SignInViewModel(
     private var login = ""
     private var password = ""
 
-    fun onPasswordTextChanged(editable: Editable) {
-        password = editable.toString()
+    fun onPasswordTextChanged(text: String?) {
+        password = text.toString()
         updateButtonState()
     }
 
-    fun onLoginTextChanged(editable: Editable) {
-        login = editable.toString()
+    fun onLoginTextChanged(text: String?) {
+        login = text.toString()
         updateButtonState()
     }
 
