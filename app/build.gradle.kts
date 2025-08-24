@@ -5,7 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -58,14 +59,22 @@ android {
             merges += "META-INF/LICENSE-notice.md"
         }
     }
+//    hilt {
+//        enableAggregatingTask = false
+//    }
 
 }
 
+
+
 dependencies {
+    implementation(libs.dagger.hilt)
+    ksp(libs.androidx.room.compiler)
+    ksp(libs.dagger.hilt.compiler)
+
     implementation(libs.androidx.room.runtime)
     implementation("androidx.room:room-ktx:2.6.1")
     implementation(libs.androidx.fragment)
-    kapt("androidx.room:room-compiler:2.6.1")
     implementation(libs.toolbar.compose)
     implementation(libs.androidx.ui.test.android)
     implementation(libs.androidx.runtime.livedata)
@@ -80,7 +89,6 @@ dependencies {
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.fragment.ktx)
-    kapt (libs.compiler)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)

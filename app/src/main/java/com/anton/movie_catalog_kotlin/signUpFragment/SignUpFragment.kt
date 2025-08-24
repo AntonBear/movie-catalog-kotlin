@@ -34,9 +34,6 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
             backStackButton.setOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
-            loginEditText.doOnTextChanged {
-                viewModel.
-            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
