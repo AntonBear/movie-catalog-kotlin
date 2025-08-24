@@ -9,8 +9,6 @@
         android:layout_height="match_parent"
         android:background="@color/dark">
 
-
-
         <ImageView
             android:id="@+id/background"
             android:layout_width="match_parent"
@@ -151,14 +149,14 @@
             android:textColor="@color/white"
             android:textColorHint="@color/gray_faded"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/date_of_birthEditText"
+            app:layout_constraintBottom_toTopOf="@+id/dateOfBirthEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent" />
 
 
         <EditText
-            android:id="@+id/date_of_birthEditText"
+            android:id="@+id/dateOfBirthEditText"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="24dp"
@@ -193,7 +191,7 @@
             app:layout_constraintBottom_toTopOf="@+id/signUpButton"
             app:layout_constraintEnd_toStartOf="@+id/femaleButton"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@+id/date_of_birthEditText" />
+            app:layout_constraintStart_toStartOf="@+id/dateOfBirthEditText" />
 
         <Button
             android:id="@+id/femaleButton"
@@ -205,7 +203,7 @@
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="@+id/maleButton"
-            app:layout_constraintEnd_toEndOf="@+id/date_of_birthEditText"
+            app:layout_constraintEnd_toEndOf="@+id/dateOfBirthEditText"
             app:layout_constraintStart_toEndOf="@+id/maleButton"
             app:layout_constraintTop_toTopOf="@+id/maleButton" />
 

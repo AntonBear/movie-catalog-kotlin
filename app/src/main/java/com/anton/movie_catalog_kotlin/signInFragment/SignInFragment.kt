@@ -38,14 +38,19 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
             }
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    binding.signInButton.isEnabled = viewModel.isButtonEnable.value
+                    launch {
+                        viewModel.isButtonEnable.collect { isEnable ->
+                            signInButton.isEnabled = isEnable
+                        }
+                    }
+                    launch {
+                        viewModel.error.collect { error ->
+                            loginTextInputLayout.error = error
+                        }
+                    }
                 }
             }
         }
-
-
-
-
     }
 
     override fun onDestroyView() {
