@@ -72,6 +72,8 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     ksp(libs.dagger.hilt.compiler)
 
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+
     implementation(libs.androidx.room.runtime)
     implementation("androidx.room:room-ktx:2.6.1")
     implementation(libs.androidx.fragment)
