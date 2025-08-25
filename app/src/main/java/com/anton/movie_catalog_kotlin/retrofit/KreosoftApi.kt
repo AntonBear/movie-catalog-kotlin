@@ -1,6 +1,5 @@
 package com.anton.movie_catalog_kotlin.retrofit
 
-import com.anton.movie_catalog_kotlin.model.Movie
 import com.anton.movie_catalog_kotlin.models.FavoritesMoviesListModel
 import com.anton.movie_catalog_kotlin.models.LoginResponse
 import com.anton.movie_catalog_kotlin.models.MovieDetailsModel
@@ -25,10 +24,10 @@ interface KreosoftApi {
     //Auth
 
     @POST("api/account/login")
-    suspend fun login(@Body request: LoginRequest): LoginResponse
+    suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
     @POST("/api/account/register")
-    suspend fun register(@Body request: SignUpRequest): SignUpResponse
+    suspend fun register(@Body request: SignUpRequest): Response<SignUpResponse>
 
     @POST("/api/account/logout")
     suspend fun logout(): Response<Unit>
@@ -36,7 +35,7 @@ interface KreosoftApi {
     //FavoriteMovies
 
     @GET("/api/favorites")
-    suspend fun getFavoritesMovies(): FavoritesMoviesListModel
+    suspend fun getFavoritesMovies(): Response<FavoritesMoviesListModel>
 
     @POST("/api/favorites/{movieId}/add")
     suspend fun addFavoritesMovie(@Path("movieId") movieId: String): Response<Unit>

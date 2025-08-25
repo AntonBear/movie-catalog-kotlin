@@ -23,7 +23,7 @@ class MovieApiSimpleTest {
 
     private val api: KreosoftApi = Retrofit.Builder()
         .baseUrl("https://react-midterm.kreosoft.space/")
-        .addConverterFactory(ScalarsConverterFactory.create()) // Получаем тело как String
+        .addConverterFactory(ScalarsConverterFactory.create())
         .build()
         .create(KreosoftApi::class.java)
 
