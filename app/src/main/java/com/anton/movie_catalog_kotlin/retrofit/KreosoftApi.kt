@@ -47,7 +47,6 @@ interface KreosoftApi {
     @GET("/api/movies/{page}")
     suspend fun getMoviesPage(@Path("page") page: Int): Response<MoviesPagedListModel>
 
-
     @GET("/api/movies/details/{movieId}")
     suspend fun getMovieDetail(@Path("movieId") movieId: String): Response<MovieDetailsModel>
 

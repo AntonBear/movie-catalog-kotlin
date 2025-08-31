@@ -1,11 +1,12 @@
-package com.anton.movie_catalog_kotlin.retrofit
+package com.anton.movie_catalog_kotlin
 
+import com.anton.movie_catalog_kotlin.retrofit.KreosoftApi
 import com.anton.movie_catalog_kotlin.storage.TokenStorage
-import retrofit2.Retrofit
-import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
 object KreosoftRetrofitClient {
 

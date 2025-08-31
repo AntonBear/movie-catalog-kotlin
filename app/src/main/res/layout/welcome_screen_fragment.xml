@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/dark"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".mainActivity.MainActivity">
 
     <ImageView

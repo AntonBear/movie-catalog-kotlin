@@ -2,7 +2,7 @@ package com.anton.movie_catalog_kotlin
 
 import com.anton.movie_catalog_kotlin.models.*
 import com.anton.movie_catalog_kotlin.retrofit.KreosoftApi
-import com.anton.movie_catalog_kotlin.retrofit.KreosoftRetrofitClient
+import com.anton.movie_catalog_kotlin.KreosoftRetrofitClient
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import models.LoginRequest

@@ -1,16 +1,13 @@
 package com.anton.movie_catalog_kotlin
 
 import com.anton.movie_catalog_kotlin.retrofit.KinopoiskRetrofitClient
-import com.anton.movie_catalog_kotlin.retrofit.KreosoftRetrofitClient
+import com.anton.movie_catalog_kotlin.KreosoftRetrofitClient
 import kotlinx.coroutines.runBlocking
 import models.LoginRequest
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 
 class ApiTest {
-
-    private var token: String? = null
-    private var testMovieId: String? = null
 
     @Test
     fun test_login_request() = runBlocking {
@@ -21,7 +18,7 @@ class ApiTest {
             )
         )
         println("Ответ сервера: $response")
-        // Проверяем что токен вернулся (или хотя бы не null)
+
         assertNotNull(response.body()?.token, "Токен не должен быть null")
     }
 

@@ -2,6 +2,7 @@
 <resources>
 
     <style name="Theme.Moviecatalogkotlin" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/dark</item>
         <item name="colorPrimary">@color/dark</item>
         <item name="colorPrimaryVariant">@color/dark</item>
         <item name="colorOnPrimary">@color/dark</item>

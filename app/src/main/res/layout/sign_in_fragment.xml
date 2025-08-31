@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,7 +29,6 @@
             app:layout_constraintTop_toTopOf="@+id/backStackButton"
             app:layout_constraintVertical_bias="0.545" />
 
-        <!-- Кнопка с MaterialButton -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/backStackButton"
             style="@style/ButtonWithSvgMaterial"
@@ -59,9 +59,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-
-
-        <!-- Поле ввода логина -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/loginTextInputLayout"
             android:layout_width="0dp"
