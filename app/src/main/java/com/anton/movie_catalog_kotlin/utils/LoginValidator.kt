@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 
 class LoginValidator @Inject constructor() {
-    fun isValid(login: String?): Boolean {
-        return !login.isNullOrBlank()
+    fun isValid(login: CharSequence?): Boolean {
+        return login.isNullOrEmpty()
     }
 }

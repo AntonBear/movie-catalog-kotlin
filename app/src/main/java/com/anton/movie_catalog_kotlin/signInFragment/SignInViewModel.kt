@@ -34,8 +34,8 @@ class SignInViewModel @Inject constructor(
     val kreosoftApi: KreosoftApi,
 ) : ViewModel() {
 
-    private var userLogin: String? = null
-    private var userPassword: String? = null
+    private var _userLogin: String? = null
+    private var _userPassword: String? = null
 
     private val _signInState = MutableStateFlow<SignInState>(SignInState.Initial)
     val signInState: StateFlow<SignInState> = _signInState
@@ -63,43 +63,43 @@ class SignInViewModel @Inject constructor(
         initialValue = false
     )
 
-    private fun isLoginValid(login: String?): Boolean {
-        return loginValidator.isValid(login)
-    }
-
     fun onPasswordTextChanged(inputPassword: CharSequence?) {
         Log.d(
             "debug",
             "isPasswordValid - ${passwordValidator.signInPasswordIsValid(inputPassword)}"
         )
         if (!passwordValidator.signInPasswordIsValid(inputPassword)) {
-            _passwordErrorText.value =  "password error"
+            _passwordErrorText.value = "password error"
             _passwordIsValid.value = false
         } else {
             _passwordErrorText.value = null
             _passwordIsValid.value = true
+            _userPassword = inputPassword.toString()
         }
     }
 
     fun onLoginTextChanged(inputLogin: CharSequence?) {
-        userLogin = inputLogin.toString()
-        Log.d("debug", "isLoginValid - ${isLoginValid(userLogin)}")
-        if (!isLoginValid(userLogin)) {
+        Log.d("debug", "isLoginValid - ${loginValidator.isValid(inputLogin)}")
+        if (loginValidator.isValid(inputLogin)) {
             _loginErrorText.value = "login error"
             _loginIsValid.value = false
         } else {
             _loginErrorText.value = null
             _loginIsValid.value = true
+            _userLogin = inputLogin.toString()
         }
     }
 
     fun loginUser() {
         val request: LoginRequest =
-            LoginRequest(username = userLogin ?: "null", password = userPassword ?: "null")
+            LoginRequest(username = _userLogin ?: "null", password = _userPassword ?: "null")
         viewModelScope.launch {
-            val fuu = kreosoftApi.login(request)
-            if (fuu.isSuccessful) {
+            val response = kreosoftApi.login(request)
+            if (response.isSuccessful) {
                 _userLogSuccess.emit(true)
+                val body = response.body()
+                if(body != null)
+                Log.d("debug","token ${body.token}")
             } else {
                 _userLogSuccess.emit(false)
             }

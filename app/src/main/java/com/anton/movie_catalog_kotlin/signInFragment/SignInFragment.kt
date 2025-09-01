@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.SignInFragmentBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -28,8 +29,9 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
         with(binding) {
             signInButton.setOnClickListener {
-                findNavController().navigate(R.id.action_signInFragment_to_mainHostFragment)
+                viewModel.loginUser()
             }
+
             backStackButton.setOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
@@ -41,6 +43,14 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
             }
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    launch {
+                        viewModel.userLogSuccess.collect { state ->
+                            if (state) findNavController().navigate(R.id.action_signInFragment_to_mainHostFragment)
+                            else {
+                                showErrorDialog("Ошибка авторизации")
+                            }
+                        }
+                    }
                     launch {
                         viewModel.isSignInButtonEnable.collect { isEnable ->
                             Log.d("debug", "isSignInButtonEnable ${isEnable}")
@@ -61,6 +71,19 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
             }
         }
     }
+
+
+    private fun showErrorDialog(message: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(requireContext().getString(R.string.error_title))
+            .setMessage(message)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
