@@ -1,6 +1,7 @@
 package com.anton.movie_catalog_kotlin.moviesScreenFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.anton.movie_catalog_kotlin.R
@@ -13,6 +14,8 @@ class MoviesScreenFragment : Fragment(R.layout.movies_screen_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = MoviesScreenFragmentBinding.bind(view)
+        Log.d("DEBUG", "App started - check if changes are applied")
+
     }
 
 }

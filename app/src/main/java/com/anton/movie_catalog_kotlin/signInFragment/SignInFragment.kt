@@ -11,8 +11,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.SignInFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SignInFragment : Fragment(R.layout.sign_in_fragment) {
 
     private var _binding: SignInFragmentBinding? = null
@@ -39,7 +41,7 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     launch {
-                        viewModel.isButtonEnable.collect { isEnable ->
+                        viewModel.isSignInButtonEnable.collect { isEnable ->
                             signInButton.isEnabled = isEnable
                         }
                     }

@@ -4,7 +4,7 @@
     <style name="Theme.Moviecatalogkotlin" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/dark</item>
         <item name="colorPrimary">@color/dark_faded</item>
-        <item name="colorOnSurface">@color/white</item>          <!-- текст/иконки на фоне -->
+        <item name="colorOnSurface">@color/gray_faded</item>          <!-- текст/иконки на фоне -->
         <item name="colorPrimaryVariant">@color/dark</item>      <!-- вариант акцента -->
         <item name="colorOnPrimary">@color/white</item>          <!-- текст на акценте -->
         <item name="android:windowLightStatusBar">false</item>

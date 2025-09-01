@@ -4,17 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <import type="com.anton.movie_catalog_kotlin.feedScreenFragment.FeedScreenFragmentViewModel" />
-
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="FeedScreenFragmentViewModel" />
-    </data>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

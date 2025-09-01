@@ -4,7 +4,9 @@ import android.app.Application
 import android.content.Context
 import com.anton.movie_catalog_kotlin.room.AppDatabase
 import com.anton.movie_catalog_kotlin.room.GenreDao
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class MovieCatalogApplication : Application() {
 
     lateinit var database: AppDatabase

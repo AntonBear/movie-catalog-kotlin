@@ -7,7 +7,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.MainHostFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainHostFragment : Fragment(R.layout.main_host_fragment) {
 
     private var _binding: MainHostFragmentBinding? = null

@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anton.movie_catalog_kotlin.models.MovieDetails
 import com.anton.movie_catalog_kotlin.repository.Repositories.movieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FeedScreenFragmentViewModel : ViewModel() {
+@HiltViewModel
+class FeedScreenFragmentViewModel @Inject constructor() : ViewModel() {
     private val _movieData = MutableLiveData<MovieDetails?>()
     val movieData: LiveData<MovieDetails?> = _movieData
 
