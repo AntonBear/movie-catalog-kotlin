@@ -105,7 +105,7 @@ class SignUpViewModel(
     private fun areInputFieldsValid(): Boolean {
         val fieldsNotEmpty = areFieldsNotEmpty()
         val isEmailValid = emailValidator.isValid(email)
-        val isPasswordValid = passwordValidator.isValid(password, confirmPassword)
+        val isPasswordValid = passwordValidator.signUpPasswordIsValid(password, confirmPassword)
         return fieldsNotEmpty && isEmailValid && isPasswordValid
     }
 

@@ -4,8 +4,13 @@ import javax.inject.Inject
 
 class PasswordValidator @Inject constructor() {
 
-    fun isValid (password: String, confirmPassword: String): Boolean {
-        return password.isNotEmpty() && password == confirmPassword
+    fun signUpPasswordIsValid(password: String?, confirmPassword: String?): Boolean {
+        if (password.isNullOrEmpty()) return false
+        if (confirmPassword.isNullOrEmpty()) return false
+        return password == confirmPassword
     }
 
+    fun signInPasswordIsValid(password: CharSequence?): Boolean {
+        return !password.isNullOrEmpty()
+    }
 }

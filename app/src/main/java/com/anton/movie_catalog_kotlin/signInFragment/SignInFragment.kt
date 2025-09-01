@@ -1,6 +1,7 @@
 package com.anton.movie_catalog_kotlin.signInFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -42,12 +43,18 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     launch {
                         viewModel.isSignInButtonEnable.collect { isEnable ->
+                            Log.d("debug", "isSignInButtonEnable ${isEnable}")
                             signInButton.isEnabled = isEnable
                         }
                     }
                     launch {
-                        viewModel.error.collect { error ->
+                        viewModel.loginError.collect { error ->
                             loginTextInputLayout.error = error
+                        }
+                    }
+                    launch {
+                        viewModel.passwordError.collect { error ->
+                            passwordEditText.error = error
                         }
                     }
                 }

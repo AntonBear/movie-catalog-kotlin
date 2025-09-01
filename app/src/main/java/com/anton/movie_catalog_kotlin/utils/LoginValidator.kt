@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class LoginValidator @Inject constructor() {
     fun isValid(login: String?): Boolean {
-        return login?.isBlank() ?: false
+        return !login.isNullOrBlank()
     }
 }
