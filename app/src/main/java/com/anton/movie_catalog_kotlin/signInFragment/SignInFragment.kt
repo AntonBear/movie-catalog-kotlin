@@ -48,12 +48,12 @@ class SignInFragment : Fragment(R.layout.sign_in_fragment) {
                         }
                     }
                     launch {
-                        viewModel.loginError.collect { error ->
+                        viewModel.loginErrorText.collect { error ->
                             loginTextInputLayout.error = error
                         }
                     }
                     launch {
-                        viewModel.passwordError.collect { error ->
+                        viewModel.passwordErrorText.collect { error ->
                             passwordEditText.error = error
                         }
                     }

@@ -18,11 +18,13 @@ import kotlinx.coroutines.launch
 import models.LoginRequest
 import javax.inject.Inject
 
-sealed class ValidatorResult {
-    class LoginSuccess : ValidatorResult()
-    class PasswordSuccess : ValidatorResult()
-    class LoginError : ValidatorResult()
-    class PasswordError : ValidatorResult()
+sealed class SignInState {
+    data object Initial : SignInState()
+    data object Loading : SignInState()
+    class LoginError(val message: String) : SignInState()
+    class PasswordError(val message: String): SignInState()
+    class LoginValidSuccess(): SignInState()
+    class PasswordValidSuccess(): SignInState()
 }
 
 @HiltViewModel
@@ -35,21 +37,26 @@ class SignInViewModel @Inject constructor(
     private var userLogin: String? = null
     private var userPassword: String? = null
 
+    private val _signInState = MutableStateFlow<SignInState>(SignInState.Initial)
+    val signInState: StateFlow<SignInState> = _signInState
+
     private val _userLogSuccess = MutableSharedFlow<Boolean>()
     val userLogSuccess: SharedFlow<Boolean> = _userLogSuccess
 
-    private val _loginError = MutableStateFlow<String?>(null)
-    val loginError: StateFlow<String?> = _loginError
+    private val _loginErrorText = MutableStateFlow<String?>(null)
+    val loginErrorText: StateFlow<String?> = _loginErrorText
 
-    private val _passwordError = MutableStateFlow<String?>(null)
-    val passwordError: StateFlow<String?> = _passwordError
+    private val _passwordErrorText = MutableStateFlow<String?>(null)
+    val passwordErrorText: StateFlow<String?> = _passwordErrorText
 
-    //    private val _isSignInButtonEnable = MutableStateFlow(false)
+    private val _passwordIsValid = MutableStateFlow<Boolean>(false)
+    private val _loginIsValid = MutableStateFlow<Boolean>(false)
+
     val isSignInButtonEnable: StateFlow<Boolean> = combine(
-        _passwordError,
-        _loginError,
+        _passwordIsValid,
+        _loginIsValid,
     ) { loginErr, passErr ->
-        loginErr == null && passErr == null
+        _loginIsValid.value && _passwordIsValid.value
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -66,16 +73,24 @@ class SignInViewModel @Inject constructor(
             "isPasswordValid - ${passwordValidator.signInPasswordIsValid(inputPassword)}"
         )
         if (!passwordValidator.signInPasswordIsValid(inputPassword)) {
-            _passwordError.value = "password error"
-        } else _passwordError.value = null
+            _passwordErrorText.value =  "password error"
+            _passwordIsValid.value = false
+        } else {
+            _passwordErrorText.value = null
+            _passwordIsValid.value = true
+        }
     }
 
     fun onLoginTextChanged(inputLogin: CharSequence?) {
         userLogin = inputLogin.toString()
         Log.d("debug", "isLoginValid - ${isLoginValid(userLogin)}")
         if (!isLoginValid(userLogin)) {
-            _loginError.value = "login error"
-        } else _loginError.value = null
+            _loginErrorText.value = "login error"
+            _loginIsValid.value = false
+        } else {
+            _loginErrorText.value = null
+            _loginIsValid.value = true
+        }
     }
 
     fun loginUser() {
