@@ -37,7 +37,9 @@ android {
         }
 
         debug {
-
+            buildConfigField("boolean", "AUTO_LOGIN", "true")
+            buildConfigField("String", "LOGIN", "\"anton\"")
+            buildConfigField("String", "PASSWORD", "\"greedisgood\"")
         }
     }
     compileOptions {
@@ -51,6 +53,7 @@ android {
         viewBinding = true
         dataBinding = true
         compose = true
+        buildConfig = true
     }
 
     composeOptions {
