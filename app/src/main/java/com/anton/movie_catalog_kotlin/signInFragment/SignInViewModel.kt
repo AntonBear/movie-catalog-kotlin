@@ -1,8 +1,6 @@
 package com.anton.movie_catalog_kotlin.signInFragment
 
 import androidx.lifecycle.ViewModel
-import com.anton.movie_catalog_kotlin.signin.SignInUiState
-import com.anton.movie_catalog_kotlin.utils.EmailValidator
 import com.anton.movie_catalog_kotlin.utils.LoginValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,10 +10,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(val loginValidator: LoginValidator) : ViewModel() {
-
-
-    private val _uiState = MutableStateFlow(SignInUiState())
-    val uiState: StateFlow<SignInUiState> = _uiState.asStateFlow()
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
