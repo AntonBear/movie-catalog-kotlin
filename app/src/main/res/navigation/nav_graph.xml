@@ -19,7 +19,7 @@
 
     <composable
         android:id="@+id/compose_favorites_fragment"
-        android:name="com.anton.movie_catalog_kotlin.FavoriteMoviesFragment.FavoritesScreenKt\$FavoritesScreen">
+        android:name="com.anton.movie_catalog_kotlin.favoriteMoviesFragment.FavoritesScreenKt\$FavoritesScreen">
     </composable>
 
     <fragment

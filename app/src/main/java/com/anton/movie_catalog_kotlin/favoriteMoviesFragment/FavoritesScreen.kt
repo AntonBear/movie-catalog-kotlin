@@ -1,4 +1,4 @@
-package com.anton.movie_catalog_kotlin.FavoriteMoviesFragment
+package com.anton.movie_catalog_kotlin.favoriteMoviesFragment
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

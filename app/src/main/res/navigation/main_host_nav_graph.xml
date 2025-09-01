@@ -16,7 +16,7 @@
         tools:layout="@layout/movies_screen_fragment" />
     <fragment
         android:id="@+id/favoriteMoviesFragment"
-        android:name="com.anton.movie_catalog_kotlin.FavoriteMoviesFragment.FavoriteMoviesFragment"
+        android:name="com.anton.movie_catalog_kotlin.favoriteMoviesFragment.FavoriteMoviesFragment"
         android:label="FavoriteMoviesFragment" />
     <fragment
         android:id="@+id/profileScreenFragment"

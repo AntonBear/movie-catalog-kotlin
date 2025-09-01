@@ -98,8 +98,7 @@ class SignInViewModel @Inject constructor(
             if (response.isSuccessful) {
                 _userLogSuccess.emit(true)
                 val body = response.body()
-                if(body != null)
-                Log.d("debug","token ${body.token}")
+                if(body != null) Log.d("debug","token ${body.token}")
             } else {
                 _userLogSuccess.emit(false)
             }
