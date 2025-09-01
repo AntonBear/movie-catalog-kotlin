@@ -22,7 +22,7 @@
             android:id="@+id/backStackButton"
             style="@style/ButtonWithSvgMaterial"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/form_element_height"
             android:layout_marginStart="24dp"
             android:layout_marginTop="40dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,23 +31,22 @@
         <TextView
             android:id="@+id/label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/form_element_height"
+            android:layout_marginStart="@dimen/m"
             android:fontFamily="@font/manrope_bold"
             android:text="@string/signup"
             android:textColor="@color/white"
             android:textSize="24sp"
-            app:layout_constraintTop_toTopOf="@+id/backStackButton"
             app:layout_constraintBottom_toBottomOf="@+id/backStackButton"
             app:layout_constraintStart_toEndOf="@+id/backStackButton"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/backStackButton" />
 
         <!-- Поля ввода -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/loginTextInput"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:boxBackgroundMode="filled"
-            app:boxBackgroundColor="?attr/colorPrimary"
+            android:layout_height="@dimen/form_element_height"
+            style="@style/TextInputLayout"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="8dp"
@@ -58,7 +57,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/loginEditText"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/form_element_height"
                 android:hint="@string/login"
                 android:textColor="?attr/colorOnSurface"
                 android:textColorHint="@color/gray_faded"
@@ -68,9 +67,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailTextInput"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:boxBackgroundMode="filled"
-            app:boxBackgroundColor="?attr/colorPrimary"
+            android:layout_height="@dimen/form_element_height"
+            style="@style/TextInputLayout"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="8dp"
@@ -81,7 +79,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/form_element_height"
                 android:hint="@string/email"
                 android:textColor="?attr/colorOnSurface"
                 android:textColorHint="@color/gray_faded"
@@ -92,8 +90,7 @@
             android:id="@+id/nameTextInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:boxBackgroundMode="filled"
-            app:boxBackgroundColor="?attr/colorPrimary"
+            style="@style/TextInputLayout"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="8dp"
@@ -115,8 +112,7 @@
             android:id="@+id/passwordTextInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:boxBackgroundMode="filled"
-            app:boxBackgroundColor="?attr/colorPrimary"
+            style="@style/TextInputLayout"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="8dp"
@@ -138,8 +134,7 @@
             android:id="@+id/passwordConfirmTextInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:boxBackgroundMode="filled"
-            app:boxBackgroundColor="?attr/colorPrimary"
+            style="@style/TextInputLayout"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="8dp"
@@ -161,8 +156,7 @@
             android:id="@+id/dateOfBirthTextInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:boxBackgroundMode="filled"
-            app:boxBackgroundColor="?attr/colorPrimary"
+            style="@style/TextInputLayout"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="8dp"
@@ -184,30 +178,34 @@
         <!-- Пол кнопок -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/maleButton"
+            style="@style/Button"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/form_element_height"
+            android:layout_marginEnd="@dimen/s"
+            android:layout_marginBottom="@dimen/xl"
             android:text="@string/male_button"
             android:textColor="?attr/colorOnPrimary"
-            app:layout_constraintStart_toStartOf="@+id/dateOfBirthTextInput"
+            app:layout_constraintBottom_toTopOf="@+id/signUpButton"
             app:layout_constraintEnd_toStartOf="@+id/femaleButton"
-            app:layout_constraintBottom_toTopOf="@+id/signUpButton"/>
+            app:layout_constraintStart_toStartOf="@+id/dateOfBirthTextInput" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/femaleButton"
+            style="@style/Button"
             android:layout_width="0dp"
             android:layout_height="48dp"
+            android:layout_marginBottom="@dimen/xl"
             android:text="@string/female_button"
-            android:textColor="?attr/colorOnPrimary"
-            app:layout_constraintStart_toEndOf="@+id/maleButton"
+            app:layout_constraintBottom_toTopOf="@+id/signUpButton"
             app:layout_constraintEnd_toEndOf="@+id/dateOfBirthTextInput"
-            app:layout_constraintTop_toTopOf="@+id/maleButton"
-            app:layout_constraintBottom_toBottomOf="@+id/maleButton"/>
+            app:layout_constraintStart_toEndOf="@+id/maleButton"
+            app:layout_constraintTop_toTopOf="@+id/maleButton" />
 
         <!-- Кнопка регистрации -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/signUpButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/form_element_height"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
