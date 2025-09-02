@@ -14,9 +14,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.SignUpFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
 
+@AndroidEntryPoint
 class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
     private var _binding: SignUpFragmentBinding? = null
@@ -34,18 +36,29 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
             backStackButton.setOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
-        }
+            maleButton.setOnClickListener {
+                viewModel.onMaleGenderChanged()
+            }
+            femaleButton.setOnClickListener {
+                viewModel.onFemaleGenderChanged()
+            }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-
-
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    launch {
+                        viewModel.isMaleGenderSelected.collect { isSelected ->
+                            maleButton.isSelected = isSelected
+                        }
+                    }
+                    launch {
+                        viewModel.isFemaleGenderSelected.collect { isSelected ->
+                            femaleButton.isSelected = isSelected
+                        }
+                    }
                 }
             }
+
         }
-
-
     }
 
     private fun showDatePickerDialog() {

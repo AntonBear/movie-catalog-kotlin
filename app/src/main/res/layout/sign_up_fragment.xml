@@ -178,24 +178,25 @@
         <!-- Пол кнопок -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/maleButton"
-            style="@style/Button"
             android:layout_width="0dp"
             android:layout_height="@dimen/form_element_height"
             android:layout_marginEnd="@dimen/s"
             android:layout_marginBottom="@dimen/xl"
             android:text="@string/male_button"
-            android:textColor="?attr/colorOnPrimary"
+            android:background="@drawable/button_selected_selector"
+            app:backgroundTint="@null"
             app:layout_constraintBottom_toTopOf="@+id/signUpButton"
             app:layout_constraintEnd_toStartOf="@+id/femaleButton"
             app:layout_constraintStart_toStartOf="@+id/dateOfBirthTextInput" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/femaleButton"
-            style="@style/Button"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginBottom="@dimen/xl"
             android:text="@string/female_button"
+            android:background="@drawable/button_selected_selector"
+            app:backgroundTint="@null"
             app:layout_constraintBottom_toTopOf="@+id/signUpButton"
             app:layout_constraintEnd_toEndOf="@+id/dateOfBirthTextInput"
             app:layout_constraintStart_toEndOf="@+id/maleButton"
@@ -210,7 +211,8 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
             android:text="@string/sign_up"
-            style="@style/Button"
+            android:background="@drawable/button_enabled_selector"
+            app:backgroundTint="@null"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
