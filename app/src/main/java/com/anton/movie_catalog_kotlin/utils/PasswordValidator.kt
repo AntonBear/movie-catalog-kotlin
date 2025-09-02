@@ -14,7 +14,7 @@ class PasswordValidator @Inject constructor() {
         return password == confirmPassword
     }
 
-    fun signInPasswordIsValid(password: CharSequence?): Boolean {
+    fun passwordIsValid(password: CharSequence?): Boolean {
         return !password.isNullOrEmpty()
     }
 }

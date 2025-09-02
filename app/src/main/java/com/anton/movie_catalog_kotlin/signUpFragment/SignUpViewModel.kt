@@ -83,13 +83,12 @@ class SignUpViewModel @Inject constructor(
             _userName = userNameInput.toString()
         } else {
             _errorUserName.value = "Поле должно быть заполнено"
-
         }
     }
 
     fun onPasswordInputChanged(passwordInput: CharSequence?) {
         _password = passwordInput.toString()
-        if (passwordValidator.signInPasswordIsValid(passwordInput)) {
+        if (passwordValidator.passwordIsValid(passwordInput)) {
             _passwordError.value = null
         } else {
             _passwordError.value = "Поле должно быть заполнено"
@@ -98,7 +97,15 @@ class SignUpViewModel @Inject constructor(
 
     fun onConfirmPasswordTextChanged(confirmPasswordInput: CharSequence?) {
         _confirmPassword = confirmPasswordInput?.toString()
-        if (passwordValidator.signInPasswordIsValid(_confirmPassword)) {
+        if (passwordValidator.passwordIsValid(_confirmPassword)) {
+            _confirmPasswordError.value = null
+        } else {
+            _confirmPasswordError.value = "Поле должно быть заполнено"
+        }
+    }
+
+    fun onConfirmPasswordFocusLost() {
+        if (passwordValidator.confirmPasswordValid(_password, _confirmPassword)) {
             _confirmPasswordError.value = null
         } else {
             _confirmPasswordError.value = "Пароли не совпадают"

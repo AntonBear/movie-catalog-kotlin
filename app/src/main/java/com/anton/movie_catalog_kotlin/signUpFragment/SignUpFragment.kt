@@ -65,6 +65,11 @@ import java.util.Locale
                 passwordConfirmEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.onConfirmPasswordTextChanged(text)
                 }
+                passwordConfirmEditText.setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus) {
+                        viewModel.onConfirmPasswordFocusLost()
+                    }
+                }
 
                 dateOfBirthEditText.setOnClickListener {
                     showDatePickerDialog()
