@@ -145,7 +145,7 @@ class SignUpViewModel(
                     password,
                     email,
                     birthDate,
-                    gender!!,
+                    1,
                 )
                 userAuthRepository.signUp(signUpRequest)
                 _uiState.update { it.copy(isUserLoggedIn = true) }
