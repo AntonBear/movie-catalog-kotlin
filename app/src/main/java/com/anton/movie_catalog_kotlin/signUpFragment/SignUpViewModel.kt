@@ -39,8 +39,8 @@ class SignUpViewModel @Inject constructor(
     private val _errorLogin = MutableStateFlow<String?>(null)
     val errorLogin: StateFlow<String?> = _errorLogin
 
-    private val _errorMail = MutableStateFlow<String?>(null)
-    val errorMail: StateFlow<String?> = _errorMail
+    private val _emailError = MutableStateFlow<String?>(null)
+    val emailError: StateFlow<String?> = _emailError
 
     private val _errorUserName = MutableStateFlow<String?>(null)
     val errorUserName: StateFlow<String?> = _errorUserName
@@ -66,13 +66,18 @@ class SignUpViewModel @Inject constructor(
 
     fun updateEmailText(emailUserInput: CharSequence?) {
         _email = emailUserInput?.toString() ?: ""
+        if (emailValidator.isValid(_email)) {
+            _emailError.value = null
+        } else {
+            _emailError.value = "Неправильный емаил"
+        }
     }
 
     fun emailUserOnFocusValid(emailUserInput: CharSequence?) {
         if (emailValidator.isValid(emailUserInput)) {
-            _errorMail.value = null
+            _emailError.value = null
         } else {
-            _errorMail.value = "Поле заполнено некорректно"
+            _emailError.value = "Поле заполнено некорректно"
 
         }
     }
@@ -96,8 +101,10 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun checkPasswordsMatch() {
-        if (!passwordValidator.passwordIsValid(_confirmPassword)) return
-        if (passwordValidator.confirmPasswordValid(_password, _confirmPassword)) {
+        if (_password.isNullOrBlank() || _confirmPassword.isNullOrBlank()) {
+            return
+        }
+        if (passwordValidator.checkPasswordsMatch(_password, _confirmPassword)) {
             _confirmPasswordError.value = null
         } else {
             _confirmPasswordError.value = "Пароли не совпадают"
@@ -114,7 +121,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onConfirmPasswordFocusLost() {
-        if (passwordValidator.confirmPasswordValid(_password, _confirmPassword)) {
+        if (passwordValidator.checkPasswordsMatch(_password, _confirmPassword)) {
             _confirmPasswordError.value = null
         } else {
             _confirmPasswordError.value = "Пароли не совпадают"
@@ -131,26 +138,6 @@ class SignUpViewModel @Inject constructor(
     fun onPasswordFocusLost() {
         if (passwordValidator.passwordIsValid(_password)) _passwordError.value = null else _passwordError.value = "Полне заполнено не верно"
     }
-
-
-
-    fun onPasswordFocusLostValidConfirmPassword() {
-        val password = _password
-        val confirm = _confirmPassword
-
-        // Проверяем, что оба поля не пустые
-        if (password.isNullOrBlank() || confirm.isNullOrBlank()) {
-            return
-        }
-
-        // Проверяем совпадение
-        _confirmPasswordError.value = if (passwordValidator.confirmPasswordValid(password, confirm)) {
-            null
-        } else {
-            "Пароли не совпадают"
-        }
-    }
-
 
     fun onFemaleGenderChanged() {
         _isFemaleGenderSelected.value = true

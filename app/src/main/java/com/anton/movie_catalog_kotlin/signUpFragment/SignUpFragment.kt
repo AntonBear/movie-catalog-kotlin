@@ -1,11 +1,9 @@
 package com.anton.movie_catalog_kotlin.signUpFragment
 
 import android.app.DatePickerDialog
-import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.View
-import androidx.compose.ui.test.isEnabled
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,9 +15,8 @@ import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.SignUpFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.Locale
 
-    @AndroidEntryPoint
+@AndroidEntryPoint
     class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
         private var _binding: SignUpFragmentBinding? = null
@@ -55,6 +52,7 @@ import java.util.Locale
                 }
                 emailEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.updateEmailText(text)
+
                 }
                 emailEditText.setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
@@ -77,12 +75,12 @@ import java.util.Locale
                 passwordEditText.setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
                         viewModel.onPasswordFocusLost()
-                        viewModel.onPasswordFocusLostValidConfirmPassword()
                     }
                 }
 
                 passwordConfirmEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.onConfirmPasswordTextChanged(text)
+                    viewModel.checkPasswordsMatch()
                 }
                 passwordConfirmEditText.setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
@@ -122,7 +120,7 @@ import java.util.Locale
                             }
                         }
                         launch {
-                            viewModel.errorMail.collect { error ->
+                            viewModel.emailError.collect { error ->
                                 emailTextInput.error = error
                             }
                         }
