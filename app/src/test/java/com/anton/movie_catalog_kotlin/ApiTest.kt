@@ -1,13 +1,35 @@
 package com.anton.movie_catalog_kotlin
 
+import android.util.Log
 import com.anton.movie_catalog_kotlin.retrofit.KinopoiskRetrofitClient
 import com.anton.movie_catalog_kotlin.KreosoftRetrofitClient
+import com.anton.movie_catalog_kotlin.models.SignUpRequest
 import kotlinx.coroutines.runBlocking
 import models.LoginRequest
 import org.junit.Assert.assertNotNull
 import org.junit.Test
+import java.util.UUID
 
 class ApiTest {
+
+    @Test
+    fun testRegUserRequest() = runBlocking {
+        val randomUserName = "User_" + UUID.randomUUID().toString().take(8)
+
+        val response = KreosoftRetrofitClient.api.register(
+            SignUpRequest(
+                userName = randomUserName,
+                name = "Anton",
+                password = "greedisgood",
+                email = "holzed15@gmail.com",
+                birthDate = "2024-11-06T10:26:03.128Z",
+                gender = 1,
+            )
+        )
+        println("register response: ${response.body()?.token}")
+
+        assertNotNull(response.body()?.token, "Токен не должен быть null")
+    }
 
     @Test
     fun test_login_request() = runBlocking {

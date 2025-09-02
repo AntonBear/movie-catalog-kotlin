@@ -5,6 +5,7 @@ import android.icu.util.Calendar
 import android.text.Editable
 import androidx.lifecycle.ViewModel
 import com.anton.movie_catalog_kotlin.models.Gender
+import com.anton.movie_catalog_kotlin.retrofit.KreosoftRepository
 import com.anton.movie_catalog_kotlin.utils.EmailValidator
 import com.anton.movie_catalog_kotlin.utils.LoginValidator
 import com.anton.movie_catalog_kotlin.utils.PasswordValidator
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
+    val kreosoftRepository: KreosoftRepository,
     val userNameValidator: UserNameValidator,
     val emailValidator: EmailValidator,
     val loginValidator: LoginValidator,
@@ -32,6 +34,7 @@ class SignUpViewModel @Inject constructor(
     private var _gender: Int? = null
     private var _birthDayRaw: String? = null
 
+    // UI стейт для дня рождения
     private val _birthDate = MutableStateFlow<String?>(null)
     val birthDate: StateFlow<String?> = _birthDate
 

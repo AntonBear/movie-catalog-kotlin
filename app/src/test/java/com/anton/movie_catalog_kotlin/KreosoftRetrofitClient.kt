@@ -14,16 +14,16 @@ object KreosoftRetrofitClient {
 
     val json = Json { ignoreUnknownKeys = true }
 
-    lateinit var tokenStorage: TokenStorage
+//    lateinit var tokenStorage: TokenStorage
 
     val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .addInterceptor { chain ->
-                val token = tokenStorage.getToken()
+//                val token = tokenStorage.getToken()
                 val requestBuilder = chain.request().newBuilder()
-                if (!token.isNullOrBlank()) {
-                    requestBuilder.addHeader("Authorization", "Bearer $token")
-                }
+//                if (!token.isNullOrBlank()) {
+//                    requestBuilder.addHeader("Authorization", "Bearer $token")
+//                }
                 chain.proceed(requestBuilder.build())
             }
             .build()
