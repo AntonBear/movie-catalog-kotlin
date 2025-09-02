@@ -10,6 +10,10 @@ class PasswordValidator @Inject constructor() {
         return password == confirmPassword
     }
 
+    fun confirmPasswordValid(password: String?, confirmPassword: String?): Boolean {
+        return password == confirmPassword
+    }
+
     fun signInPasswordIsValid(password: CharSequence?): Boolean {
         return !password.isNullOrEmpty()
     }

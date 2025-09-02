@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.anton.movie_catalog_kotlin.models.Gender
 import com.anton.movie_catalog_kotlin.utils.EmailValidator
 import com.anton.movie_catalog_kotlin.utils.LoginValidator
+import com.anton.movie_catalog_kotlin.utils.PasswordValidator
 import com.anton.movie_catalog_kotlin.utils.UserNameValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +20,7 @@ class SignUpViewModel @Inject constructor(
     val userNameValidator: UserNameValidator,
     val emailValidator: EmailValidator,
     val loginValidator: LoginValidator,
+    val passwordValidator: PasswordValidator,
 ) : ViewModel() {
 
     // Сырые данные полей ввода
@@ -87,10 +89,20 @@ class SignUpViewModel @Inject constructor(
 
     fun onPasswordInputChanged(passwordInput: CharSequence?) {
         _password = passwordInput.toString()
+        if (passwordValidator.signInPasswordIsValid(passwordInput)) {
+            _passwordError.value = null
+        } else {
+            _passwordError.value = "Поле должно быть заполнено"
+        }
     }
 
     fun onConfirmPasswordTextChanged(confirmPasswordInput: CharSequence?) {
-        _confirmPassword = confirmPasswordInput.toString()
+        _confirmPassword = confirmPasswordInput?.toString()
+        if (passwordValidator.confirmPasswordValid(_password,_confirmPassword)) {
+            _confirmPasswordError.value = null
+        } else {
+            _confirmPasswordError.value = "Пароли не совпадают"
+        }
     }
 
     fun onFemaleGenderChanged() {
