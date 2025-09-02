@@ -3,22 +3,28 @@ package com.anton.movie_catalog_kotlin.signUpFragment
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.text.Editable
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anton.movie_catalog_kotlin.models.Gender
 import com.anton.movie_catalog_kotlin.models.SignUpRequest
 import com.anton.movie_catalog_kotlin.retrofit.KreosoftRepository
+import com.anton.movie_catalog_kotlin.storage.TokenStorage
 import com.anton.movie_catalog_kotlin.utils.EmailValidator
 import com.anton.movie_catalog_kotlin.utils.LoginValidator
 import com.anton.movie_catalog_kotlin.utils.PasswordValidator
 import com.anton.movie_catalog_kotlin.utils.UserNameValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import java.util.Locale
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +34,7 @@ class SignUpViewModel @Inject constructor(
     val emailValidator: EmailValidator,
     val loginValidator: LoginValidator,
     val passwordValidator: PasswordValidator,
+    val tokenStorage: TokenStorage,
 ) : ViewModel() {
 
     // Сырые данные полей ввода
@@ -43,6 +50,10 @@ class SignUpViewModel @Inject constructor(
     private val _birthDate = MutableStateFlow<String?>(null)
     val birthDate: StateFlow<String?> = _birthDate
 
+    //Стейт для перехода на фрагмент при успешной регистрации
+    private val _navigateToNextFragment = MutableSharedFlow<Unit>()
+    val navigateToNextFragment: SharedFlow<Unit> = _navigateToNextFragment
+
     // Стейты валидности полей
     private val _userLoginIsValid = MutableStateFlow<Boolean>(false)
     private val _emailIsValid = MutableStateFlow<Boolean>(false)
@@ -51,7 +62,6 @@ class SignUpViewModel @Inject constructor(
     private val _confirmIsValid = MutableStateFlow<Boolean>(false)
     private val _genderIsValid = MutableStateFlow<Boolean>(false)
     private val _birthDateIsValid = MutableStateFlow<Boolean>(false)
-
 
     // Стейты для текста ошибок
     private val _errorLogin = MutableStateFlow<String?>(null)
@@ -71,7 +81,6 @@ class SignUpViewModel @Inject constructor(
 
     private val _birthdayDateError = MutableStateFlow<String?>(null)
     val birthdayDateError: StateFlow<String?> = _birthdayDateError
-
 
     fun onUserLoginInputChanged(userLoginInput: CharSequence?) {
         _userLogin = userLoginInput.toString()
@@ -204,22 +213,26 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun registerUser() {
-        val request: SignUpRequest = SignUpRequest(
+        val request = SignUpRequest(
             userName = _userName,
             name = _userLogin,
             password = _password,
             email = _email,
             birthDate = _birthDateRaw,
             gender = _gender )
-//        try {
-//            val response = kreosoftRepository.regUser(
-//                _userName = "Anton"
-//            )
-//
-//        }
-//        catch(e: Exception) {
-//
-//        }
+
+        Log.d("debug", "$_userName, $_userLogin, $_password, $_email, $_birthDateRaw, $_gender")
+        viewModelScope.launch {
+            val result = kreosoftRepository.regUser(request)
+
+            result.onSuccess { token ->
+                println("Регистрация успешна, токен: $token")
+                tokenStorage.saveToken(token)
+                _navigateToNextFragment.emit(Unit)
+            }.onFailure { e ->
+                println("Ошибка регистрации: ${e.message}")
+            }
+        }
     }
 
 
@@ -239,5 +252,29 @@ class SignUpViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = false
     )
+
+    init {
+        _userLogin = "TestLogin"
+        _email = "test@example.com"
+        _userName = "User_" + UUID.randomUUID().toString().take(8) // случайный каждый раз
+        _password = "greedisgood"
+        _confirmPassword = "greedisgood"
+        _gender = 0 // например, male
+        _birthDateRaw = "2000-01-01T00:00:00.000Z"
+
+        // UI-friendly дата
+        _birthDate.value = "01 января 2000"
+
+        // все валидные
+        _userLoginIsValid.value = true
+        _emailIsValid.value = true
+        _userNameIsValid.value = true
+        _passwordIsValid.value = true
+        _confirmIsValid.value = true
+        _genderIsValid.value = true
+        _birthDateIsValid.value = true
+
+        _isMaleGenderSelected.value = true
+    }
 
 }

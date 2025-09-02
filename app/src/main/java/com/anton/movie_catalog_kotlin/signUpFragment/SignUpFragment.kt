@@ -28,9 +28,6 @@ import kotlinx.coroutines.launch
             _binding = SignUpFragmentBinding.bind(view)
 
             with(binding) {
-                signUpButton.setOnClickListener {
-                    findNavController().navigate(R.id.action_signUpFragment_to_mainHostFragment)
-                }
                 backStackButton.setOnClickListener {
                     requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
@@ -40,8 +37,9 @@ import kotlinx.coroutines.launch
                 femaleButton.setOnClickListener {
                     viewModel.onFemaleGenderChanged()
                 }
-                signUpButton.setOnClickListener {}
-
+                signUpButton.setOnClickListener {
+                    viewModel.registerUser()
+                }
                 loginEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.onUserLoginInputChanged(text)
                 }
@@ -66,13 +64,11 @@ import kotlinx.coroutines.launch
                     viewModel.onPasswordInputChanged(text)
                     viewModel.checkPasswordsMatch()
                 }
-
                 passwordEditText.setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
                         viewModel.onPasswordFocusLost()
                     }
                 }
-
                 passwordConfirmEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.onConfirmPasswordTextChanged(text)
                     viewModel.checkPasswordsMatch()
@@ -82,7 +78,6 @@ import kotlinx.coroutines.launch
                         viewModel.onConfirmPasswordFocusLost()
                     }
                 }
-
                 dateOfBirthEditText.setOnClickListener {
                     showDatePickerDialog()
                 }
@@ -137,6 +132,11 @@ import kotlinx.coroutines.launch
                         launch {
                             viewModel.birthdayDateError.collect { error ->
                                 dateOfBirthTextInput.error = error
+                            }
+                        }
+                        launch {
+                            viewModel.navigateToNextFragment.collect {
+                                findNavController().navigate(R.id.action_signUpFragment_to_mainHostFragment)
                             }
                         }
                     }

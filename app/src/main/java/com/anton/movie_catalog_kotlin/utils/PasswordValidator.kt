@@ -15,6 +15,6 @@ class PasswordValidator @Inject constructor() {
     }
 
     fun passwordIsValid(password: CharSequence?): Boolean {
-        return !password.isNullOrEmpty()
+        return !password.isNullOrEmpty() && password.length >= 6
     }
 }
