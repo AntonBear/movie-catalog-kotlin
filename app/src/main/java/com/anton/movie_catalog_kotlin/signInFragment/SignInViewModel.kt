@@ -68,25 +68,26 @@ class SignInViewModel @Inject constructor(
             "debug",
             "isPasswordValid - ${passwordValidator.signInPasswordIsValid(inputPassword)}"
         )
-        if (!passwordValidator.signInPasswordIsValid(inputPassword)) {
-            _passwordErrorText.value = "password error"
-            _passwordIsValid.value = false
-        } else {
+        if (passwordValidator.signInPasswordIsValid(inputPassword)) {
             _passwordErrorText.value = null
             _passwordIsValid.value = true
             _userPassword = inputPassword.toString()
+        } else {
+            _passwordErrorText.value = "password error"
+            _passwordIsValid.value = false
         }
     }
 
     fun onLoginTextChanged(inputLogin: CharSequence?) {
         Log.d("debug", "isLoginValid - ${loginValidator.isValid(inputLogin)}")
         if (loginValidator.isValid(inputLogin)) {
-            _loginErrorText.value = "login error"
-            _loginIsValid.value = false
-        } else {
             _loginErrorText.value = null
             _loginIsValid.value = true
             _userLogin = inputLogin.toString()
+        } else {
+            _loginErrorText.value = "login error"
+            _loginIsValid.value = false
+
         }
     }
 

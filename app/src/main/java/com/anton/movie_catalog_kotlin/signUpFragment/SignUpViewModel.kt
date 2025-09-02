@@ -98,7 +98,7 @@ class SignUpViewModel @Inject constructor(
 
     fun onConfirmPasswordTextChanged(confirmPasswordInput: CharSequence?) {
         _confirmPassword = confirmPasswordInput?.toString()
-        if (passwordValidator.confirmPasswordValid(_password,_confirmPassword)) {
+        if (passwordValidator.signInPasswordIsValid(_confirmPassword)) {
             _confirmPasswordError.value = null
         } else {
             _confirmPasswordError.value = "Пароли не совпадают"
