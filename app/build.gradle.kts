@@ -27,6 +27,10 @@ android {
         }
     }
 
+    productFlavors {
+
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -37,7 +41,7 @@ android {
         }
 
         debug {
-            buildConfigField("boolean", "AUTO_LOGIN", "true")
+            buildConfigField("boolean", "mainHostFragment_debug", "false")
             buildConfigField("String", "LOGIN", "\"anton\"")
             buildConfigField("String", "PASSWORD", "\"greedisgood\"")
         }

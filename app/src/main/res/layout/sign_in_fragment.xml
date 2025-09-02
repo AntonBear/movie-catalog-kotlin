@@ -47,6 +47,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
             android:text="@string/sign_in"
+            android:textSize="14sp"
             android:background="@drawable/button_selector"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"

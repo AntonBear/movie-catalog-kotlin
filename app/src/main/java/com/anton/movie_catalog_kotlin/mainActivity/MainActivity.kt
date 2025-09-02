@@ -29,15 +29,17 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         // Авто-логин только для debug сборки
-        if (BuildConfig.AUTO_LOGIN) {
+        if (BuildConfig.mainHostFragment_debug) {
             viewModel.loginUser(BuildConfig.LOGIN, BuildConfig.PASSWORD)
-        }
+            // После успешного логина переходим на MainHostFragment
 
-        // После успешного логина переходим на MainHostFragment
-        viewModel.loginResult.observe(this) { token ->
-            if (token != null) {
-                navController.navigate(R.id.mainHostFragment)
+            viewModel.loginResult.observe(this) { token ->
+                if (token != null) {
+                    navController.navigate(R.id.mainHostFragment)
+                }
             }
         }
+
+
     }
 }
