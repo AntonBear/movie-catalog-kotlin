@@ -56,9 +56,9 @@ class SignUpViewModel @Inject constructor(
 
 
     fun onUserLoginInputChanged(userLoginInput: CharSequence?) {
-        if (loginValidator.isValid(userLoginInput)) {
+        _userLogin = userLoginInput.toString()
+        if (loginValidator.isValid(_userLogin)) {
             _errorLogin.value = null
-            _userLogin = userLoginInput.toString()
         } else {
             _errorLogin.value = "Поле должно быть заполнено"
         }
@@ -78,20 +78,29 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onUserNameInputChanged(userNameInput: CharSequence?) {
-        if (userNameValidator.isValid(userNameInput)) {
+        _userName = userNameInput.toString()
+        if (userNameValidator.isValid(_userName)) {
             _errorUserName.value = null
-            _userName = userNameInput.toString()
         } else {
-            _errorUserName.value = "Поле должно быть заполнено"
+            _errorUserName.value = "Поле заполнено не верно"
         }
     }
 
     fun onPasswordInputChanged(passwordInput: CharSequence?) {
         _password = passwordInput.toString()
-        if (passwordValidator.passwordIsValid(passwordInput)) {
+        if (passwordValidator.passwordIsValid(_password)) {
             _passwordError.value = null
         } else {
-            _passwordError.value = "Поле должно быть заполнено"
+            _passwordError.value = "Поле заполнено не верно"
+        }
+    }
+
+    fun checkPasswordsMatch() {
+        if (!passwordValidator.passwordIsValid(_confirmPassword)) return
+        if (passwordValidator.confirmPasswordValid(_password, _confirmPassword)) {
+            _confirmPasswordError.value = null
+        } else {
+            _confirmPasswordError.value = "Пароли не совпадают"
         }
     }
 
@@ -100,7 +109,7 @@ class SignUpViewModel @Inject constructor(
         if (passwordValidator.passwordIsValid(_confirmPassword)) {
             _confirmPasswordError.value = null
         } else {
-            _confirmPasswordError.value = "Поле должно быть заполнено"
+            _confirmPasswordError.value = "Поле заполнено не верно"
         }
     }
 
@@ -111,6 +120,37 @@ class SignUpViewModel @Inject constructor(
             _confirmPasswordError.value = "Пароли не совпадают"
         }
     }
+    fun onUserLoginFocusLost() {
+        if(loginValidator.isValid(_userLogin)) _errorLogin.value = null else _errorLogin.value = "Поле заполнено не верно"
+    }
+
+    fun onUserNameFocusLost() {
+        if (userNameValidator.isValid(_userName)) _errorUserName.value = null else _errorUserName.value = "Полне заполнено не верно"
+    }
+
+    fun onPasswordFocusLost() {
+        if (passwordValidator.passwordIsValid(_password)) _passwordError.value = null else _passwordError.value = "Полне заполнено не верно"
+    }
+
+
+
+    fun onPasswordFocusLostValidConfirmPassword() {
+        val password = _password
+        val confirm = _confirmPassword
+
+        // Проверяем, что оба поля не пустые
+        if (password.isNullOrBlank() || confirm.isNullOrBlank()) {
+            return
+        }
+
+        // Проверяем совпадение
+        _confirmPasswordError.value = if (passwordValidator.confirmPasswordValid(password, confirm)) {
+            null
+        } else {
+            "Пароли не совпадают"
+        }
+    }
+
 
     fun onFemaleGenderChanged() {
         _isFemaleGenderSelected.value = true

@@ -48,6 +48,11 @@ import java.util.Locale
                 loginEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.onUserLoginInputChanged(text)
                 }
+                loginEditText.setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus) {
+                        viewModel.onUserLoginFocusLost()
+                    }
+                }
                 emailEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.updateEmailText(text)
                 }
@@ -59,9 +64,23 @@ import java.util.Locale
                 userNameEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.onUserNameInputChanged(text)
                 }
+                userNameEditText.setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus) {
+                        viewModel.onUserNameFocusLost()
+                    }
+                }
                 passwordEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.onPasswordInputChanged(text)
+                    viewModel.checkPasswordsMatch()
                 }
+
+                passwordEditText.setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus) {
+                        viewModel.onPasswordFocusLost()
+                        viewModel.onPasswordFocusLostValidConfirmPassword()
+                    }
+                }
+
                 passwordConfirmEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.onConfirmPasswordTextChanged(text)
                 }
