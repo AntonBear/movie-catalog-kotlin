@@ -6,6 +6,7 @@ import android.text.Editable
 import androidx.lifecycle.ViewModel
 import com.anton.movie_catalog_kotlin.models.Gender
 import com.anton.movie_catalog_kotlin.utils.EmailValidator
+import com.anton.movie_catalog_kotlin.utils.LoginValidator
 import com.anton.movie_catalog_kotlin.utils.UserNameValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     val userNameValidator: UserNameValidator,
     val emailValidator: EmailValidator,
+    val loginValidator: LoginValidator,
 ) : ViewModel() {
 
     // Сырые данные полей ввода
@@ -51,31 +53,35 @@ class SignUpViewModel @Inject constructor(
     val birthdayDateError: StateFlow<String?> = _birthdayDateError
 
 
-
-
     fun onUserLoginInputChanged(userLoginInput: CharSequence?) {
-        _userLogin = userLoginInput.toString()
+        if (loginValidator.isValid(userLoginInput)) {
+            _errorLogin.value = null
+            _userLogin = userLoginInput.toString()
+        } else {
+            _errorLogin.value = "Поле должно быть заполнено"
+        }
     }
 
     fun updateEmailText(emailUserInput: CharSequence?) {
         _email = emailUserInput?.toString() ?: ""
     }
 
-    fun onEmailUserInputChanged(emailUserInput: CharSequence?) {
-        _email = emailUserInput.toString()
-        if (!emailValidator.isValid(_email)) {
-            _errorMail.value = "Поле заполнено некорректно"
-        } else {
+    fun emailUserOnFocusValid(emailUserInput: CharSequence?) {
+        if (emailValidator.isValid(emailUserInput)) {
             _errorMail.value = null
+        } else {
+            _errorMail.value = "Поле заполнено некорректно"
+
         }
     }
 
     fun onUserNameInputChanged(userNameInput: CharSequence?) {
-        _userName = userNameInput.toString()
-        if (userNameValidator.isValid(_userName)) {
-            _errorUserName.value = "Поле должно быть заполнено"
-        } else {
+        if (userNameValidator.isValid(userNameInput)) {
             _errorUserName.value = null
+            _userName = userNameInput.toString()
+        } else {
+            _errorUserName.value = "Поле должно быть заполнено"
+
         }
     }
 

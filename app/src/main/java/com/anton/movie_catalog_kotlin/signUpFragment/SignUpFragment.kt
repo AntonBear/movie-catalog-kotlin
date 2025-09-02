@@ -44,6 +44,7 @@ import java.util.Locale
                     viewModel.onFemaleGenderChanged()
                 }
                 signUpButton.setOnClickListener {}
+
                 loginEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.onUserLoginInputChanged(text)
                 }
@@ -52,7 +53,7 @@ import java.util.Locale
                 }
                 emailEditText.setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
-                        viewModel.onEmailUserInputChanged(emailEditText.text)
+                        viewModel.emailUserOnFocusValid(emailEditText.text)
                     }
                 }
                 userNameEditText.doOnTextChanged { text, _, _, _ ->
