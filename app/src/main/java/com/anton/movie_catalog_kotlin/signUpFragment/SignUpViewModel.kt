@@ -4,7 +4,9 @@ import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.text.Editable
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.anton.movie_catalog_kotlin.models.Gender
+import com.anton.movie_catalog_kotlin.models.SignUpRequest
 import com.anton.movie_catalog_kotlin.retrofit.KreosoftRepository
 import com.anton.movie_catalog_kotlin.utils.EmailValidator
 import com.anton.movie_catalog_kotlin.utils.LoginValidator
@@ -12,7 +14,10 @@ import com.anton.movie_catalog_kotlin.utils.PasswordValidator
 import com.anton.movie_catalog_kotlin.utils.UserNameValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import java.util.Locale
 import javax.inject.Inject
 
@@ -26,19 +31,29 @@ class SignUpViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Сырые данные полей ввода
-    private var _userLogin: String? = null
+    private var _userLogin: String = ""
     private var _email: String = ""
-    private var _userName: String? = null
-    private var _password: String? = null
-    private var _confirmPassword: String? = null
-    private var _gender: Int? = null
-    private var _birthDayRaw: String? = null
+    private var _userName: String = ""
+    private var _password: String = ""
+    private var _confirmPassword: String = ""
+    private var _gender: Int = 0
+    private var _birthDateRaw: String = ""
 
     // UI стейт для дня рождения
     private val _birthDate = MutableStateFlow<String?>(null)
     val birthDate: StateFlow<String?> = _birthDate
 
-    // Стейты для ошибок полей ввода
+    // Стейты валидности полей
+    private val _userLoginIsValid = MutableStateFlow<Boolean>(false)
+    private val _emailIsValid = MutableStateFlow<Boolean>(false)
+    private val _userNameIsValid = MutableStateFlow<Boolean>(false)
+    private val _passwordIsValid = MutableStateFlow<Boolean>(false)
+    private val _confirmIsValid = MutableStateFlow<Boolean>(false)
+    private val _genderIsValid = MutableStateFlow<Boolean>(false)
+    private val _birthDateIsValid = MutableStateFlow<Boolean>(false)
+
+
+    // Стейты для текста ошибок
     private val _errorLogin = MutableStateFlow<String?>(null)
     val errorLogin: StateFlow<String?> = _errorLogin
 
@@ -62,6 +77,7 @@ class SignUpViewModel @Inject constructor(
         _userLogin = userLoginInput.toString()
         if (loginValidator.isValid(_userLogin)) {
             _errorLogin.value = null
+            _userLoginIsValid.value = true
         } else {
             _errorLogin.value = "Поле должно быть заполнено"
         }
@@ -71,24 +87,18 @@ class SignUpViewModel @Inject constructor(
         _email = emailUserInput?.toString() ?: ""
         if (emailValidator.isValid(_email)) {
             _emailError.value = null
+            _emailIsValid.value = true
         } else {
             _emailError.value = "Неправильный емаил"
         }
     }
 
-    fun emailUserOnFocusValid(emailUserInput: CharSequence?) {
-        if (emailValidator.isValid(emailUserInput)) {
-            _emailError.value = null
-        } else {
-            _emailError.value = "Поле заполнено некорректно"
-
-        }
-    }
 
     fun onUserNameInputChanged(userNameInput: CharSequence?) {
         _userName = userNameInput.toString()
         if (userNameValidator.isValid(_userName)) {
             _errorUserName.value = null
+            _userNameIsValid.value = true
         } else {
             _errorUserName.value = "Поле заполнено не верно"
         }
@@ -98,6 +108,7 @@ class SignUpViewModel @Inject constructor(
         _password = passwordInput.toString()
         if (passwordValidator.passwordIsValid(_password)) {
             _passwordError.value = null
+            _passwordIsValid.value = true
         } else {
             _passwordError.value = "Поле заполнено не верно"
         }
@@ -115,9 +126,10 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onConfirmPasswordTextChanged(confirmPasswordInput: CharSequence?) {
-        _confirmPassword = confirmPasswordInput?.toString()
+        _confirmPassword = confirmPasswordInput.toString()
         if (passwordValidator.passwordIsValid(_confirmPassword)) {
             _confirmPasswordError.value = null
+            _confirmIsValid.value = true
         } else {
             _confirmPasswordError.value = "Поле заполнено не верно"
         }
@@ -145,14 +157,18 @@ class SignUpViewModel @Inject constructor(
     fun onFemaleGenderChanged() {
         _isFemaleGenderSelected.value = true
         _isMaleGenderSelected.value = false
+        _genderIsValid.value = true
         _gender = 0
     }
 
     fun onMaleGenderChanged() {
         _isMaleGenderSelected.value = true
         _isFemaleGenderSelected.value = false
+        _genderIsValid.value = true
         _gender = 1
     }
+
+
 
     // Стейты кнопок выбора гендера и активации регистрации
     private val _isMaleGenderSelected = MutableStateFlow<Boolean>(false)
@@ -160,9 +176,9 @@ class SignUpViewModel @Inject constructor(
 
     private val _isFemaleGenderSelected = MutableStateFlow<Boolean>(false)
     val isFemaleGenderSelected: StateFlow<Boolean> = _isFemaleGenderSelected
-
-    private val _isSignUpButtonEnabled = MutableStateFlow<Boolean>(false)
-    val isSignUpButtonEnabled: StateFlow<Boolean> = _isSignUpButtonEnabled
+//
+//    private val _isSignUpButtonEnabled = MutableStateFlow<Boolean>(false)
+//    val isSignUpButtonEnabled: StateFlow<Boolean> = _isSignUpButtonEnabled
 
 
     fun onBirthDateInputChanged(year: Int, month: Int, day: Int) {
@@ -173,7 +189,8 @@ class SignUpViewModel @Inject constructor(
 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
         val formattedDate = dateFormat.format(calendar.time)
-        _birthDayRaw = formattedDate
+        _birthDateRaw = formattedDate
+        _birthDateIsValid.value = true
 
         val locale = Locale("ru", "RU")
         val formattedDateUI =
@@ -185,5 +202,42 @@ class SignUpViewModel @Inject constructor(
                 }.time)
         _birthDate.value = formattedDateUI
     }
+
+    fun registerUser() {
+        val request: SignUpRequest = SignUpRequest(
+            userName = _userName,
+            name = _userLogin,
+            password = _password,
+            email = _email,
+            birthDate = _birthDateRaw,
+            gender = _gender )
+//        try {
+//            val response = kreosoftRepository.regUser(
+//                _userName = "Anton"
+//            )
+//
+//        }
+//        catch(e: Exception) {
+//
+//        }
+    }
+
+
+
+    val isSignUpButtonEnabled: StateFlow<Boolean> = combine(
+        _userLoginIsValid,
+        _emailIsValid,
+        _userNameIsValid,
+        _passwordIsValid,
+        _confirmIsValid,
+        _genderIsValid,
+        _birthDateIsValid,
+    ) { values: Array<Boolean> ->
+        values.all { it }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = false
+    )
 
 }

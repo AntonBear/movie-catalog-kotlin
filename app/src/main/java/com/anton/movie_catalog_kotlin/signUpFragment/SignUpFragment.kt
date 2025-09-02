@@ -54,11 +54,6 @@ import kotlinx.coroutines.launch
                     viewModel.updateEmailText(text)
 
                 }
-                emailEditText.setOnFocusChangeListener { _, hasFocus ->
-                    if (!hasFocus) {
-                        viewModel.emailUserOnFocusValid(emailEditText.text)
-                    }
-                }
                 userNameEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.onUserNameInputChanged(text)
                 }
