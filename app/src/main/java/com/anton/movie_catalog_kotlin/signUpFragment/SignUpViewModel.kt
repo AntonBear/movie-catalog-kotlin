@@ -5,6 +5,8 @@ import android.icu.util.Calendar
 import android.text.Editable
 import androidx.lifecycle.ViewModel
 import com.anton.movie_catalog_kotlin.models.Gender
+import com.anton.movie_catalog_kotlin.utils.EmailValidator
+import com.anton.movie_catalog_kotlin.utils.UserNameValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,11 +14,14 @@ import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor() : ViewModel() {
+class SignUpViewModel @Inject constructor(
+    val userNameValidator: UserNameValidator,
+    val emailValidator: EmailValidator,
+) : ViewModel() {
 
     // Сырые данные полей ввода
     private var _userLogin: String? = null
-    private var _email: String? = null
+    private var _email: String = ""
     private var _userName: String? = null
     private var _password: String? = null
     private var _confirmPassword: String? = null
@@ -26,13 +31,12 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
     private val _birthDate = MutableStateFlow<String?>(null)
     val birthDate: StateFlow<String?> = _birthDate
 
-
     // Стейты для ошибок полей ввода
     private val _errorLogin = MutableStateFlow<String?>(null)
     val errorLogin: StateFlow<String?> = _errorLogin
 
     private val _errorMail = MutableStateFlow<String?>(null)
-    val errorMail: StateFlow<String?> = _errorLogin
+    val errorMail: StateFlow<String?> = _errorMail
 
     private val _errorUserName = MutableStateFlow<String?>(null)
     val errorUserName: StateFlow<String?> = _errorUserName
@@ -43,20 +47,36 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
     private val _confirmPasswordError = MutableStateFlow<String?>(null)
     val confirmPasswordError: StateFlow<String?> = _confirmPasswordError
 
-    private val _birthdayDate = MutableStateFlow<String?>(null)
-    val birthdayDate: StateFlow<String?> = _birthdayDate
+    private val _birthdayDateError = MutableStateFlow<String?>(null)
+    val birthdayDateError: StateFlow<String?> = _birthdayDateError
+
+
 
 
     fun onUserLoginInputChanged(userLoginInput: CharSequence?) {
         _userLogin = userLoginInput.toString()
     }
 
+    fun updateEmailText(emailUserInput: CharSequence?) {
+        _email = emailUserInput?.toString() ?: ""
+    }
+
     fun onEmailUserInputChanged(emailUserInput: CharSequence?) {
         _email = emailUserInput.toString()
+        if (!emailValidator.isValid(_email)) {
+            _errorMail.value = "Поле заполнено некорректно"
+        } else {
+            _errorMail.value = null
+        }
     }
 
     fun onUserNameInputChanged(userNameInput: CharSequence?) {
         _userName = userNameInput.toString()
+        if (userNameValidator.isValid(_userName)) {
+            _errorUserName.value = "Поле должно быть заполнено"
+        } else {
+            _errorUserName.value = null
+        }
     }
 
     fun onPasswordInputChanged(passwordInput: CharSequence?) {

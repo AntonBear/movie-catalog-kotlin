@@ -48,7 +48,12 @@ import java.util.Locale
                     viewModel.onUserLoginInputChanged(text)
                 }
                 emailEditText.doOnTextChanged { text, _, _, _ ->
-                    viewModel.onEmailUserInputChanged(text)
+                    viewModel.updateEmailText(text)
+                }
+                emailEditText.setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus) {
+                        viewModel.onEmailUserInputChanged(emailEditText.text)
+                    }
                 }
                 userNameEditText.doOnTextChanged { text, _, _, _ ->
                     viewModel.onUserNameInputChanged(text)
@@ -84,6 +89,36 @@ import java.util.Locale
                         launch {
                             viewModel.birthDate.collect { date ->
                                 dateOfBirthEditText.setText(date)
+                            }
+                        }
+                        launch {
+                            viewModel.errorLogin.collect { error ->
+                                loginTextInput.error = error
+                            }
+                        }
+                        launch {
+                            viewModel.errorMail.collect { error ->
+                                emailTextInput.error = error
+                            }
+                        }
+                        launch {
+                            viewModel.errorUserName.collect { error ->
+                                userNameTextInput.error = error
+                            }
+                        }
+                        launch {
+                            viewModel.passwordError.collect { error ->
+                                passwordTextInput.error = error
+                            }
+                        }
+                        launch {
+                            viewModel.confirmPasswordError.collect { error ->
+                                passwordConfirmTextInput.error = error
+                            }
+                        }
+                        launch {
+                            viewModel.birthdayDateError.collect { error ->
+                                dateOfBirthTextInput.error = error
                             }
                         }
                     }
