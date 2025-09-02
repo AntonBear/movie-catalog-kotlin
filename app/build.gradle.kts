@@ -41,7 +41,7 @@ android {
         }
 
         debug {
-            buildConfigField("boolean", "mainHostFragment_debug", "false")
+            buildConfigField("boolean", "mainHostFragment_debug", "true")
             buildConfigField("String", "LOGIN", "\"anton\"")
             buildConfigField("String", "PASSWORD", "\"greedisgood\"")
         }
