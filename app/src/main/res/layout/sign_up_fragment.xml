@@ -22,7 +22,7 @@
             android:id="@+id/backStackButton"
             style="@style/ButtonWithSvgMaterial"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/form_element_height"
+            android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="40dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         <TextView
             android:id="@+id/label"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/form_element_height"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/m"
             android:fontFamily="@font/manrope_bold"
             android:text="@string/signup"
@@ -45,7 +45,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/loginTextInput"
             android:layout_width="0dp"
-            android:layout_height="@dimen/form_element_height"
+            android:layout_height="wrap_content"
             style="@style/TextInputLayout"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
@@ -57,7 +57,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/loginEditText"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/form_element_height"
+                android:layout_height="wrap_content"
                 android:hint="@string/login"
                 android:textColor="?attr/colorOnSurface"
                 android:textColorHint="@color/gray_faded"
@@ -68,7 +68,7 @@
             android:id="@+id/emailTextInput"
             style="@style/TextInputLayout"
             android:layout_width="0dp"
-            android:layout_height="@dimen/form_element_height"
+            android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="@dimen/s"
@@ -79,7 +79,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/form_element_height"
+                android:layout_height="wrap_content"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:textColor="?attr/colorOnSurface"
@@ -101,7 +101,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/userNameEditText"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:hint="@string/name"
                 android:textColor="?attr/colorOnSurface"
                 android:textColorHint="@color/gray_faded"
@@ -123,7 +123,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:textColor="?attr/colorOnSurface"
                 android:textColorHint="@color/gray_faded"
@@ -145,7 +145,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordConfirmEditText"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:hint="@string/confirm_password"
                 android:textColor="?attr/colorOnSurface"
                 android:textColorHint="@color/gray_faded"
@@ -167,7 +167,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/dateOfBirthEditText"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:hint="@string/date_of_birth"
                 android:focusable="false"
                 android:textColor="?attr/colorOnSurface"
@@ -179,7 +179,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/maleButton"
             android:layout_width="0dp"
-            android:layout_height="@dimen/form_element_height"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/s"
             android:layout_marginBottom="@dimen/xl"
             android:text="@string/male_button"
@@ -192,7 +192,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/femaleButton"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/xl"
             android:text="@string/female_button"
             android:background="@drawable/button_selected_selector"
@@ -206,7 +206,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/signUpButton"
             android:layout_width="0dp"
-            android:layout_height="@dimen/form_element_height"
+            android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"

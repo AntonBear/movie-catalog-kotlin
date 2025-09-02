@@ -37,7 +37,7 @@
         android:id="@+id/buttonEnterAccount"
         style="@style/MyButtonTextStyle"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
@@ -55,7 +55,7 @@
     <Button
         android:id="@+id/buttonSignUpAccount"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="44dp"
