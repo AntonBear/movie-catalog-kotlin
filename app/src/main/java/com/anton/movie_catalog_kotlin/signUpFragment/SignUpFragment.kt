@@ -5,6 +5,7 @@ import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.View
+import androidx.compose.ui.test.isEnabled
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,74 +19,95 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
 
-@AndroidEntryPoint
-class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
+    @AndroidEntryPoint
+    class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
-    private var _binding: SignUpFragmentBinding? = null
-    val binding get() = _binding!!
-    private val viewModel: SignUpViewModel by viewModels()
+        private var _binding: SignUpFragmentBinding? = null
+        val binding get() = _binding!!
+        private val viewModel: SignUpViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        _binding = SignUpFragmentBinding.bind(view)
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            _binding = SignUpFragmentBinding.bind(view)
 
-        with(binding) {
-            signUpButton.setOnClickListener {
-                findNavController().navigate(R.id.action_signUpFragment_to_mainHostFragment)
-            }
-            backStackButton.setOnClickListener {
-                requireActivity().onBackPressedDispatcher.onBackPressed()
-            }
-            maleButton.setOnClickListener {
-                viewModel.onMaleGenderChanged()
-            }
-            femaleButton.setOnClickListener {
-                viewModel.onFemaleGenderChanged()
-            }
+            with(binding) {
+                signUpButton.setOnClickListener {
+                    findNavController().navigate(R.id.action_signUpFragment_to_mainHostFragment)
+                }
+                backStackButton.setOnClickListener {
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+                maleButton.setOnClickListener {
+                    viewModel.onMaleGenderChanged()
+                }
+                femaleButton.setOnClickListener {
+                    viewModel.onFemaleGenderChanged()
+                }
+                signUpButton.setOnClickListener {}
+                loginEditText.doOnTextChanged { text, _, _, _ ->
+                    viewModel.onUserLoginInputChanged(text)
+                }
+                emailEditText.doOnTextChanged { text, _, _, _ ->
+                    viewModel.onEmailUserInputChanged(text)
+                }
+                userNameEditText.doOnTextChanged { text, _, _, _ ->
+                    viewModel.onUserNameInputChanged(text)
+                }
+                passwordEditText.doOnTextChanged { text, _, _, _ ->
+                    viewModel.onPasswordInputChanged(text)
+                }
+                passwordConfirmEditText.doOnTextChanged { text, _, _, _ ->
+                    viewModel.onConfirmPasswordTextChanged(text)
+                }
 
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    launch {
-                        viewModel.isMaleGenderSelected.collect { isSelected ->
-                            maleButton.isSelected = isSelected
+                dateOfBirthEditText.setOnClickListener {
+                    showDatePickerDialog()
+                }
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        launch {
+                            viewModel.isMaleGenderSelected.collect { isSelected ->
+                                maleButton.isSelected = isSelected
+                            }
                         }
-                    }
-                    launch {
-                        viewModel.isFemaleGenderSelected.collect { isSelected ->
-                            femaleButton.isSelected = isSelected
+                        launch {
+                            viewModel.isFemaleGenderSelected.collect { isSelected ->
+                                femaleButton.isSelected = isSelected
+                            }
+                        }
+                        launch {
+                            viewModel.isSignUpButtonEnabled.collect { isEnabled ->
+                                signUpButton.isEnabled = isEnabled
+                            }
+                        }
+                        launch {
+                            viewModel.birthDate.collect { date ->
+                                dateOfBirthEditText.setText(date)
+                            }
                         }
                     }
                 }
+
             }
-
         }
+
+        private fun showDatePickerDialog() {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            val datePickerDialog = DatePickerDialog(
+                requireActivity(),
+                { _, year, monthOfYear, dayOfMonth ->
+                    viewModel.onBirthDateInputChanged(year, monthOfYear, dayOfMonth)
+                },
+                year,
+                month,
+                day
+            )
+            datePickerDialog.show()
+        }
+
+
     }
-
-    private fun showDatePickerDialog() {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val datePickerDialog = DatePickerDialog(
-            requireActivity(),
-            { _, year, monthOfYear, dayOfMonth ->
-                val locale = Locale("ru", "RU")
-                val formattedDate =
-                    SimpleDateFormat("dd MMMM yyyy", locale)
-                        .format(Calendar.getInstance().apply {
-                            set(Calendar.YEAR, year)
-                            set(Calendar.MONTH, monthOfYear)
-                            set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                        }.time)
-                viewModel.onDateSelected(year, monthOfYear, dayOfMonth)
-                binding.dateOfBirthEditText.setText(formattedDate)
-            },
-            year,
-            month,
-            day
-        )
-        datePickerDialog.show()
-    }
-
-
-}

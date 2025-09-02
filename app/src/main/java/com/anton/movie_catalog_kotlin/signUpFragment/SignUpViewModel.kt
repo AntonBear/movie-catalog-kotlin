@@ -14,14 +14,17 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor() : ViewModel() {
 
-    // Стейты полей ввода
+    // Сырые данные полей ввода
     private var _userLogin: String? = null
     private var _email: String? = null
     private var _userName: String? = null
     private var _password: String? = null
     private var _confirmPassword: String? = null
-    private var _birthDate: String? = null
     private var _gender: Int? = null
+    private var _birthDayRaw: String? = null
+
+    private val _birthDate = MutableStateFlow<String?>(null)
+    val birthDate: StateFlow<String?> = _birthDate
 
 
     // Стейты для ошибок полей ввода
@@ -44,7 +47,6 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
     val birthdayDate: StateFlow<String?> = _birthdayDate
 
 
-
     fun onUserLoginInputChanged(userLoginInput: CharSequence?) {
         _userLogin = userLoginInput.toString()
     }
@@ -65,10 +67,6 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
         _confirmPassword = confirmPasswordInput.toString()
     }
 
-    fun onBirthDateInputChanged(birthDateInput: CharSequence?) {
-        _birthDate = birthDateInput.toString()
-    }
-
     fun onFemaleGenderChanged() {
         _isFemaleGenderSelected.value = true
         _isMaleGenderSelected.value = false
@@ -81,14 +79,18 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
         _gender = 1
     }
 
+    // Стейты кнопок выбора гендера и активации регистрации
     private val _isMaleGenderSelected = MutableStateFlow<Boolean>(false)
     val isMaleGenderSelected: StateFlow<Boolean> = _isMaleGenderSelected
 
     private val _isFemaleGenderSelected = MutableStateFlow<Boolean>(false)
     val isFemaleGenderSelected: StateFlow<Boolean> = _isFemaleGenderSelected
 
+    private val _isSignUpButtonEnabled = MutableStateFlow<Boolean>(false)
+    val isSignUpButtonEnabled: StateFlow<Boolean> = _isSignUpButtonEnabled
 
-    fun onDateSelected(year: Int, month: Int, day: Int) {
+
+    fun onBirthDateInputChanged(year: Int, month: Int, day: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month)
@@ -96,7 +98,17 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
         val formattedDate = dateFormat.format(calendar.time)
-        _birthDate = formattedDate
+        _birthDayRaw = formattedDate
+
+        val locale = Locale("ru", "RU")
+        val formattedDateUI =
+            SimpleDateFormat("dd MMMM yyyy", locale)
+                .format(Calendar.getInstance().apply {
+                    set(Calendar.YEAR, year)
+                    set(Calendar.MONTH, month)
+                    set(Calendar.DAY_OF_MONTH, day)
+                }.time)
+        _birthDate.value = formattedDateUI
     }
 
 }

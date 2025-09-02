@@ -66,28 +66,28 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailTextInput"
+            style="@style/TextInputLayout"
             android:layout_width="0dp"
             android:layout_height="@dimen/form_element_height"
-            style="@style/TextInputLayout"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="@dimen/s"
+            app:layout_constraintBottom_toTopOf="@+id/userNameTextInput"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/nameTextInput">
+            app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/form_element_height"
                 android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 android:textColor="?attr/colorOnSurface"
-                android:textColorHint="@color/gray_faded"
-                android:inputType="textEmailAddress"/>
+                android:textColorHint="@color/gray_faded" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameTextInput"
+            android:id="@+id/userNameTextInput"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/TextInputLayout"
@@ -99,7 +99,7 @@
             app:layout_constraintBottom_toTopOf="@+id/passwordTextInput">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nameEditText"
+                android:id="@+id/userNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:hint="@string/name"
