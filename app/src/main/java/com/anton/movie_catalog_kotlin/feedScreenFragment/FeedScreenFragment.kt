@@ -45,7 +45,7 @@ class FeedScreenFragment : Fragment(R.layout.feed_screen_fragment) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.movieData.collect {
-                        binding.movieTitle.text = it?.name ?: "Ошибка"
+                        binding.movieTitle.text = it?.name ?: "Загрузка"
                     }
                 }
                 launch {
@@ -55,6 +55,14 @@ class FeedScreenFragment : Fragment(R.layout.feed_screen_fragment) {
                             .error(R.drawable.error_image)
                             .into(binding.moviePoster)
                     }
+                }
+                launch {
+                    viewModel.movieData.collect { movieDetails ->
+                        binding.movieCountryYear.text =  "${movieDetails?.country ?: ""} • ${movieDetails?.year ?: ""}"
+                    }
+                }
+                launch {
+
                 }
             }
         }

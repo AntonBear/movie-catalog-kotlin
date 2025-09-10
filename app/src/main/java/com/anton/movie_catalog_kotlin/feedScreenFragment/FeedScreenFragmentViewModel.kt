@@ -34,11 +34,11 @@ class FeedScreenFragmentViewModel @Inject constructor(
             } else {
                 Log.d("debug", "${response}")
                 _movieData.value = MovieDetails(
-                    id = "Загрузка",
-                    name = "Загрузка",
-                    poster = "Загрузка",
+                    id = "Ошибка",
+                    name = "Ошибка",
+                    poster = "Ошибка",
                     year = 2025,
-                    country = "Загрузка",
+                    country = "Ошибка",
                     genres = emptyList(),
                 )
             }
