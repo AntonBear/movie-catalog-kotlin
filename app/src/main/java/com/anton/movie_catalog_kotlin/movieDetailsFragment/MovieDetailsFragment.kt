@@ -1,4 +1,4 @@
-package com.anton.movie_catalog_kotlin.moviesScreenFragment
+package com.anton.movie_catalog_kotlin.movieDetailsFragment
 
 import android.os.Bundle
 import android.util.Log
@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.MoviesScreenFragmentBinding
 
-class MoviesScreenFragment : Fragment(R.layout.movies_screen_fragment) {
+class MovieDetailsScreenFragment : Fragment(R.layout.movies_screen_fragment) {
 
     private var _binding: MoviesScreenFragmentBinding? = null
 

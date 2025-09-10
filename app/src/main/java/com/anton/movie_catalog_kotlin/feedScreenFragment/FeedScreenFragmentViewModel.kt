@@ -7,7 +7,9 @@ import com.anton.movie_catalog_kotlin.models.MovieDetails
 import com.anton.movie_catalog_kotlin.repository.Repositories.movieRepository
 import com.anton.movie_catalog_kotlin.retrofit.KreosoftRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,6 +21,9 @@ class FeedScreenFragmentViewModel @Inject constructor(
 
     private val _movieData = MutableStateFlow<MovieDetails?>(null)
     val movieData: StateFlow<MovieDetails?> = _movieData
+
+    private val _navigateToMovieDetails = MutableSharedFlow<Unit>()
+    val navigateToMovieDetails: SharedFlow<Unit> = _navigateToMovieDetails
 
     init {
         loadData()

@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.FeedScreenFragmentBinding
 import com.bumptech.glide.Glide
@@ -35,30 +36,38 @@ class FeedScreenFragment : Fragment(R.layout.feed_screen_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Подписка на Flow
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.movieData.collectLatest { movie ->
-                    movie?.let {
-                        binding.movieTitle.text = it.name
-                        binding.movieCountryYear.text = "${it.country} • ${it.year}"
+                launch {
+                    viewModel.movieData.collectLatest { movie ->
+                        movie?.let {
+                            binding.movieTitle.text = it.name
+                            binding.movieCountryYear.text = "${it.country} • ${it.year}"
 
-                        Glide.with(binding.root.context)
-                            .load(it.poster)
-                            .error(R.drawable.error_image)
-                            .into(binding.moviePoster)
+                            Glide.with(binding.root.context)
+                                .load(it.poster)
+                                .error(R.drawable.error_image)
+                                .into(binding.moviePoster)
 
-                        binding.genreChipGroup.removeAllViews()
+                            binding.genreChipGroup.removeAllViews()
 
-                        it.genres.take(3).forEach { genre ->
-                            val chip = Chip(binding.root.context).apply {
-                                text = genre.name
-                                isCheckable = false
+                            it.genres.take(3).forEach { genre ->
+                                val chip = Chip(binding.root.context).apply {
+                                    text = genre.name
+                                    isCheckable = false
+                                }
+                                binding.genreChipGroup.addView(chip)
                             }
-                            binding.genreChipGroup.addView(chip)
                         }
                     }
+
                 }
+                launch {
+                    viewModel.navigateToMovieDetails.collect {
+//                        findNavController().navigate()
+                    }
+                }
+
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.anton.movie_catalog_kotlin.moviesScreenFragment
+package com.anton.movie_catalog_kotlin.movieDetailsFragment
 
 import androidx.lifecycle.ViewModel
 

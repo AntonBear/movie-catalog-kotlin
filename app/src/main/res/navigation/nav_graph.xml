@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/fragment_movies_screen"
-        android:name="com.anton.movie_catalog_kotlin.moviesScreenFragment.MoviesScreenFragment"
+        android:name="com.anton.movie_catalog_kotlin.movieDetailsFragment.MoviesScreenFragment"
         android:label="fragment_movies_screen"
         tools:layout="@layout/movies_screen_fragment" />
 
