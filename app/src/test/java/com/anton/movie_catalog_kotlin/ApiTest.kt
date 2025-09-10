@@ -1,9 +1,7 @@
 package com.anton.movie_catalog_kotlin
 
-import android.util.Log
-import com.anton.movie_catalog_kotlin.retrofit.KinopoiskRetrofitClient
-import com.anton.movie_catalog_kotlin.KreosoftRetrofitClient
-import com.anton.movie_catalog_kotlin.models.SignUpRequest
+import com.anton.movie_catalog_kotlin.models_old.SignUpRequest
+import com.anton.movie_catalog_kotlin.retrofit.KreosoftRepository
 import kotlinx.coroutines.runBlocking
 import models.LoginRequest
 import org.junit.Assert.assertNotNull
@@ -11,6 +9,11 @@ import org.junit.Test
 import java.util.UUID
 
 class ApiTest {
+
+//    @Test
+////    fun getListMovieDetails() = runBlocking {
+////        val response = KreosoftRepository
+////    }
 
     @Test
     fun testRegUserRequest() = runBlocking {

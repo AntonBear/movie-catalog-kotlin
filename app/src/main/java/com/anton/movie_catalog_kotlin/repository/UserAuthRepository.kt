@@ -1,6 +1,6 @@
 package com.anton.movie_catalog_kotlin.repository
 
-import com.anton.movie_catalog_kotlin.models.SignUpRequest
+import com.anton.movie_catalog_kotlin.models_old.SignUpRequest
 import com.anton.movie_catalog_kotlin.networking.MovieCatalogApi
 import com.anton.movie_catalog_kotlin.storage.TokenStorage
 import models.LoginRequest

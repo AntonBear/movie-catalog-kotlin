@@ -1,10 +1,11 @@
 package com.anton.movie_catalog_kotlin.retrofit
 
-import com.anton.movie_catalog_kotlin.models.FavoritesMoviesListModel
-import com.anton.movie_catalog_kotlin.models.LoginResponse
-import com.anton.movie_catalog_kotlin.models.MovieDetailsModel
-import com.anton.movie_catalog_kotlin.models.SignUpRequest
-import com.anton.movie_catalog_kotlin.models.SignUpResponse
+import com.anton.movie_catalog_kotlin.models.MovieDetails
+import com.anton.movie_catalog_kotlin.models_old.FavoritesMoviesListModel
+import com.anton.movie_catalog_kotlin.models_old.LoginResponse
+import com.anton.movie_catalog_kotlin.models_old.MovieDetailsModel
+import com.anton.movie_catalog_kotlin.models_old.MoviesPagedListModel
+import com.anton.movie_catalog_kotlin.models_old.SignUpRequest
 import com.anton.movie_catalog_kotlin.storage.TokenStorage
 import models.LoginRequest
 import javax.inject.Inject
@@ -15,6 +16,48 @@ class KreosoftRepository @Inject constructor(
     private val api: KreosoftApi,
     private val tokenStorage: TokenStorage
 ) {
+
+    suspend fun getListMovieDetails(page: Int): Result<MoviesPagedListModel> {
+            return try {
+                val response = api.getMoviesPage(page)
+                if (!response.isSuccessful) {
+                    Result.failure(Exception("${response.errorBody()}"))
+                } else {
+                    val body = response.body()
+                    if (body != null) {
+                        Result.success(body)
+                    } else {
+                        Result.failure(Exception("Response body is null"))
+                    }
+                }
+            } catch(e: Exception) {
+                Result.failure(e)
+            }
+    }
+
+    suspend fun getRandomMovieDetails(): Result<MovieDetails> {
+        val randomPage = (0..5).random()
+        return try {
+            val response = getListMovieDetails(randomPage)
+            if (response.isSuccess) {
+                response.map { it ->
+                    val firstMovie = it.movies[0]
+                   MovieDetails(
+                        id = firstMovie.id,
+                        name = firstMovie.name,
+                        poster = firstMovie.poster,
+                        year = firstMovie.year,
+                        country = firstMovie.country,
+                        genres = firstMovie.genres,
+                    )
+                }
+            } else {
+                Result.failure(Exception("${response.onFailure { it.message }}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 
     suspend fun regUser(request: SignUpRequest): Result<String> {
         return try {

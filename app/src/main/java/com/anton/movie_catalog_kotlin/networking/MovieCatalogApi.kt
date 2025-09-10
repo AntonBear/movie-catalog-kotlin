@@ -1,14 +1,12 @@
 package com.anton.movie_catalog_kotlin.networking
 
-import com.anton.movie_catalog_kotlin.models.LoginResponse
-import com.anton.movie_catalog_kotlin.models.MovieDetails
-import com.anton.movie_catalog_kotlin.models.MovieDetailsModel
-import com.anton.movie_catalog_kotlin.models.MovieListModel
-import com.anton.movie_catalog_kotlin.models.MoviesPagedListModel
-import com.anton.movie_catalog_kotlin.models.ProfileModel
-import com.anton.movie_catalog_kotlin.models.ReviewModel
-import com.anton.movie_catalog_kotlin.models.ReviewModifyModel
-import com.anton.movie_catalog_kotlin.models.SignUpRequest
+import com.anton.movie_catalog_kotlin.models_old.LoginResponse
+import com.anton.movie_catalog_kotlin.models_old.MovieDetailsModel
+import com.anton.movie_catalog_kotlin.models_old.MovieListModel
+import com.anton.movie_catalog_kotlin.models_old.MoviesPagedListModel
+import com.anton.movie_catalog_kotlin.models_old.ProfileModel
+import com.anton.movie_catalog_kotlin.models_old.ReviewModifyModel
+import com.anton.movie_catalog_kotlin.models_old.SignUpRequest
 import models.LoginRequest
 import retrofit2.Response
 import retrofit2.http.Body

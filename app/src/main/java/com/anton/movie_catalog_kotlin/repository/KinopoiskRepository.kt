@@ -1,9 +1,8 @@
 package com.anton.movie_catalog_kotlin.repository
 
-import com.anton.movie_catalog_kotlin.models.FilmDetails
-import com.anton.movie_catalog_kotlin.models.MovieSearchModel
-import com.anton.movie_catalog_kotlin.models.PersonItem
-import com.anton.movie_catalog_kotlin.models.PersonListModel
+import com.anton.movie_catalog_kotlin.models_old.FilmDetails
+import com.anton.movie_catalog_kotlin.models_old.MovieSearchModel
+import com.anton.movie_catalog_kotlin.models_old.PersonItem
 import com.anton.movie_catalog_kotlin.networking.KinopoiskApi
 import retrofit2.Response
 

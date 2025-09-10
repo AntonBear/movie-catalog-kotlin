@@ -1,7 +1,6 @@
-package com.anton.movie_catalog_kotlin.models
+package com.anton.movie_catalog_kotlin.models_old
 
 import kotlinx.serialization.Serializable
-import java.time.LocalDateTime
 
 @Serializable
 data class UserShortModel(

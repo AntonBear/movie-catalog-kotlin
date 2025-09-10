@@ -1,10 +1,9 @@
 package com.anton.movie_catalog_kotlin.retrofit
 
-import com.anton.movie_catalog_kotlin.models.FilmDetails
-import com.anton.movie_catalog_kotlin.models.MovieSearchModel
+import com.anton.movie_catalog_kotlin.models_old.FilmDetails
+import com.anton.movie_catalog_kotlin.models_old.MovieSearchModel
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface KinopoiskApi {

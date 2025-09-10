@@ -10,12 +10,16 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import coil.load
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.FeedScreenFragmentBinding
 import com.anton.movie_catalog_kotlin.movieDetailsScreen.MovieDetailsActivity
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FeedScreenFragment : Fragment(R.layout.feed_screen_fragment) {
@@ -36,52 +40,14 @@ class FeedScreenFragment : Fragment(R.layout.feed_screen_fragment) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("DEBUG", "FeedScreenFragment - onViewCreated")
 
-
-
-
-
-//        viewModel.loadData()
-
-//        viewModel.movieData.observe(viewLifecycleOwner) { movieDetails ->
-//            movieDetails?.let {
-//                binding.movieTitle.text = it.name
-//                val countryYearText = SpannableString("${it.country.split(",").firstOrNull()?.trim()} • ${it.year}")
-//                binding.movieCountryYear.text = countryYearText
-//                binding.moviePoster.load(it.poster)
-//
-//                updateChips(it.genres)
-//
-//                binding.moviePoster.setOnClickListener { _ ->
-//                    val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
-//                    intent.putExtra("id", it.id)
-////                    intent.putExtra("id", "b6c5228b-91fb-43a1-a2ac-08d9b9f3d2a2")
-//                    startActivity(intent)
-//                }
-//            }
-//        }
-    }
-
-    private fun updateChips(genres: List<String>?) {
-        binding.flexbox.removeAllViews()
-        genres?.take(3)?.forEach { genre ->
-            val chip = Chip(requireContext()).apply {
-                text = genre
-                shapeAppearanceModel = shapeAppearanceModel.toBuilder()
-                    .setAllCornerSizes(resources.getDimension(R.dimen.chip_corner_radius))
-                    .build()
-                setChipBackgroundColorResource(R.color.dark_faded)
-                setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-
-                val layoutParams = ViewGroup.MarginLayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    marginStart = resources.getDimensionPixelSize(R.dimen.chip_margin)
-                    marginEnd = resources.getDimensionPixelSize(R.dimen.chip_margin)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.movieData.collect {
+                        binding.movieTitle.text = it?.name ?: "Ошибка"
+                    }
                 }
-                this.layoutParams = layoutParams
             }
-            binding.flexbox.addView(chip)
         }
     }
 

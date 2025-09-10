@@ -1,7 +1,7 @@
 package com.anton.movie_catalog_kotlin.movieDetailsScreen
 
-import com.anton.movie_catalog_kotlin.models.FilmDetails
-import com.anton.movie_catalog_kotlin.models.MovieDetailsModel
+import com.anton.movie_catalog_kotlin.models_old.FilmDetails
+import com.anton.movie_catalog_kotlin.models_old.MovieDetailsModel
 
 data class MovieDetailsCombined(
     val movieDetails: MovieDetailsModel? = null,

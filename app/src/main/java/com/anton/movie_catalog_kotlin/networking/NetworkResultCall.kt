@@ -1,6 +1,6 @@
 package com.anton.movie_catalog_kotlin.networking
 
-import com.anton.movie_catalog_kotlin.models.ErrorResponse
+import com.anton.movie_catalog_kotlin.models_old.ErrorResponse
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import okhttp3.Request

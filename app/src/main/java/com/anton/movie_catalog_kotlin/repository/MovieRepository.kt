@@ -2,10 +2,10 @@ package com.anton.movie_catalog_kotlin.repository
 
 import android.util.Log
 //import com.anton.movie_catalog_kotlin.models.ImageSource
-import com.anton.movie_catalog_kotlin.models.MovieDetails
-import com.anton.movie_catalog_kotlin.models.MovieDetailsModel
-import com.anton.movie_catalog_kotlin.models.MovieElementModel
-import com.anton.movie_catalog_kotlin.models.MoviesPagedListModel
+import com.anton.movie_catalog_kotlin.models_old.MovieDetails
+import com.anton.movie_catalog_kotlin.models_old.MovieDetailsModel
+import com.anton.movie_catalog_kotlin.models_old.MovieElementModel
+import com.anton.movie_catalog_kotlin.models_old.MoviesPagedListModel
 import com.anton.movie_catalog_kotlin.networking.MovieCatalogApi
 import retrofit2.Response
 

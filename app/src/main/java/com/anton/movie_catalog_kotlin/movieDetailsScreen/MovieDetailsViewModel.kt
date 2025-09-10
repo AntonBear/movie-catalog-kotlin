@@ -6,9 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.anton.movie_catalog_kotlin.models.FilmDetails
-import com.anton.movie_catalog_kotlin.models.ReviewModifyModel
+import com.anton.movie_catalog_kotlin.models_old.FilmDetails
+import com.anton.movie_catalog_kotlin.models_old.ReviewModifyModel
 import com.anton.movie_catalog_kotlin.repository.FavoriteMovieRepository
 import com.anton.movie_catalog_kotlin.repository.KinopoiskRepository
 import com.anton.movie_catalog_kotlin.repository.MovieRepository

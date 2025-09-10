@@ -2,7 +2,6 @@ package com.anton.movie_catalog_kotlin.movieDetailsScreen
 
 
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,23 +21,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.anton.movie_catalog_kotlin.R
-import com.anton.movie_catalog_kotlin.models.Country
-import com.anton.movie_catalog_kotlin.models.FilmDetails
-import com.anton.movie_catalog_kotlin.models.MovieDetailsModel
+import com.anton.movie_catalog_kotlin.models_old.FilmDetails
+import com.anton.movie_catalog_kotlin.models_old.MovieDetailsModel
 
 
 @Composable

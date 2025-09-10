@@ -2,12 +2,10 @@ package com.anton.movie_catalog_kotlin.signUpFragment
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
-import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anton.movie_catalog_kotlin.models.Gender
-import com.anton.movie_catalog_kotlin.models.SignUpRequest
+import com.anton.movie_catalog_kotlin.models_old.SignUpRequest
 import com.anton.movie_catalog_kotlin.retrofit.KreosoftRepository
 import com.anton.movie_catalog_kotlin.storage.TokenStorage
 import com.anton.movie_catalog_kotlin.utils.EmailValidator

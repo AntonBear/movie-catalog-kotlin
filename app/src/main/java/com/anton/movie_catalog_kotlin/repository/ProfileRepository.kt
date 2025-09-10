@@ -1,7 +1,7 @@
 package com.anton.movie_catalog_kotlin.repository
 
 import android.util.Log
-import com.anton.movie_catalog_kotlin.models.ProfileModel
+import com.anton.movie_catalog_kotlin.models_old.ProfileModel
 import com.anton.movie_catalog_kotlin.networking.MovieCatalogApi
 
 

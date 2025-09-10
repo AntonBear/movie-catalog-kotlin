@@ -1,8 +1,8 @@
-package com.anton.movie_catalog_kotlin.models
+package com.anton.movie_catalog_kotlin.models_old
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SignUpResponse(
+data class LoginResponse(
     val token: String
 )

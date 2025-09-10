@@ -1,8 +1,7 @@
 package com.anton.movie_catalog_kotlin.repository
 
 import android.util.Log
-import com.anton.movie_catalog_kotlin.models.MovieDetails
-import com.anton.movie_catalog_kotlin.models.MovieListModel
+import com.anton.movie_catalog_kotlin.models_old.MovieListModel
 import com.anton.movie_catalog_kotlin.networking.MovieCatalogApi
 import retrofit2.HttpException
 import retrofit2.Response

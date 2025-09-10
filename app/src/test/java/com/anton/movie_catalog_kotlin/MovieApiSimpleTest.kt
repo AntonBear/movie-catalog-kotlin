@@ -1,22 +1,10 @@
 package com.anton.movie_catalog_kotlin
 
-import com.anton.movie_catalog_kotlin.models.*
 import com.anton.movie_catalog_kotlin.retrofit.KreosoftApi
-import com.anton.movie_catalog_kotlin.KreosoftRetrofitClient
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.Json
-import models.LoginRequest
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.ResponseBody
-import org.junit.Assert.*
-import org.junit.Before
 import org.junit.Test
-import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
 
 
 class MovieApiSimpleTest {

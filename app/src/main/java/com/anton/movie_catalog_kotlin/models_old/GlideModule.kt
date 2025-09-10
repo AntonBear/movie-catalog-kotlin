@@ -1,4 +1,4 @@
-package com.anton.movie_catalog_kotlin.models
+package com.anton.movie_catalog_kotlin.models_old
 
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule

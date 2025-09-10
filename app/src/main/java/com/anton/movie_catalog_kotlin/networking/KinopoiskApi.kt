@@ -1,9 +1,8 @@
 package com.anton.movie_catalog_kotlin.networking
 
-import com.anton.movie_catalog_kotlin.models.FilmDetails
-import com.anton.movie_catalog_kotlin.models.MovieSearchModel
-import com.anton.movie_catalog_kotlin.models.PersonListModel
-import com.anton.movie_catalog_kotlin.models.Staff
+import com.anton.movie_catalog_kotlin.models_old.FilmDetails
+import com.anton.movie_catalog_kotlin.models_old.MovieSearchModel
+import com.anton.movie_catalog_kotlin.models_old.PersonListModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
