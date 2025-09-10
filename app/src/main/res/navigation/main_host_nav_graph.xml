@@ -8,7 +8,11 @@
     <fragment
         android:id="@+id/feedScreenFragment"
         android:name="com.anton.movie_catalog_kotlin.feedScreenFragment.FeedScreenFragment"
-        android:label="FeedScreenFragment" />
+        android:label="FeedScreenFragment" >
+        <action
+            android:id="@+id/action_feedScreenFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/moviesScreenFragment"
         android:name="com.anton.movie_catalog_kotlin.moviesFragment.MoviesFragment"
@@ -22,7 +26,10 @@
         android:id="@+id/profileScreenFragment"
         android:name="com.anton.movie_catalog_kotlin.profileScreenFragment.ProfileScreenFragment"
         android:label="ProfileScreenFragment" />
-
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.anton.movie_catalog_kotlin.movieDetailsFragment.MovieDetailsFragment"
+        android:label="MovieDetailsFragment" />
 
 
 </navigation>
