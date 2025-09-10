@@ -17,6 +17,7 @@ import coil.load
 import com.anton.movie_catalog_kotlin.R
 import com.anton.movie_catalog_kotlin.databinding.FeedScreenFragmentBinding
 import com.anton.movie_catalog_kotlin.movieDetailsScreen.MovieDetailsActivity
+import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -45,6 +46,14 @@ class FeedScreenFragment : Fragment(R.layout.feed_screen_fragment) {
                 launch {
                     viewModel.movieData.collect {
                         binding.movieTitle.text = it?.name ?: "Ошибка"
+                    }
+                }
+                launch {
+                    viewModel.movieData.collect { movieDetails ->
+                        Glide.with(binding.root.context)
+                            .load(movieDetails?.poster)
+                            .error(R.drawable.error_image)
+                            .into(binding.moviePoster)
                     }
                 }
             }
