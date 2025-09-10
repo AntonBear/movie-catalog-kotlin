@@ -11,7 +11,7 @@
         android:label="FeedScreenFragment" />
     <fragment
         android:id="@+id/moviesScreenFragment"
-        android:name="com.anton.movie_catalog_kotlin.movieDetailsFragment.MoviesScreenFragment"
+        android:name="com.anton.movie_catalog_kotlin.moviesFragment.MoviesFragment"
         android:label="fragment_movies_screen"
         tools:layout="@layout/movies_screen_fragment" />
     <fragment
@@ -22,6 +22,7 @@
         android:id="@+id/profileScreenFragment"
         android:name="com.anton.movie_catalog_kotlin.profileScreenFragment.ProfileScreenFragment"
         android:label="ProfileScreenFragment" />
+
 
 
 </navigation>
