@@ -16,7 +16,6 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/materialCardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -24,23 +23,21 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
-            android:layout_width="0dp"
+            android:layout_width="352dp"
             android:layout_height="0dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="8dp"
             app:cardCornerRadius="20dp"
             app:layout_constraintBottom_toTopOf="@+id/movieTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label">
 
             <ImageView
                 android:id="@+id/moviePoster"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="434dp"
                 android:clickable="true"
                 android:contentDescription="@string/filmdescription"
                 android:focusable="true"
@@ -60,6 +57,7 @@
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:text="Movie title"
             app:layout_constraintBottom_toTopOf="@+id/movieCountryYear"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -72,28 +70,34 @@
             android:fontFamily="@font/manrope_bold"
             android:textColor="@color/gray"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/flexbox"
+            android:text="2025 Russia"
+            app:layout_constraintBottom_toTopOf="@+id/genreChipGroup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
 
-        <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/flexbox"
-            android:layout_width="wrap_content"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/genreChipGroup"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="16dp"
-            app:flexWrap="nowrap"
-            app:itemSpacing="8dp"
-            app:justifyContent="center"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/m"
+            android:layout_marginEnd="@dimen/m"
+            android:layout_marginBottom="23dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movieTitle">
+            app:singleLine="true">
 
-        </com.google.android.flexbox.FlexboxLayout>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip3"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chip 3" />
+
+        </com.google.android.material.chip.ChipGroup>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
