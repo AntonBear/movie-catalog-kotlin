@@ -28,6 +28,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
+            android:clickable="true"
+            android:focusable="true"
             app:cardCornerRadius="20dp"
             app:layout_constraintBottom_toTopOf="@+id/movieTitle"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,9 +40,7 @@
                 android:id="@+id/moviePoster"
                 android:layout_width="match_parent"
                 android:layout_height="434dp"
-                android:clickable="true"
                 android:contentDescription="@string/filmdescription"
-                android:focusable="true"
                 android:scaleType="centerCrop" />
 
         </com.google.android.material.card.MaterialCardView>

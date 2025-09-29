@@ -25,6 +25,16 @@ class FeedScreenFragmentViewModel @Inject constructor(
     private val _navigateToMovieDetails = MutableSharedFlow<Unit>()
     val navigateToMovieDetails: SharedFlow<Unit> = _navigateToMovieDetails
 
+
+    fun navigateToMovieDetails() {
+        viewModelScope.launch {
+            _navigateToMovieDetails.emit(Unit)
+        }
+
+    }
+
+
+
     init {
         loadData()
     }

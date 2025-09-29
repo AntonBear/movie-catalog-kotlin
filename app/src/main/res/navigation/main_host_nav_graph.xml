@@ -30,6 +30,4 @@
         android:id="@+id/movieDetailsFragment"
         android:name="com.anton.movie_catalog_kotlin.movieDetailsFragment.MovieDetailsFragment"
         android:label="MovieDetailsFragment" />
-
-
 </navigation>

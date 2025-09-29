@@ -1,6 +1,7 @@
 package com.anton.movie_catalog_kotlin.feedScreenFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,12 +65,20 @@ class FeedScreenFragment : Fragment(R.layout.feed_screen_fragment) {
                 }
                 launch {
                     viewModel.navigateToMovieDetails.collect {
-//                        findNavController().navigate()
+                        findNavController().navigate(R.id.action_feedScreenFragment_to_movieDetailsFragment)
                     }
                 }
 
+
             }
         }
+
+        binding.materialCardView.setOnClickListener {
+            Log.d("debug", "navigateToMovieDetails")
+            viewModel.navigateToMovieDetails()
+        }
+
+
     }
 
     override fun onResume() {
